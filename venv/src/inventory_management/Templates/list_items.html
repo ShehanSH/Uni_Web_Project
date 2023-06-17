@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>
+        {{title}}
+    </title> 
+</head>
+<body>
+    <h1> This is List Otem page </h1>
+    {% for instance in queryset %}
+    {{instance.item_name}}, {{instance.quantity}}, {{instance.issue_quantity}} <br>
+    {% endfor %}
+</body>
+</html>

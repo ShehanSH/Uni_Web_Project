@@ -1,0 +1,15 @@
+
+<html>
+<head>
+	<title>{{title}}</title>
+</head>
+<body>
+     
+	<form method='POST' action=''>{% csrf_token %}  
+        {% comment %} Cross-Site Request Forgery - authenticated security method to pass data to database {% endcomment %}
+		{{form}}
+        <input type="submit" value='Save'/>
+    </form>
+
+</body>
+</html>
