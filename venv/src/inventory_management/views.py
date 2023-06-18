@@ -5,7 +5,7 @@ from .forms import InventoryCreateForm
 
 def home(request):
     title = "Welcome: This is the Home Page"
-    form = "This is Form"
+    form = "This is home page body"
     context = {
         "title": title,
         "form": form,

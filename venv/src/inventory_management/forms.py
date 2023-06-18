@@ -4,4 +4,4 @@ from .models import Inventory_Stock
 class InventoryCreateForm(forms.ModelForm):
     class Meta:
         model =  Inventory_Stock
-        fields = ['category', 'item_name', 'quantity', 'issue_quantity']
+        fields = ['category', 'item_name', 'quantity']
