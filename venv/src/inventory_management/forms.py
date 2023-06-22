@@ -38,3 +38,15 @@ class InventoryUpdateForm(forms.ModelForm):
     class Meta:
         model = Inventory_Stock
         fields = ['category', 'item_name', 'quantity']
+
+class IssueForm(forms.ModelForm):
+    class Meta:
+        model = Inventory_Stock
+        fields = ['issue_quantity', 'issue_to']    
+        # add to issue by
+
+class ReceiveForm(forms.ModelForm):
+    class Meta:
+        model = Inventory_Stock
+        fields = ['receive_quantity']    
+      
