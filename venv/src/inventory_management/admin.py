@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .forms import InventoryCreateForm   
-
+from .models import *
 # Register your models here
 
 from .models import Inventory_Stock
@@ -16,3 +16,4 @@ class InventoryCreateAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Inventory_Stock, InventoryCreateAdmin)
+admin.site.register(Category)
