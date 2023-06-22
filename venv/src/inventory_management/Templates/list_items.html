@@ -25,12 +25,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
+    <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
+
     <!-- Favicons -->
     <link
       rel="apple-touch-icon"
@@ -85,6 +81,13 @@
   <body>
     {% include 'navbar.html' %}
     <main role="main" class="container">
+      {% if messages %}
+        <ul class="success">
+               {% for message in messages %}
+                     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+               {% endfor %}
+       </ul>
+      {% endif %}
       <div class="jumbotron">
         <div class="header"> {{header}} </div>
         <form method='POST' action=''>{% csrf_token %}
@@ -100,6 +103,8 @@
                   <th>CATEGORY</th>
                   <th>ITEM NAME</th>
                   <th>QUANTITY IN STORE</th>
+                  <th>TIMESTAMP</th>
+                  <th>LAST UPDATE</th>
                   <th>DELETE</th>
                 </tr>
               </thead>
@@ -109,8 +114,11 @@
                   <td>{{item.category}}</td>       
                    {% comment %} use item for instance name {% endcomment %}
                   <td><a href="{% url 'update_items' item.id %}">{{item.item_name}}</a></td>
-                  <td>{{item.quantity}}</td>
+                  <td><a href="{% url 'stock_detail' item.id %}">{{item.quantity}}</a></td>
+                  <td>{{item.timestamp}}</td>  
+                  <td>{{item.last_updated}}</td>  
                   <td><a href="{% url 'delete_items' item.id %}"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
+                 
                 </tr>
             {% endfor %}
           </table>

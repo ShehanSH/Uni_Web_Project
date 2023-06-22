@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from django.contrib import messages
 from .forms import InventoryCreateForm, InventorySearchForm, InventoryUpdateForm
 from django.http import HttpResponse
 import csv
@@ -13,6 +14,15 @@ def home(request):
         "form": form,
     }
     return render(request, 'home.html', context)
+
+def test(request):
+    title = "Welcome: This is the test Page"
+   
+    context = {
+        "title": title,
+    }
+    return render(request, 'test.html', context)
+
 
 def list_items(request):
     header = "Sports Items"
@@ -50,34 +60,48 @@ def list_items(request):
 
 
 def add_items(request):
-   form = InventoryCreateForm(request.POST or None)
-   if form.is_valid():      #validate form details
-       form.save()
-       return redirect('/list_items')
-   context = {
+    form = InventoryCreateForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Item added successfully')
+        return redirect('/list_items')
+    
+    context = {
         "form": form,
         "title": "Add Item",
     }
-   return render(request, 'add_items.html', context)
+    return render(request, 'add_items.html', context)
+
 
 def update_items(request, pk):
-	queryset = Inventory_Stock.objects.get(id=pk)
-	form = InventoryUpdateForm(instance=queryset)
-	if request.method == 'POST':
-		form = InventoryUpdateForm(request.POST, instance=queryset)
-		if form.is_valid():
-			form.save()
-			return redirect('/list_items')
+    queryset = Inventory_Stock.objects.get(id=pk)
+    form = InventoryUpdateForm(instance=queryset)
+    if request.method == 'POST':
+        form = InventoryUpdateForm(request.POST, instance=queryset)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Item updated successfully')
+            return redirect('/list_items')
 
-	context = {
-		'form':form
-	}
-	return render(request, 'add_items.html', context)
+    context = {
+        'form': form
+    }
+    return render(request, 'add_items.html', context)
 
 
 def delete_items(request, pk):
     queryset = Inventory_Stock.objects.get(id=pk) 
     if request.method == 'POST':
         queryset.delete()
+        messages.success(request, 'Item deleted successfully')
         return redirect('/list_items')
     return render(request, 'delete_items.html')
+
+
+def stock_detail(request, pk):
+	queryset = Inventory_Stock.objects.get(id=pk)
+	context = {
+        "title": queryset.item_name,
+		"queryset": queryset,
+	}
+	return render(request, "stock_detail.html", context)
