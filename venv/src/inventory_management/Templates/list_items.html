@@ -26,6 +26,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/stylesheetdelete.css' %}" rel="stylesheet" />
 
     <!-- Favicons -->
     <link
@@ -79,7 +80,43 @@
    
   </head>
   <body>
+
+
     {% include 'navbar.html' %}
+
+    
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="icon-box">
+              <i class="material-icons">&#xE5CD;</i>
+            </div>
+            <h4 class="modal-title">Are you sure?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Do you really want to delete these records? This process cannot be undone.</p>
+          </div>
+          <div class="modal-footer">
+            <form method="post" action="">
+              {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Delete" />
+                <a href="/list_items"><div class="btn btn-secondary" data-dismiss="modal" >Cancel</div></a>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
     <main role="main" class="container">
       {% if messages %}
         <ul class="success">
@@ -117,7 +154,7 @@
                   <td><a href="{% url 'stock_detail' item.id %}">{{item.quantity}}</a></td>
                   <td>{{item.timestamp}}</td>  
                   <td>{{item.last_updated}}</td>  
-                  <td><a href="{% url 'delete_items' item.id %}"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
+                  <td><a href="{% url 'delete_items' item.id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
                  
                 </tr>
             {% endfor %}
