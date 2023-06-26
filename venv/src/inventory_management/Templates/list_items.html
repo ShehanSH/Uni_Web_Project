@@ -140,6 +140,7 @@
                   <th>CATEGORY</th>
                   <th>ITEM NAME</th>
                   <th>QUANTITY IN STORE</th>
+                  <th>REORDER LEVEL</th>
                   <th>TIMESTAMP</th>
                   <th>LAST UPDATE</th>
                   <th>DELETE</th>
@@ -151,7 +152,16 @@
                   <td>{{item.category}}</td>       
                    {% comment %} use item for instance name {% endcomment %}
                   <td><a href="{% url 'update_items' item.id %}">{{item.item_name}}</a></td>
-                  <td><a href="{% url 'stock_detail' item.id %}">{{item.quantity}}</a></td>
+                  <td>
+                    {% if item.quantity <= item.reorder_level %}
+                    <div style="background-color: orange;">
+                      <a href="{% url 'stock_detail' item.id %}">{{item.quantity}}
+                    </div>
+                    {% else %}
+                      <a href="{% url 'stock_detail' item.id %}">{{item.quantity}}
+                    {% endif %}
+                  </td>
+                  <td><a href="{% url 'reorder_level' item.id %}">{{item.reorder_level}}</a></td>
                   <td>{{item.timestamp}}</td>  
                   <td>{{item.last_updated}}</td>  
                   <td><a href="{% url 'delete_items' item.id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>

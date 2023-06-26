@@ -49,4 +49,8 @@ class ReceiveForm(forms.ModelForm):
     class Meta:
         model = Inventory_Stock
         fields = ['receive_quantity']    
-      
+
+class ReorderLevelForm(forms.ModelForm):
+	class Meta:
+		model = Inventory_Stock
+		fields = ['reorder_level']

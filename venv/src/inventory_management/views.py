@@ -109,43 +109,73 @@ def stock_detail(request, pk):
 
 
 def issue_items(request, pk):
-	queryset = Inventory_Stock.objects.get(id=pk)
-	form = IssueForm(request.POST or None, instance=queryset)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.quantity -= instance.issue_quantity
-		# instance.issue_by = str(request.user)
-		messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
-		instance.save()
+    queryset = Inventory_Stock.objects.get(id=pk)
+    form = IssueForm(request.POST or None, instance=queryset)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.receive_quantity = 0
+        instance.quantity -= instance.issue_quantity
+        instance.issue_by = str(request.user)
+        messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
+        instance.save()
 
-		return redirect('/stock_detail/'+str(instance.id))
-		# return HttpResponseRedirect(instance.get_absolute_url())
+        return redirect('/stock_detail/' + str(instance.id))
+        # return HttpResponseRedirect(instance.get_absolute_url())
 
-	context = {
-		"title": 'Issue ' + str(queryset.item_name),
-		"queryset": queryset,
-		"form": form,
-		"username": 'Issue By: ' + str(request.user),
-	}
-	return render(request, "add_items.html", context)
+    context = {
+        "title": 'Issue ' + str(queryset.item_name),
+        "queryset": queryset,
+        "form": form,
+        "username": 'Issue By: ' + str(request.user),
+    }
+    return render(request, "add_items.html", context)
+
 
 
 
 def receive_items(request, pk):
-	queryset = Inventory_Stock.objects.get(id=pk)
-	form = ReceiveForm(request.POST or None, instance=queryset)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.quantity += instance.receive_quantity
-		instance.save()
-		messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name)+"s now in Store")
+    queryset = Inventory_Stock.objects.get(id=pk)
+    form = ReceiveForm(request.POST or None, instance=queryset)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.issue_quantity = 0
+        instance.quantity += instance.receive_quantity
+        instance.receive_by = str(request.user)
+        instance.save()
+        messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now in Store")
 
-		return redirect('/stock_detail/'+str(instance.id))
-		# return HttpResponseRedirect(instance.get_absolute_url())
+        return redirect('/stock_detail/' + str(instance.id))
+        # return HttpResponseRedirect(instance.get_absolute_url())
+    context = {
+        "title": 'Receive ' + str(queryset.item_name),
+        "instance": queryset,
+        "form": form,
+        "username": 'Receive By: ' + str(request.user),
+    }
+    return render(request, "add_items.html", context)
+
+
+
+def reorder_level(request, pk):
+	queryset = Inventory_Stock.objects.get(id=pk)
+	form = ReorderLevelForm(request.POST or None, instance=queryset)
+	if form.is_valid():
+		item = form.save(commit=False)
+		item.save()
+		messages.success(request, "Reorder level for " + str(item.item_name) + " is updated to " + str(item.reorder_level))
+
+		return redirect("/list_items")
 	context = {
-			"title": 'Reaceive ' + str(queryset.item_name),
 			"instance": queryset,
 			"form": form,
-			"username": 'Receive By: ' + str(request.user),
 		}
 	return render(request, "add_items.html", context)
+
+def list_history(request):
+	header = 'LIST OF ITEMS'
+	queryset = Inventory_Stock_History.objects.all()
+	context = {
+		"header": header,
+		"queryset": queryset,
+	}
+	return render(request, "list_history.html",context)
