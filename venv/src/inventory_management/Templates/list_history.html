@@ -127,6 +127,12 @@
       {% endif %}
       <div class="jumbotron">
      
+        <form method='POST' action=''>{% csrf_token %}
+          {{form|crispy}}
+          <input type="submit" value='Search'/>
+      </form>
+
+      <br>
         <div class="display_table">
             <table class='table'>
               <thead>

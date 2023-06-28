@@ -26,7 +26,7 @@ def test(request):
 
 
 def list_items(request):
-    header = "Sports Items"
+    header = "Sports Items List"
     form = InventorySearchForm(request.POST or None)
     queryset = Inventory_Stock.objects.all()
     context = {
@@ -38,6 +38,7 @@ def list_items(request):
     if request.method == 'POST':
         queryset = Inventory_Stock.objects.filter(
             # category__icontains=form['category'].value(),
+            # category__name__icontains=form['category'].value(),
             item_name__icontains=form['item_name'].value()
         )
 
@@ -171,11 +172,57 @@ def reorder_level(request, pk):
 		}
 	return render(request, "add_items.html", context)
 
+
 def list_history(request):
-	header = 'LIST OF ITEMS'
-	queryset = Inventory_Stock_History.objects.all()
-	context = {
-		"header": header,
-		"queryset": queryset,
-	}
-	return render(request, "list_history.html",context)
+    header = 'LIST OF ITEMS'
+    queryset = Inventory_Stock_History.objects.all()
+    form = InventorySearchForm(request.POST or None)
+    context = {
+        "header": header,
+        "queryset": queryset,
+        "form": form,
+    }
+
+    if request.method == 'POST':
+        category = form['category'].value()
+        queryset = Inventory_Stock_History.objects.filter(
+            item_name__icontains=form['item_name'].value()
+        )
+
+        if category != '':
+            queryset = queryset.filter(category_id=category)
+
+        if form['export_to_CSV'].value() == True:
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="Stock History.csv"'
+                writer = csv.writer(response)
+                writer.writerow(
+                    ['CATEGORY',
+                     'ITEM NAME',
+                     'QUANTITY',
+                     'ISSUE QUANTITY',
+                     'RECEIVE QUANTITY',
+                     'RECEIVE BY',
+                     'ISSUE BY',
+                     'LAST UPDATED'])
+                instance = queryset
+                for stock in instance:
+                    writer.writerow(
+                        [stock.category,
+                         stock.item_name,
+                         stock.quantity,
+                         stock.issue_quantity,
+                         stock.receive_quantity,
+                         stock.receive_by,
+                         stock.issue_by,
+                         stock.last_updated])
+                return response
+
+        context = {
+            "form": form,
+            "header": header,
+            "queryset": queryset,
+        }
+
+    return render(request, "list_history.html", context)
+

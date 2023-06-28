@@ -27,8 +27,6 @@ class InventoryCreateForm(forms.ModelForm):
 
 
 class InventorySearchForm(forms.ModelForm):
-    category = forms.CharField(max_length=50, required=False)
-    item_name = forms.CharField(max_length=50, required=False)
     export_to_CSV = forms.BooleanField(required=False)
     class Meta:
         model = Inventory_Stock
