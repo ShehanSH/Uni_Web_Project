@@ -35,12 +35,22 @@ def list_items(request):
         "form": form,
     }
 
+    # if request.method == 'POST':
+    #     queryset = Inventory_Stock.objects.filter(
+    #         # category__icontains=form['category'].value(),
+    #         # category__name__icontains=form['category'].value(),
+    #         item_name__icontains=form['item_name'].value()
+    #     )
+
     if request.method == 'POST':
+        category = form['category'].value()
         queryset = Inventory_Stock.objects.filter(
-            # category__icontains=form['category'].value(),
-            # category__name__icontains=form['category'].value(),
             item_name__icontains=form['item_name'].value()
         )
+
+        if category != '':
+            queryset = queryset.filter(category_id=category)
+
 
         if form['export_to_CSV'].value() == True:
             response = HttpResponse(content_type='text/csv')
@@ -176,7 +186,7 @@ def reorder_level(request, pk):
 def list_history(request):
     header = 'LIST OF ITEMS'
     queryset = Inventory_Stock_History.objects.all()
-    form = InventorySearchForm(request.POST or None)
+    form = InventoryStockHistorySearchForm(request.POST or None)
     context = {
         "header": header,
         "queryset": queryset,
@@ -186,7 +196,11 @@ def list_history(request):
     if request.method == 'POST':
         category = form['category'].value()
         queryset = Inventory_Stock_History.objects.filter(
-            item_name__icontains=form['item_name'].value()
+            item_name__icontains=form['item_name'].value(),
+            last_updated__range=[
+                                    form['start_date'].value(),
+                                    form['end_date'].value()
+                                ]
         )
 
         if category != '':

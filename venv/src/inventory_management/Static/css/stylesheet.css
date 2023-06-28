@@ -7,6 +7,9 @@
 	
 }
 
+.mybutton{
+  width: 100%;
+}
 /*Make alternating colors for the table rows*/
 .table tr:nth-child(odd){
 	background: #B8CAE4
@@ -44,4 +47,5 @@ th {
 body{
   background-color: #b84d4d;
 }
+
 

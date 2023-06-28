@@ -1,5 +1,5 @@
 from django import forms
-from .models import Inventory_Stock
+from .models import Inventory_Stock, Inventory_Stock_History
 
 class InventoryCreateForm(forms.ModelForm):
     class Meta:
@@ -25,12 +25,24 @@ class InventoryCreateForm(forms.ModelForm):
         return item_name
 
 
-
+# inventory search form related to the list_items.html
 class InventorySearchForm(forms.ModelForm):
     export_to_CSV = forms.BooleanField(required=False)
     class Meta:
         model = Inventory_Stock
         fields = ['category', 'item_name']
+
+
+# inventory history search form related to the list_hostory.html
+
+class InventoryStockHistorySearchForm(forms.ModelForm):
+	export_to_CSV = forms.BooleanField(required=False)
+	start_date = forms.DateTimeField(required=False)
+	end_date = forms.DateTimeField(required=False)
+	class Meta:
+		model = Inventory_Stock_History
+		fields = ['category', 'item_name', 'start_date', 'end_date']
+                
 
 class InventoryUpdateForm(forms.ModelForm):
     class Meta:
