@@ -20,6 +20,7 @@ from inventory_management import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('home2/', views.home2, name='home2'),
     path('admin/', admin.site.urls),
     path('list_items/', views.list_items, name='list_items'),
     path('update_items/<str:pk>/', views.update_items, name="update_items"),

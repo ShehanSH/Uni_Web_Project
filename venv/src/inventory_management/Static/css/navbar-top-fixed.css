@@ -3,3 +3,8 @@ body {
   min-height: 200rem;
   padding-top:50.5rem;
 }
+
+.navtxt {
+  color: #fff;
+  font-size: 1.5rem;
+}

@@ -16,6 +16,16 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
+
+def home2(request):
+  
+    context = {
+        
+    }
+    return render(request, 'home2.html', context)
+
+
+
 def test(request):
     title = "Welcome: This is the test Page"
    

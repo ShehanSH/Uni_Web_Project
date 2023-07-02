@@ -54,6 +54,7 @@
     <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
     <link href="{% static 'css/stylesheetdelete.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/paging.css' %}" rel="stylesheet" />
 
     <!-- Favicons -->
     <link
@@ -220,8 +221,17 @@
     <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.js' %}"></script>
     <script src="{% static 'js/myjs.js' %}"></script>
-      
+    <script src="{% static 'js/pager/paging.js' %}"></script>  
 
+    <script>
+    $(document).ready(function(){
+  
+      $(".datetimeinput").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
+      $(".table").paging({limit:5});
+
+     
+    });
+  </script>
 
   </body>
 </html>
