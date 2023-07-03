@@ -18,8 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 from inventory_management import views
 
+
+
+
+
+
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.list_items, name='list_items'),
     path('home2/', views.home2, name='home2'),
     path('admin/', admin.site.urls),
     path('list_items/', views.list_items, name='list_items'),
@@ -30,6 +35,9 @@ urlpatterns = [
     path('issue_items/<str:pk>/', views.issue_items, name="issue_items"),
     path('receive_items/<str:pk>/', views.receive_items, name="receive_items"),
     path('reorder_level/<str:pk>/', views.reorder_level, name="reorder_level"),
-    path('accounts/', include('registration.backends.default.urls')),
+    # path('accounts/', include('registration.backends.default.urls')),
     path('list_history/', views.list_history, name='list_history'),
+    path('', include('accounts.urls')),
+
+    
 ]

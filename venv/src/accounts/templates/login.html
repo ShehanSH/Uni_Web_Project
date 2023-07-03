@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <style>
+        .error {
+            position: relative;
+        }
+
+        .error .close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar2.html' %}
+
+    <div class="msg">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                    <span class="close-button">&times;</span>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="LoginPageContainer">
+        <div class="LoginPageInnerContainer">
+            <div class="ImageContianer">
+                <img src="{% static 'images/login4.png' %}" alt="login Image" class="GroupImage">
+            </div>
+            <div class="LoginFormContainer">
+                <div class="LoginFormInnerContainer">
+                    <h2 class="header">Log In.</h2>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="inputContainer">
+                            <label class="label" for="emailAddress">
+                                <img src="https://imgur.com/xCvzudW.png" class="labelIcon">
+                                <span>User Name</span>
+                            </label>
+                            <input type="text" class="input" id="id_username" name="username" placeholder="Enter your Email Address">
+                        </div>
+                        <div class="inputContainer">
+                            <label class="label" for="emailAddress">
+                                <img src="https://i.imgur.com/g5SvdfG.png" class="labelIcon">
+                                <span>Password</span>
+                            </label>
+                            <input type="password" class="input" placeholder="Enter your Password" name="password" id="id_password">
+                        </div>
+                        <div class="OptionsContainer">
+                            <div class="checkboxContainer">
+                                <input type="checkbox" id="RememberMe" class="checkbox">
+                                <label for="RememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="ForgotPasswordLink">Forgot Password?</a>
+                        </div>
+                        <input type="submit" value="Login" class="LoginButton">
+                        <br>
+                        <div class="OptionsContainer">
+                            <p class="dontacc">Don't have an account?</p>
+                            <a href="#" class="ForgotPasswordLink">Sign Up</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/home2.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+    
+</body>
+</html>

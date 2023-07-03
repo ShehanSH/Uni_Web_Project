@@ -1,0 +1,34 @@
+/* styles.css */
+
+.registration-form {
+    width: 300px;
+    margin: 0 auto;
+  }
+  
+  .registration-form input[type="text"],
+  .registration-form input[type="password"],
+  .registration-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .registration-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .registration-form button[type="submit"]:hover {
+    background-color: #286090;
+  }
+  
+
+
+  /* login css */
+
+  

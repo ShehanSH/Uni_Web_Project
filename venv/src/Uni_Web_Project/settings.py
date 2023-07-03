@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'registration', #should be immediately above 'django.contrib.auth'
     'django.contrib.staticfiles',
-    'inventory_management'
+    'inventory_management',
+    
+    'accounts'
     
     ]
 
@@ -142,3 +144,5 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'accounts.User'
