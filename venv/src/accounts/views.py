@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import User
 from .forms import RegistrationForm, LoginForm
+from django.contrib import messages
 
-from .forms import RegistrationForm, LoginForm
 
 # def login(request):
 #     if request.method == 'POST':
@@ -24,16 +24,14 @@ from .forms import RegistrationForm, LoginForm
 #     return render(request, 'login.html')
 
 
-from django.contrib import messages
+
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        
-        # Add form validation
         form = LoginForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             try:
                 user = User.objects.get(username=username, password=password)
                 role = user.role.role_name
@@ -48,16 +46,16 @@ def login(request):
                 error_message = 'Invalid username or password. Please try again.'
                 messages.error(request, error_message)
         else:
-            # Form is not valid, display form errors
-            for field, errors in form.errors.items():
-                for error in errors:
-                    error = 'Feilds cannot be empty. Please try again.'
-                    messages.error(request, error)
-    
+            # Check if the form has been submitted
+            if 'username' in request.POST and 'password' in request.POST:
+                error_message = list(form.errors.values())[0][0]
+                messages.error(request, error_message)
     else:
         form = LoginForm()
-    
+
     return render(request, 'login.html', {'form': form})
+
+
 
 
 
@@ -117,29 +115,76 @@ def register_admin(request):
     return render(request, 'admin_register.html', {'form': form})
 
 
+# def register_uniPerson(request):
+#     role = request.GET.get('role', '')  # Get the role query parameter
+
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             role = form.cleaned_data['role']
+           
+#             # Get the role ID from the selected Role object
+#             role_id = role.id
+
+#             user = User(username=username, password=password, role_id=role_id)
+#             user.save()
+
+#             # Redirect to login page or any other page as desired
+#             return redirect('login')
+#     else:
+#         initial = {'role': role}  # Set the initial value for the role field
+#         form = RegistrationForm(initial=initial)
+
+#     return render(request, 'uni_register.html', {'form': form})
+
+
 def register_uniPerson(request):
-    role = request.GET.get('role', '')  # Get the role query parameter
+    role = request.GET.get('role', '')
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            date_of_birth = form.cleaned_data['date_of_birth']
+            gender = form.cleaned_data['gender']
+            phone_number = form.cleaned_data['phone_number']
+            faculty = form.cleaned_data['faculty']
+            department = form.cleaned_data['department']
+            confirm_password = form.cleaned_data['confirm_password']
             role = form.cleaned_data['role']
-           
-            # Get the role ID from the selected Role object
+
             role_id = role.id
 
-            user = User(username=username, password=password, role_id=role_id)
+            user = User(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                date_of_birth=date_of_birth,
+                gender=gender,
+                phone_number=phone_number,
+                faculty=faculty,
+                department=department,
+                password=password,
+                role_id=role_id
+            )
             user.save()
 
-            # Redirect to login page or any other page as desired
             return redirect('login')
     else:
-        initial = {'role': role}  # Set the initial value for the role field
+        initial = {'role': role}
         form = RegistrationForm(initial=initial)
 
     return render(request, 'uni_register.html', {'form': form})
+
+
+
 
 
 

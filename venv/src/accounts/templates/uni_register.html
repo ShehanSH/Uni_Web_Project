@@ -37,216 +37,107 @@
 
     <div class="LoginPageContainer">
         <div class="LoginPageInnerContainer">
-            
+            <div class="ImageContianer">
+                <img src="{% static 'images/signup.png' %}" alt="login Image" class="GroupImage">
+            </div>
             <div class="LoginFormContainer">
                 <div class="LoginFormInnerContainer">
                     <h2 class="header">Sign Up.</h2>
                     <form method="POST" action="{% url 'university_person_registration' %}">
                         {% csrf_token %}
+                        <div class="inputContainer">
+                            <label class="label" for="username">
+                                <span>User Name</span>
+                            </label>
+                            {{ form.username }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="first_name">
+                                <span>First Name</span>
+                            </label>
+                            {{ form.first_name }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="last_name">
+                                <span>Last Name</span>
+                            </label>
+                            {{ form.last_name }}
+                        </div>
 
-                        <table>
+                        <div class="inputContainer">
+                            <label class="label" for="student_id">
+                                <span>StudentID</span>
+                            </label>
+                            {{ form.username }}
+                        </div>
+                    
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="email">
+                                <span>Email</span>
+                            </label>
+                            {{ form.email }}
+                        </div>
 
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>User Name</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                </td>
-
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Student Number</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                </td>
-
-
-                            </tr>
-
-                            <tr>
-                                <td>
-
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>First Name</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                </td>
-
-                                <td>
-
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Last Name</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-                                    
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Email</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-
-                                </td>
-
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Date of Birth</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                    
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Gender</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-
-                                </td>
-
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Address</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                    
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Faculty</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-
-                                </td>
-
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Department</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-                                    
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Phone Number</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-
-                                </td>
-
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="password">
-                                           
-                                            <span>Password</span>
-                                        </label>
-                                        {{ form.password }} 
+                        <div class="inputContainer">
+                            <label class="label" for="date_of_birth">
+                                <span>Date of Birth</span>
+                            </label>
+                            {{ form.date_of_birth }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="gender">
+                                <span>Gender</span>
+                            </label>
+                            {{ form.gender }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="faculty">
+                                <span>Faculty</span>
+                            </label>
+                            {{ form.faculty }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="department">
+                                <span>Department</span>
+                            </label>
+                            {{ form.department }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="phone_number">
+                                <span>Phone Number</span>
+                            </label>
+                            {{ form.phone_number }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="password">
+                                <span>Password</span>
+                            </label>
+                            {{ form.password }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="confirm_password">
+                                <span>Confirm Password</span>
+                            </label>
+                            {{ form.confirm_password }}
+                        </div>
+                    
+                        <span>Role</span>
+                        <div class="OptionsContainer">
+                            {{ form.role }}
+                        </div>
                         
-                                    </div>
-
-                                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="inputContainer">
-                                        <label class="label" for="username">
-                                          
-                                            <span>Confirm Password</span>
-                                        </label>
-                                        {{ form.username }}
-                            
-                                    </div>
-
-
-                                </td>
-
-                                <td>
-                                    <span>Role</span>
-                                    <div class="OptionsContainer">
-                                        {{ form.role }}
-                                    </div>
-
-                                    
-                                </td>
-                            </tr>
-
-                        </table>
-
-
-
-
-                      
-                      
                         <button type="submit" class="LoginButton">Register</button>
-                        
                     </form>
+                    
                 </div>
             </div>
         </div>

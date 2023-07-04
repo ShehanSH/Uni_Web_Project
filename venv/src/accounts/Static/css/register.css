@@ -78,7 +78,7 @@
     height: 600px;
     /* overflow: auto; */
     margin-left: 20%;
-    max-width: 60%;
+    width: 60%;
     align-items: center;
     justify-content: center;
      /* Add red border */
@@ -86,9 +86,8 @@
     background-color: #b3b3b3;
     /* border: #660000 2px solid; */
     
-    
-   
     border-radius: 20px;
+   
     margin-top: 150px;
 }
 
@@ -107,11 +106,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px 0 0 20px;
 }
 
 .LoginPageInnerContainer .ImageContianer .GroupImage {
-    width: 200%;
+    width: 120%;
     display: block;
+    
 }
 
 .LoginPageInnerContainer .LoginFormContainer {
@@ -124,7 +125,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    max-width: 400px;
+    max-width:1200px;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .LogoContainer .logo {
@@ -164,14 +165,14 @@
 }
 
 .LoginPageInnerContainer .LoginFormContainer .inputContainer .label .labelIcon {
-    width: 20px;
+    width: 100px;
     margin-right: 10px;
     display: block;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .inputContainer .input {
     display: block;
-    width: calc(100%);
+    /* max-width: 3300px; */
     font-size: 15px;
     padding: 10px;
     border: 1px solid #d6d7db;
@@ -183,14 +184,18 @@
 
 .abc {
     display: block;
-    width: calc(100%);
+    width: 400px;
     font-size: 15px;
     padding: 10px;
     border: 1px solid  #660000;
     border-radius: 5px;
     margin-top: 5px;
     outline: 0px !important;
+   
 }
+
+
+
 
 .LoginPageInnerContainer .LoginFormContainer .OptionsContainer {
     display: flex;
@@ -203,7 +208,7 @@
 }
 
 .LoginFormInnerContainer {
-    max-width: 500px;
+    max-width: 900px;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .checkbox{
@@ -305,4 +310,7 @@
     margin-top: 20px;
 }
 
+.LoginPageInnerContainer .LoginFormContainer .td2{
 
+    margin-left: 90px;
+}
