@@ -75,16 +75,16 @@
 
 
 .LoginPageContainer {
-    height: 300%;
-    overflow: auto;
-    margin-left: 26%;
-    max-width: 50%;
+    height: 600px;
+    /* overflow: auto; */
+    margin-left: 20%;
+    max-width: 60%;
     align-items: center;
     justify-content: center;
      /* Add red border */
      /* Add yellow background */
-    
-    border: #660000 2px solid;
+    background-color: #b3b3b3;
+    /* border: #660000 2px solid; */
     
     
    
@@ -175,6 +175,18 @@
     font-size: 15px;
     padding: 10px;
     border: 1px solid #d6d7db;
+    border-radius: 5px;
+    margin-top: 5px;
+    outline: 0px !important;
+}
+
+
+.abc {
+    display: block;
+    width: calc(100%);
+    font-size: 15px;
+    padding: 10px;
+    border: 1px solid  #660000;
     border-radius: 5px;
     margin-top: 5px;
     outline: 0px !important;

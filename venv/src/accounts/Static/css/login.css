@@ -180,6 +180,18 @@
     outline: 0px !important;
 }
 
+
+.abc {
+    display: block;
+    width: calc(100%);
+    font-size: 15px;
+    padding: 4px;
+    border: 1px solid #2d47af;
+    border-radius: 5px;
+    margin-top: 5px;
+    outline: 0px !important;
+}
+
 .LoginPageInnerContainer .LoginFormContainer .OptionsContainer {
     display: flex;
     justify-content: space-between;

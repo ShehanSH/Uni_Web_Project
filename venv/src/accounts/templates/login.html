@@ -45,14 +45,14 @@
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="inputContainer">
-                            <label class="label" for="emailAddress">
+                            <label class="label" for="username">
                                 <img src="https://imgur.com/xCvzudW.png" class="labelIcon">
                                 <span>User Name</span>
                             </label>
                             <input type="text" class="input" id="id_username" name="username" placeholder="Enter your Email Address">
                         </div>
                         <div class="inputContainer">
-                            <label class="label" for="emailAddress">
+                            <label class="label" for="password">
                                 <img src="https://i.imgur.com/g5SvdfG.png" class="labelIcon">
                                 <span>Password</span>
                             </label>

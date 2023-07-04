@@ -1,0 +1,259 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+    <style>
+        .error {
+            position: relative;
+        }
+
+        .error .close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar2.html' %}
+
+    <div class="msg">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                    <span class="close-button">&times;</span>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="LoginPageContainer">
+        <div class="LoginPageInnerContainer">
+            
+            <div class="LoginFormContainer">
+                <div class="LoginFormInnerContainer">
+                    <h2 class="header">Sign Up.</h2>
+                    <form method="POST" action="{% url 'university_person_registration' %}">
+                        {% csrf_token %}
+
+                        <table>
+
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>User Name</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Student Number</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr>
+                                <td>
+
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>First Name</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                </td>
+
+                                <td>
+
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Last Name</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Email</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+
+                                </td>
+
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Date of Birth</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Gender</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+
+                                </td>
+
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Address</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Faculty</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+
+                                </td>
+
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Department</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Phone Number</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+
+                                </td>
+
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="password">
+                                           
+                                            <span>Password</span>
+                                        </label>
+                                        {{ form.password }} 
+                        
+                                    </div>
+
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="inputContainer">
+                                        <label class="label" for="username">
+                                          
+                                            <span>Confirm Password</span>
+                                        </label>
+                                        {{ form.username }}
+                            
+                                    </div>
+
+
+                                </td>
+
+                                <td>
+                                    <span>Role</span>
+                                    <div class="OptionsContainer">
+                                        {{ form.role }}
+                                    </div>
+
+                                    
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+
+
+                      
+                      
+                        <button type="submit" class="LoginButton">Register</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/home2.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+    
+</body>
+</html>

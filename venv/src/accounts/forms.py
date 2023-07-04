@@ -17,14 +17,24 @@ class LoginForm(forms.Form):
             Submit('submit', 'Login')
         )
 
+class CustomSelectWidget(forms.Select):
+    def __init__(self, attrs=None):
+        default_attrs = {'class': 'abc'}
+        if attrs:
+            default_attrs.update(attrs)
+        super().__init__(attrs=default_attrs)
+
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=255)
-    
-    password = forms.CharField(label='Password', max_length=255, widget=forms.PasswordInput)
+    username = forms.CharField(label='Username', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
+    password = forms.CharField(label='Password', max_length=255, widget=forms.PasswordInput(attrs={'class': 'abc'}))
 
-    role = forms.ModelChoiceField(label='Role', queryset=Role.objects.all())
-    # role = forms.ModelChoiceField(label='Role', queryset=Role.objects.filter(role_name__in=['University Person', 'Outsider']))
+    #role = forms.ModelChoiceField(label='Role', queryset=Role.objects.filter(role_name__in=['Admin', 'University Person', 'Outsider']))
+    role = forms.ModelChoiceField(
+        label='Role',
+        queryset=Role.objects.filter(role_name__in=['Admin', 'University Person', 'Outsider']),
+        widget=CustomSelectWidget()
+    )
 
     def clean_username(self):
         username = self.cleaned_data['username']
