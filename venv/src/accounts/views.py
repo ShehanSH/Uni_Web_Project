@@ -3,7 +3,13 @@ from .models import User
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
 
+from django.shortcuts import render, redirect
+from .forms import RoleSelectionForm
 
+
+from django.shortcuts import render, redirect
+from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm
+from .models import User, UniversityPerson, Outsider, Role, Faculty, Department
 # def login(request):
 #     if request.method == 'POST':
 #         username = request.POST['username']
@@ -59,60 +65,23 @@ def login(request):
 
 
 
-def role(request):
-    if request.method == 'POST':
-        role = request.POST.get('role')
-        if role == 'Admin':
-            return redirect('admin_registration')
-        elif role == 'University Person':
-            return redirect('university_person_registration')
-        elif role == 'outsider':
-            return redirect('outsider_registration')
-    return render(request, 'role.html')
 
-
-def register(request):
+def select_role(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RoleSelectionForm(request.POST)
         if form.is_valid():
-            role = form.cleaned_data['role']
-            
-            if role == 'Admin':
-                return register_admin(request, form)
-            elif role == 'University Person':
-                return register_uniPerson(request, form)
-            elif role == 'Outsider':
-                return register_outsider(request, form)
-        else:
-            messages.error(request, 'Invalid form submission')
+            role_id = form.cleaned_data['role_id']
+
+            if role_id == 'university_person':
+                return redirect('university_person_register')
+            elif role_id == 'outsider':
+                return redirect('outsider_register')
     else:
-        form = RegistrationForm()
+        form = RoleSelectionForm()
 
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'role.html', {'form': form})
 
-
-def register_admin(request):
-
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            role = form.cleaned_data['role']
-           
-            # Get the role ID from the selected Role object
-            role_id = role.id
-
-            user = User(username=username, password=password, role_id=role_id)
-            user.save()
-
-            # Redirect to login page or any other page as desired
-            return redirect('login')
-    else:
-        initial = {'role': role}  # Set the initial value for the role field
-        form = RegistrationForm(initial=initial)
-
-    return render(request, 'admin_register.html', {'form': form})
+  
 
 
 # def register_uniPerson(request):
@@ -140,78 +109,88 @@ def register_admin(request):
 #     return render(request, 'uni_register.html', {'form': form})
 
 
-def register_uniPerson(request):
-    role = request.GET.get('role', '')
 
+
+
+
+def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
             date_of_birth = form.cleaned_data['date_of_birth']
-            gender = form.cleaned_data['gender']
             phone_number = form.cleaned_data['phone_number']
-            faculty = form.cleaned_data['faculty']
-            department = form.cleaned_data['department']
-            confirm_password = form.cleaned_data['confirm_password']
-            role = form.cleaned_data['role']
-
-            role_id = role.id
-
-            user = User(
-                username=username,
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                date_of_birth=date_of_birth,
-                gender=gender,
-                phone_number=phone_number,
-                faculty=faculty,
-                department=department,
-                password=password,
-                role_id=role_id
-            )
-            user.save()
-
-            return redirect('login')
-    else:
-        initial = {'role': role}
-        form = RegistrationForm(initial=initial)
-
-    return render(request, 'uni_register.html', {'form': form})
-
-
-
-
-
-
-def register_outsider(request):
-    role = request.GET.get('role', '')  # Get the role query parameter
-
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
+            gender = form.cleaned_data['gender']
+            address = form.cleaned_data['address']
             password = form.cleaned_data['password']
-            role = form.cleaned_data['role']
-           
-            # Get the role ID from the selected Role object
-            role_id = role.id
+            confirm_password = form.cleaned_data['confirm_password']
+            role_id = form.cleaned_data['role_id']
 
-            user = User(username=username, password=password, role_id=role_id)
+            role = Role.objects.get(role_name=role_id)
+            user = User(username=username, first_name=first_name, last_name=last_name,
+                        date_of_birth=date_of_birth, phone_number=phone_number, gender=gender,
+                        address=address, password=password, confirm_password=confirm_password, role=role)
             user.save()
 
-            # Redirect to login page or any other page as desired
+            if role_id == 'university_person':
+                university_form = UniversityPersonForm(request.POST)
+                if university_form.is_valid():
+                    student_id = university_form.cleaned_data['student_id']
+                    faculty_id = university_form.cleaned_data['faculty_id']
+                    department_id = university_form.cleaned_data['department_id']
+
+                    faculty = Faculty.objects.get(faculty_id=faculty_id)
+                    department = Department.objects.get(department_id=department_id)
+
+                    university_person = UniversityPerson(student_id=student_id, faculty=faculty, user=user,
+                                                         department=department)
+                    university_person.save()
+            elif role_id == 'outsider':
+                outsider_form = OutsiderForm(request.POST)
+                if outsider_form.is_valid():
+                    nic = outsider_form.cleaned_data['nic']
+
+                    outsider = Outsider(nic=nic, user=user)
+                    outsider.save()
+
             return redirect('login')
     else:
-        initial = {'role': role}  # Set the initial value for the role field
-        form = RegistrationForm(initial=initial)
+        form = RegistrationForm()
+    
+    return render(request, 'role.html', {'form': form})
 
-    return render(request, 'outsider_register.html', {'form': form})
+def university_person_register(request):
+    if request.method == 'POST':
+        university_form = UniversityPersonForm(request.POST)
+        if university_form.is_valid():
+            student_id = university_form.cleaned_data['student_id']
+            faculty_id = university_form.cleaned_data['faculty_id']
+            department_id = university_form.cleaned_data['department_id']
 
+            faculty = Faculty.objects.get(faculty_id=faculty_id)
+            department = Department.objects.get(department_id=department_id)
+
+            # Process the form data and save the university person details
+            return redirect('login')
+    else:
+        university_form = UniversityPersonForm()
+
+    return render(request, 'university_person_register.html', {'university_form': university_form})
+
+def outsider_register(request):
+    if request.method == 'POST':
+        outsider_form = OutsiderForm(request.POST)
+        if outsider_form.is_valid():
+            nic = outsider_form.cleaned_data['nic']
+
+            # Process the form data and save the outsider details
+            return redirect('login')
+    else:
+        outsider_form = OutsiderForm()
+
+    return render(request, 'outsider_register.html', {'outsider_form': outsider_form})
 
 
 

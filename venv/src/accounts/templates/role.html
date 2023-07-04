@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Role Selection</title>
-</head>
-<body>
-    <h1>Role Selection</h1>
-    
-    <h5><a href="{% url 'admin_registration' %}"> Role Admin Selection </a></h5> <br>
-    <h5><a href="{% url 'university_person_registration' %}"> Role Uni Selection </a></h5> <br>
-    <h5>Role Out Selection</h5> <br>
+<!-- role.html -->
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Next</button>
+  </form>
   
-</body>
-</html>
