@@ -61,7 +61,7 @@ class RegistrationForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     last_name = forms.CharField(label='Last Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     email = forms.EmailField(label='Email', max_length=255, widget=forms.EmailInput(attrs={'class': 'abc'}))
-    date_of_birth = forms.DateField(label='Date of Birth', required=False, widget=forms.DateInput(attrs={'class': 'abc'}))
+    date_of_birth = forms.DateField(label='Date of Birth', required=False, widget=forms.DateInput(attrs={'class': 'abc'}), input_formats=['%Y-%m-%d'])
     phone_number = forms.CharField(label='Phone Number', max_length=20, widget=forms.TextInput(attrs={'class': 'abc'}))
     gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')], widget=forms.Select(attrs={'class': 'abc'}))
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'class': 'abc'}))
