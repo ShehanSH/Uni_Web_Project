@@ -57,21 +57,40 @@ class RoleSelectionForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=255)
-    first_name = forms.CharField(label='First Name', max_length=255)
-    last_name = forms.CharField(label='Last Name', max_length=255)
+    username = forms.CharField(label='Username', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
+    first_name = forms.CharField(label='First Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
+    last_name = forms.CharField(label='Last Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
+    email = forms.EmailField(label='Email', max_length=255, widget=forms.EmailInput(attrs={'class': 'abc'}))
     date_of_birth = forms.DateField(label='Date of Birth', required=False, widget=forms.DateInput(attrs={'class': 'abc'}))
-    phone_number = forms.CharField(label='Phone Number', max_length=20)
-    gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')])
-    address = forms.CharField(label='Address', widget=forms.Textarea)
-    password = forms.CharField(label='Password', max_length=255, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Confirm Password', max_length=255, widget=forms.PasswordInput)
-    role_id = forms.ModelChoiceField(label='Role', queryset=Role.objects.all())
+    phone_number = forms.CharField(label='Phone Number', max_length=20, widget=forms.TextInput(attrs={'class': 'abc'}))
+    gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')], widget=forms.Select(attrs={'class': 'abc'}))
+    address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'class': 'abc'}))
+    password = forms.CharField(label='Password', max_length=255, widget=forms.PasswordInput(attrs={'class': 'abc'}))
+    confirm_password = forms.CharField(label='Confirm Password', max_length=255, widget=forms.PasswordInput(attrs={'class': 'abc'}))
+    role_id = forms.ModelChoiceField(label='Role', queryset=Role.objects.all(), widget=forms.Select(attrs={'class': 'abc'}))
+
 
 class UniversityPersonForm(forms.Form):
-    student_id = forms.CharField(label='Student ID', max_length=255)
-    faculty_id = forms.ModelChoiceField(label='Faculty', queryset=Faculty.objects.all())
-    department_id = forms.ModelChoiceField(label='Department', queryset=Department.objects.all())
+    
+    student_id = forms.CharField(label='Student ID', max_length=255,widget=forms.TextInput(attrs={'class': 'abc'}))
+    faculty_id = forms.ChoiceField(label='Faculty', widget=forms.Select(attrs={'class': 'abc'}))
+    department_id = forms.ChoiceField(label='Department', widget=forms.Select(attrs={'class': 'abc'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['faculty_id'].choices = self.get_faculty_choices()
+        self.fields['department_id'].choices = self.get_department_choices()
+
+    def get_faculty_choices(self):
+        faculties = Faculty.objects.all()
+        choices = [(faculty.faculty_id, faculty.faculty_name) for faculty in faculties]
+        return choices
+
+    def get_department_choices(self):
+        departments = Department.objects.all()
+        choices = [(department.department_id, department.department_name) for department in departments]
+        return choices
+
 
 class OutsiderForm(forms.Form):
     nic = forms.CharField(label='NIC', max_length=255)

@@ -1,10 +1,10 @@
-{% comment %} 
+
 {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/regi1.css' %}">
     <style>
         .error {
             position: relative;
@@ -37,13 +37,13 @@
 
     <div class="LoginPageContainer">
         <div class="LoginPageInnerContainer">
-            <div class="ImageContianer">
-                <img src="{% static 'images/signup.png' %}" alt="login Image" class="GroupImage">
-            </div>
+        <table>
+            <tr>
             <div class="LoginFormContainer">
                 <div class="LoginFormInnerContainer">
                     <h2 class="header">Sign Up.</h2>
-                    <form method="POST" action="{% url 'university_person_registration' %}">
+
+                    <form method="post" id="registrationForm">
                         {% csrf_token %}
                         <div class="inputContainer">
                             <label class="label" for="username">
@@ -66,20 +66,13 @@
                             {{ form.last_name }}
                         </div>
 
-                        <div class="inputContainer">
-                            <label class="label" for="student_id">
-                                <span>StudentID</span>
-                            </label>
-                            {{ form.student_id }}
-                        </div>
-                    
                     
                         <div class="inputContainer">
                             <label class="label" for="email">
                                 <span>Email</span>
                             </label>
                             {{ form.email }}
-                        </div>
+                        </div> 
 
                         <div class="inputContainer">
                             <label class="label" for="date_of_birth">
@@ -89,33 +82,27 @@
                         </div>
                     
                         <div class="inputContainer">
-                            <label class="label" for="gender">
-                                <span>Gender</span>
-                            </label>
-                            {{ form.gender }}
-                        </div>
-                    
-                        <div class="inputContainer">
-                            <label class="label" for="faculty">
-                                <span>Faculty</span>
-                            </label>
-                            {{ form.faculty }}
-                        </div>
-                    
-                        <div class="inputContainer">
-                            <label class="label" for="department">
-                                <span>Department</span>
-                            </label>
-                            {{ form.department }}
-                        </div>
-                    
-                        <div class="inputContainer">
                             <label class="label" for="phone_number">
                                 <span>Phone Number</span>
                             </label>
                             {{ form.phone_number }}
                         </div>
-                    
+
+                        <div class="inputContainer">
+                            <label class="label" for="gender">
+                                <span>Gender</span>
+                            </label>
+                            {{ form.gender }}
+                        </div>
+
+                        <div class="inputContainer">
+                            <label class="label" for="address">
+                                <span>Address</span>
+                            </label>
+                            {{ form.address }}
+                        </div>
+
+
                         <div class="inputContainer">
                             <label class="label" for="password">
                                 <span>Password</span>
@@ -123,28 +110,73 @@
                             {{ form.password }}
                         </div>
                     
-                        <div class="inputContainer">
+                       <div class="inputContainer">
                             <label class="label" for="confirm_password">
                                 <span>Confirm Password</span>
                             </label>
                             {{ form.confirm_password }}
-                        </div>
+                        </div> 
                     
                         <span>Role</span>
                         <div class="OptionsContainer">
-                            {{ form.role }}
-                        </div>
-                        
-                        <button type="submit" class="LoginButton">Register</button>
-                    </form>
+                            {{ form.role_id }}
+                        </div>      
                     
                 </div>
             </div>
+            </tr>
+
+            <tr>
+                <div class="LoginFormContainer" style="margin-top:-730px">
+                    <div class="LoginFormInnerContainer">
+                        <h2 class="header2"></h2>
+    
+                        
+                            {% csrf_token %}
+                            <div class="inputContainer">
+                                <label class="label" for="Student ID">
+                                    <span>Student ID</span>
+                                </label>
+                                {{ university_form.student_id }}
+                            </div>
+                        
+                            <div class="inputContainer">
+                                <label class="label" for="Faculty">
+                                    <span>Faculty</span>
+                                </label>
+                                {{ university_form.faculty_id }}
+                            </div>
+                        
+                            <div class="inputContainer">
+                                <label class="label" for="Department">
+                                    <span>Department</span>
+                                </label>
+                                {{ university_form.department_id }}
+                            </div>
+                            
+                                <input type="submit" value="Submit Forms" class="LoginButton">
+                              
+                        
+                    </div>
+                </div>
+                </tr>
+            </form>   
+        </table>
         </div>
     </div>
 
     <script src="{% static 'js/home2.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Submit both forms separately
+            document.forms[0].submit();  // Submit the first form
+            document.forms[1].submit();  // Submit the second form
+        });
+    </script>
     
 </body>
-</html> {% endcomment %}
+</html> 

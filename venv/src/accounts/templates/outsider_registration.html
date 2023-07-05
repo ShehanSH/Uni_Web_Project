@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h1>User Registration</h1>
+
+    <form method="post" id="registrationForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ outsider_form.as_p }}
+        <input type="submit" value="Submit Forms">
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Submit both forms separately
+            document.forms[0].submit();  // Submit the first form
+            document.forms[1].submit();  // Submit the second form
+        });
+    </script>
+</body>
+</html>

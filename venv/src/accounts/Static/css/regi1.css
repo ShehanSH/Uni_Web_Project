@@ -1,15 +1,322 @@
-.form-group {
-    margin-bottom: 10px;
-  }
+* {
+  /* margin: 0px; */
+  font-family: Rubik;
+}
+
+
+
+
+
+
+
+
+.messages {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.messages li {
+  margin-bottom: 5px;
+}
+
+.messages .error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.messages .success {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.messages .info {
+  background-color: #cce5ff;
+  color: #004085;
+  border-color: #b8daff;
+}
+
+.messages .warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+}
+
+
+
+
+.msg {
+  height: 30px;
   
-  label {
-    font-weight: bold;
-  }
+  margin-left: 26%;
+  max-width: 50%;
+  align-items: center;
+  justify-content: center;
+   /* Add red border */
+   /* Add yellow background */
   
-  .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-  }
+ 
   
+  
+ 
+  border-radius: 20px;
+ margin-top: 100px;
+ margin-bottom: -100px;
+}
+
+
+
+
+
+.LoginPageContainer {
+  height: 1500px;
+  /* overflow: auto; */
+  margin-left: 10%;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+   /* Add red border */
+   /* Add yellow background */
+  background-color: #b3b3b3;
+  /* border: #660000 2px solid; */
+  
+  border-radius: 20px;
+ 
+  margin-top: 150px;
+  margin-bottom: 50px;
+
+}
+
+
+
+.LoginPageInnerContainer {
+  display: flex;
+  min-height: 100%;
+}
+
+
+.LoginPageInnerContainer .ImageContianer {
+  width: 40%;
+  background-color: #660000;
+  min-height: 100%;
+  padding: 5% 5% 5% 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px 0 0 20px;
+}
+
+.LoginPageInnerContainer .ImageContianer .GroupImage {
+  width: 150%;
+  display: block;
+  margin-top: -950px;
+
+  
+}
+
+.LoginPageInnerContainer .LoginFormContainer {
+  flex-grow: 2;
+  background-color: white;
+  min-height: 100%;
+  padding: 5%;
+  background: url(https://i.imgur.com/BKyjjFa.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  max-width:1200px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .LogoContainer .logo {
+  height: 60px;
+  margin-bottom: 30px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .header {
+  font-size: 32px;
+  font-weight: 700;
+  
+}
+
+.header{
+  margin-bottom: 20px;
+  color: #660000;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .subHeader {
+  color: #9aa4ad;
+  margin-top: 5px;
+  margin-bottom: 40px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .inputContainer {
+  color: #3f3f45;
+  margin: 20px 0px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .inputContainer .label {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 7px;
+  margin-bottom: 10px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .inputContainer .label .labelIcon {
+  width: 100px;
+  margin-right: 10px;
+  display: block;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .inputContainer .input {
+  display: block;
+  /* max-width: 3300px; */
+  font-size: 15px;
+  padding: 10px;
+  border: 1px solid #d6d7db;
+  border-radius: 5px;
+  margin-top: 5px;
+  outline: 0px !important;
+}
+
+
+.abc {
+  display: block;
+  width: 400px;
+  font-size: 15px;
+  padding: 10px;
+  border: 1px solid  #660000;
+  border-radius: 5px;
+  margin-top: 5px;
+  outline: 0px !important;
+ 
+}
+
+
+
+
+.LoginPageInnerContainer .LoginFormContainer .OptionsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.LoginFormContainer {
+  display: flex;
+  align-items: center;
+}
+
+.LoginFormInnerContainer {
+  max-width: 900px;
+  margin-top: -100px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .checkbox{
+  width: 15px;
+  height: 15px;
+  
+  display: block;
+  border: 1px solid #d6d7db;
+
+}
+
+
+.LoginPageInnerContainer .LoginFormContainer .checkboxContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .checkboxContainer label {
+  display: block;
+  padding: 0px 5px;
+  /* color: #9aa4ad; */
+  color: #000000;
+  font-size: 13px;
+  margin-right: 55px;
+}
+
+.dontacc{
+
+  display: block;
+  padding: -1px 5px;
+  /* color: #9aa4ad; */
+  color: #000000;
+  font-size: 15px;
+  margin-right: 55px;
+}
+
+
+.LoginPageInnerContainer .LoginFormContainer .ForgotPasswordLink {
+  color:  #660000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.LoginFormContainer .LoginFormInnerContainer .LoginButton {
+  margin-top: 30px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: #660000;
+  border: 0px;
+  outline: 0px;
+  cursor: pointer;
+}
+
+.LoginFormContainer .LoginFormInnerContainer .LoginButton:active {
+  background-color: #660000;
+}
+
+.LoginFormContainer .LoginFormInnerContainer .LoginButton:hover{
+  background-color:#F6DD26;
+  color: #000000;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 1200px) {
+  .LoginPageInnerContainer .ImageContianer {
+      width: 50%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .LoginPageInnerContainer .ImageContianer {
+      display: none;
+  }
+
+  .LoginFormContainer {
+      justify-content: center;
+  }
+}
+.LoginPageContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.LoginPageContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.LoginPageContainer::-webkit-scrollbar-thumb {
+  background: #2e1f7a;
+}
+
+
+
+.h4 { 
+  margin-top: 20px;
+}
+
+.LoginPageInnerContainer .LoginFormContainer .td2{
+
+  margin-left: 90px;
+}
