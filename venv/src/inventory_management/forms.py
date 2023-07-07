@@ -33,7 +33,7 @@ class InventorySearchForm(forms.ModelForm):
         fields = ['category', 'item_name']
 
 
-# inventory history search form related to the list_hostory.html
+# inventory history search form related to the list_history.html
 
 class InventoryStockHistorySearchForm(forms.ModelForm):
 	export_to_CSV = forms.BooleanField(required=False)

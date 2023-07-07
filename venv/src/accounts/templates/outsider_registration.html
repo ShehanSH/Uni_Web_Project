@@ -1,18 +1,167 @@
+
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+
+    <script src="{% static 'date-time-phone/jquery-ui.js' %}" ></script>
+    <script src="{% static 'date-time-phone/jquery-ui-timepicker-addon.js' %}"></script> 
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/regi1.css' %}">
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="date-time-phone/jquery-ui.css">
+    <link rel='stylesheet' href="/date-time-phone/jquery-ui-timepicker-addon.css" />
+
+    <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.structure.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.theme.min.css' %}" rel="stylesheet">
+     
+    
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/myjs.js' %}"></script>
+    <script src="{% static 'js/pager/paging.js' %}"></script>  
+
+    <style>
+        .error {
+            position: relative;
+        }
+
+        .error .close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>User Registration</h1>
+    {% include 'navbar2.html' %}
 
-    <form method="post" id="registrationForm">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {{ outsider_form.as_p }}
-        <input type="submit" value="Submit Forms">
-    </form>
+    <div class="msg">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                    <span class="close-button">&times;</span>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 
+    <div class="LoginPageContainer">
+        <div class="LoginPageInnerContainer">
+            <div class="ImageContianer">
+                <img src="{% static 'images/login6.png' %}" alt="login Image" class="GroupImage">
+            </div>
+        <table>
+            <tr>
+            <div class="LoginFormContainer">
+                <div class="LoginFormInnerContainer">
+                    <h2 class="header" style="margin-top:120px">Sign Up.</h2>
+
+                    <form method="post" id="registrationForm">
+                        {% csrf_token %}
+                        <div class="inputContainer">
+                            <label class="label" for="username">
+                                <span>User Name</span>
+                            </label>
+                            {{ form.username }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="first_name">
+                                <span>First Name</span>
+                            </label>
+                            {{ form.first_name }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="last_name">
+                                <span>Last Name</span>
+                            </label>
+                            {{ form.last_name }}
+                        </div>
+                         <div class="inputContainer">
+                            <label class="label" for="NIC">
+                                <span>NIC</span>
+                            </label>
+                            {{ outsider_form.nic }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="email">
+                                <span>Email</span>
+                            </label>
+                            {{ form.email }}
+                        </div> 
+
+                        <div class="inputContainer">
+                            <label class="label" for="date_of_birth">
+                                <span>Date of Birth</span>
+                            </label>
+                            {{ form.date_of_birth }}
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label class="label" for="phone_number">
+                                <span>Phone Number</span>
+                            </label>
+                            {{ form.phone_number }}
+                        </div>
+
+                        <div class="inputContainer">
+                            <label class="label" for="gender">
+                                <span>Gender</span>
+                            </label>
+                            {{ form.gender }}
+                        </div>
+
+                        <div class="inputContainer">
+                            <label class="label" for="address">
+                                <span>Address</span>
+                            </label>
+                            {{ form.address }}
+                        </div> 
+
+                        <div class="inputContainer">
+                            <label class="label" for="password">
+                                <span>Password</span>
+                            </label>
+                            {{ form.password }}
+                        </div>
+                    
+                       <div class="inputContainer">
+                            <label class="label" for="confirm_password">
+                                <span>Confirm Password</span>
+                            </label>
+                            {{ form.confirm_password }}
+                        </div> 
+                    
+                        <span>Role</span>
+                        <div class="OptionsContainer">
+                            {{ form.role_id }}
+                        </div>      
+                        <input type="submit" value="Submit Forms" class="LoginButton">
+                </div>
+            </div>
+            </tr>
+
+            
+            </form>   
+        </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/home2.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
     <script>
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
             // Prevent the default form submission
@@ -23,5 +172,29 @@
             document.forms[1].submit();  // Submit the second form
         });
     </script>
+
+
+    <script src="{% static 'date-time-phone/jquery-input-mask-phone-number.min.js' %}"></script> 
+
+<script>
+  //(xxx) xxx-xxxx format code
+  $(document).ready(function () {
+      $('#id_phone_number').usPhoneFormat({
+          format: '(xxx) xxx-xxxx',
+      });   
+  });
+  </script> 
+
+
+     <script>
+        $(document).ready(function(){
+      
+          $("#id_date_of_birth").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
+        
+    
+         
+        });
+      </script>
+    
 </body>
-</html>
+</html> 

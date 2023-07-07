@@ -3,7 +3,18 @@ from .models import Role, User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 from .models import Role, Faculty, Department
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.forms import ValidationError
+from django import forms
 
+from django import forms
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.forms import ValidationError
+from datetime import date
+
+from .models import Role, Faculty, Department
+from django import forms
+from .models import Role
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=255, error_messages={'required': 'Fields cannot be empty.'})
     password = forms.CharField(label='Password', max_length=255, widget=forms.PasswordInput, error_messages={'required': 'Fields cannot be empty.'})
@@ -45,12 +56,6 @@ class CustomSelectWidget(forms.Select):
 
 
 
-from django import forms
-
-
-from .models import Role, Faculty, Department
-from django import forms
-from .models import Role
 
 class RoleSelectionForm(forms.Form):
     role_id = forms.ModelChoiceField(label='Role', queryset=Role.objects.all())
@@ -61,7 +66,22 @@ class RegistrationForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     last_name = forms.CharField(label='Last Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     email = forms.EmailField(label='Email', max_length=255, widget=forms.EmailInput(attrs={'class': 'abc'}))
-    date_of_birth = forms.DateField(label='Date of Birth', required=False, widget=forms.DateInput(attrs={'class': 'abc'}), input_formats=['%Y-%m-%d'])
+    date_of_birth = forms.DateField(
+        label='Date of Birth',
+        widget=forms.DateInput(attrs={'class': 'abc'}),
+        input_formats=['%Y:%m:%d'],
+        validators=[
+            MinValueValidator(limit_value=date(1900, 1, 1), message='Please enter a valid date of birth.'),
+            MaxValueValidator(limit_value=date.today(), message='The date of birth cannot be in the future.')
+        ]
+    )
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data['date_of_birth']
+        if date_of_birth and date_of_birth > date.today():
+            raise ValidationError('The date of birth cannot be in the future.')
+        return date_of_birth
+    
     phone_number = forms.CharField(label='Phone Number', max_length=20, widget=forms.TextInput(attrs={'class': 'abc'}))
     gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')], widget=forms.Select(attrs={'class': 'abc'}))
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'class': 'abc'}))
@@ -93,5 +113,5 @@ class UniversityPersonForm(forms.Form):
 
 
 class OutsiderForm(forms.Form):
-    nic = forms.CharField(label='NIC', max_length=255)
+    nic = forms.CharField(label='NIC', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
 

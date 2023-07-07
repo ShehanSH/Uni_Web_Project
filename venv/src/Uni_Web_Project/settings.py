@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory_management',
     
-    'accounts'
+    'accounts',
+    'bootstrap_datepicker_plus',
     
     ]
 

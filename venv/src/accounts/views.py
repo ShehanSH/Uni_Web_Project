@@ -7,11 +7,19 @@ from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm
 from .models import User, UniversityPerson, Outsider, Role, Faculty, Department
 from .models import User, Role, Faculty, Department, UniversityPerson, Outsider
 from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm, LoginForm,RoleSelectionForm
+import re
+from django.core.exceptions import ValidationError
 
+from django.contrib import messages
+import re
 
 def role(request):
     # Logic for role page
     return render(request, 'role.html')
+
+def test2(request):
+    # Logic for role page
+    return render(request, 'test2.html')
 
 
 def login(request):
@@ -64,8 +72,6 @@ def select_role(request):
 
 
 
-from django.contrib import messages
-import re
 
 def uni_register(request):
     if request.method == 'POST':
@@ -86,6 +92,12 @@ def uni_register(request):
                 password = form.cleaned_data['password']
                 confirm_password = form.cleaned_data['confirm_password']
                 role_id = form.cleaned_data['role_id'].role_id
+                
+
+                role = Role.objects.get(role_id=role_id)
+                if role.role_name != 'Outsider':
+                    messages.error(request, "Select the outsider role for registration.")
+                    return redirect('outsider_registration')
                 
                 # Check if password and confirm password match
                 if password != confirm_password:
@@ -154,7 +166,7 @@ def uni_register(request):
                 messages.success(request, "Registration successful. You can now log in.")
                 return redirect('login')
             else:
-                messages.error(request, "Please fill in vbvbvcall fields.")
+                messages.error(request, "Please fill in all fields.")
         
         except Exception as e:
             messages.error(request, "")
@@ -171,44 +183,147 @@ def uni_register(request):
 
 #outsider form
 
+from django.contrib import messages
+import re
+
 def outsider_registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         outsider_form = OutsiderForm(request.POST)
         
-        if form.is_valid() and outsider_form.is_valid():
-            # Process the user registration form data
-            username = form.cleaned_data['username']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            date_of_birth = form.cleaned_data['date_of_birth']
-            phone_number = form.cleaned_data['phone_number']
-            gender = form.cleaned_data['gender']
-            address = form.cleaned_data['address']
-            password = form.cleaned_data['password']
-            role_id = form.cleaned_data['role_id'].role_id
-            
-            role = Role.objects.get(role_id=role_id)
-            user = User(username=username, first_name=first_name, last_name=last_name,
-                        date_of_birth=date_of_birth, phone_number=phone_number, gender=gender,
-                        address=address, password=password, role=role)
-            user.save()
-            
-            # Process the university person registration form data
-            nic = outsider_form.cleaned_data['nic'] 
-            outsider_person = Outsider(nic=nic, user_id=user)
-            outsider_person.save()
+        try:
+            if form.is_valid() and outsider_form.is_valid():
+                # Process the user registration form data
+                username = form.cleaned_data['username']
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+                date_of_birth = form.cleaned_data['date_of_birth']
+                phone_number = form.cleaned_data['phone_number']
+                gender = form.cleaned_data['gender']
+                address = form.cleaned_data['address']
+                password = form.cleaned_data['password']
+                confirm_password = form.cleaned_data['confirm_password']
+                role_id = form.cleaned_data['role_id'].role_id
 
-
+                role = Role.objects.get(role_id=role_id)
+                if role.role_name != 'Outsider':
+                    messages.error(request, "Select the outsider role for registration.")
+                    return redirect('outsider_registration')
+                
+                # Check if password and confirm password match
+                if password != confirm_password:
+                    messages.error(request, "Password and confirm password do not match.")
+                    return redirect('outsider_registration')
+                
+                # Name Validations
+                if not first_name or not last_name:
+                    messages.error(request, "Please enter both first name and last name.")
+                    return redirect('outsider_registration')
+                
+                #Date of Birth Validations
+                if not date_of_birth:
+                    messages.error(request, "Please enter your date of birth.")
+                    return redirect('outsider_registration')
+                # Format: YYYY-MM-DD
+                date_of_birth_str = date_of_birth.strftime('%Y-%m-%d')
     
-
-
-            return redirect('login')
+                # Format: YYYY-MM-DD
+                if not re.match(r'^\d{4}-\d{2}-\d{2}$', date_of_birth_str):
+                    messages.error(request, "Invalid date of birth format. Please use YYYY-MM-DD.")
+                    return redirect('outsider_registration')
+                    
+                # Address Validations
+                if not address:
+                    messages.error(request, "Please enter your address.")
+                    return redirect('outsider_registration')
+                # Length: Set a maximum limit for the address field
+                if len(address) > 100:
+                    messages.error(request, "Address is too long.")
+                    return redirect('outsider_registration')
+                
+                # Password Validations
+                # Complexity: Minimum length, use of both letters and numbers, special characters
+                # if len(password) < 8:
+                #     messages.error(request, "Password must be at least 8 characters long.")
+                #     return redirect('outsider_registration')
+                # if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
+                #     messages.error(request, "Password must contain at least one letter, one number, and one special character.")
+                #     return redirect('outsider_registration')
+            
+                
+                user = User(username=username, first_name=first_name, last_name=last_name, email=email,
+                            date_of_birth=date_of_birth, phone_number=phone_number, gender=gender,
+                            address=address, password=password, confirm_password=confirm_password, role=role)
+                user.save()
+                
+                # Process the outsider registration form data
+                nic = outsider_form.cleaned_data['nic']
+                outsider_person = Outsider(nic=nic, user_id=user)
+                outsider_person.save()
+                
+                messages.success(request, "Registration successful. You can now log in.")
+                return redirect('login')
+            else:
+                messages.error(request, "Please fill in all fields.")
+        
+        except Exception as e:
+            messages.error(request, e)
+            print(str(e))  # Print the exception details for debugging purposes
+        
     else:
         form = RegistrationForm()
         outsider_form = OutsiderForm()
 
     return render(request, 'outsider_registration.html', {'form': form, 'outsider_form': outsider_form})
+
+
+
+# def outsider_registration(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         outsider_form = OutsiderForm(request.POST)
+
+#         if form.is_valid() and outsider_form.is_valid():
+#             # Process the user registration form data
+#             username = form.cleaned_data['username']
+#             first_name = form.cleaned_data['first_name']
+#             last_name = form.cleaned_data['last_name']
+#             password = form.cleaned_data['password']
+#             role_id = form.cleaned_data['role_id'].role_id
+#             email = form.cleaned_data['email']
+            
+#             role = Role.objects.get(role_id=role_id)
+#             if role.role_name != 'Outsider':
+#                 messages.error(request, "Select the outsider role for registration.")
+#                 return redirect('outsider_registration')
+            
+#             email = form.cleaned_data['email']
+#             if User.objects.filter(email=email).exists():
+#                 messages.error(request, "Email address is already registered.")
+#                 return redirect('outsider_registration')
+            
+#             user = User(username=username, first_name=first_name, last_name=last_name, password=password, role=role, email=email)
+#             user.save()
+            
+#             # Process the outsider registration form data
+#             nic = outsider_form.cleaned_data['nic']
+#             outsider_person = Outsider(nic=nic, user_id=user)
+#             outsider_person.save()
+            
+#             messages.success(request, "Registration successful. You can now log in.")
+#             return redirect('login')
+        
+#         else:
+#             messages.error(request, "Please fill in all fields.")
+    
+#     else:
+#         form = RegistrationForm()
+#         outsider_form = OutsiderForm()
+    
+#     return render(request, 'outsider_registration.html', {'form': form, 'outsider_form': outsider_form})
+
+
 
 
 
@@ -224,3 +339,5 @@ def uniPerson(request):
 def outsider(request):
     # Logic for outsider page
     return render(request, 'outsider.html')
+
+
