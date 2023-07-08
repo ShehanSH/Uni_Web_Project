@@ -6,9 +6,11 @@ from django.contrib import messages
 from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm
 from .models import User, UniversityPerson, Outsider, Role, Faculty, Department
 from .models import User, Role, Faculty, Department, UniversityPerson, Outsider
-from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm, LoginForm,RoleSelectionForm
+from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm, LoginForm,RoleSelectionForm,UniversityStaffForm,UniversityStaffForm
 import re
 from django.core.exceptions import ValidationError
+from django.contrib import messages
+import re
 
 from django.contrib import messages
 import re
@@ -73,7 +75,7 @@ def select_role(request):
 
 
 
-def uni_register(request):
+def uni_registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         university_form = UniversityPersonForm(request.POST)
@@ -95,55 +97,55 @@ def uni_register(request):
                 
 
                 role = Role.objects.get(role_id=role_id)
-                if role.role_name != 'Outsider':
-                    messages.error(request, "Select the outsider role for registration.")
-                    return redirect('outsider_registration')
+                if role.role_name != 'University Person':
+                    messages.error(request, "Select the University Person role for registration.")
+                    return redirect('uni_registration')
                 
                 # Check if password and confirm password match
                 if password != confirm_password:
                     messages.error(request, "Password and confirm password do not match.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 # Name Validations
                 if not first_name or not last_name:
                     messages.error(request, "Please enter both first name and last name.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 # Date of Birth Validations
                 if not date_of_birth:
                     messages.error(request, "Please enter your date of birth.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 # Format: YYYY-MM-DD
                 if not re.match(r'^\d{4}-\d{2}-\d{2}$', str(date_of_birth)):
                     messages.error(request, "Invalid date of birth format. Please use YYYY-MM-DD.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 # Email Validations
                 if not email:
                     messages.error(request, "Please enter your email address.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 # Format: Email validation using a regular expression
                 if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
                     messages.error(request, "Invalid email address.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 # Address Validations
                 if not address:
                     messages.error(request, "Please enter your address.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 # Length: Set a maximum limit for the address field
                 if len(address) > 100:
                     messages.error(request, "Address is too long.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 # Password Validations
                 # Complexity: Minimum length, use of both letters and numbers, special characters
                 if len(password) < 8:
                     messages.error(request, "Password must be at least 8 characters long.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
                     messages.error(request, "Password must contain at least one letter, one number, and one special character.")
-                    return redirect('uni_register')
+                    return redirect('uni_registration')
                 
                 role = Role.objects.get(role_id=role_id)
                 user = User(username=username, first_name=first_name, last_name=last_name,email=email,
@@ -163,28 +165,140 @@ def uni_register(request):
                                                      department=department, user_id=user)
                 university_person.save()
                 
-                messages.success(request, "Registration successful. You can now log in.")
+                # messages.success(request, "Registration successful. You can now log in.")
                 return redirect('login')
             else:
-                messages.error(request, "Please fill in all fields.")
+                messages.error(request, "Please fill in fields correctly.")
         
         except Exception as e:
-            messages.error(request, "")
-            print(str(e))  # Print the exception details for debugging purposes
+            error_message = str(e)
+            if 'Duplicate entry' in error_message:
+                duplicate_entry = error_message.split("Duplicate entry ")[1].split(" for key")[0]
+                messages.error(request, f"'{duplicate_entry}' already registered.")
+            else:
+                messages.error(request, "")
+            print(error_message) 
         
     else:
         form = RegistrationForm()
         university_form = UniversityPersonForm()
         
-    return render(request, 'uni_register.html', {'form': form, 'university_form': university_form})
+    return render(request, 'uni_registration.html', {'form': form, 'university_form': university_form})
 
+# uni_staff_registration
 
+def uni_staff_registration(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        staff_form = UniversityStaffForm(request.POST)
+        
+        try:
+            if form.is_valid() and staff_form.is_valid():
+                # Process the user registration form data
+                username = form.cleaned_data['username']
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                email = form.cleaned_data['email']
+                date_of_birth = form.cleaned_data['date_of_birth']
+                phone_number = form.cleaned_data['phone_number']
+                gender = form.cleaned_data['gender']
+                address = form.cleaned_data['address']
+                password = form.cleaned_data['password']
+                confirm_password = form.cleaned_data['confirm_password']
+                role_id = form.cleaned_data['role_id'].role_id
 
+                role = Role.objects.get(role_id=role_id)
+                if role.role_name != 'University Staff':
+                    messages.error(request, "Select the University Staff role for registration.")
+                    return redirect('uni_staff_registration')
+
+                # Check if password and confirm password match
+                if password != confirm_password:
+                    messages.error(request, "Password and confirm password do not match.")
+                    return redirect('uni_staff_registration')
+
+                # Name Validations
+                if not first_name or not last_name:
+                    messages.error(request, "Please enter both first name and last name.")
+                    return redirect('uni_staff_registration')
+
+                # Date of Birth Validations
+                if not date_of_birth:
+                    messages.error(request, "Please enter your date of birth.")
+                    return redirect('uni_staff_registration')
+                # Format: YYYY-MM-DD
+                if not re.match(r'^\d{4}-\d{2}-\d{2}$', str(date_of_birth)):
+                    messages.error(request, "Invalid date of birth format. Please use YYYY-MM-DD.")
+                    return redirect('uni_staff_registration')
+
+                # Email Validations
+                if not email:
+                    messages.error(request, "Please enter your email address.")
+                    return redirect('uni_staff_registration')
+                # Format: Email validation using a regular expression
+                if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
+                    messages.error(request, "Invalid email address.")
+                    return redirect('uni_staff_registration')
+
+                # Address Validations
+                if not address:
+                    messages.error(request, "Please enter your address.")
+                    return redirect('uni_staff_registration')
+                # Length: Set a maximum limit for the address field
+                if len(address) > 100:
+                    messages.error(request, "Address is too long.")
+                    return redirect('uni_staff_registration')
+
+                # Password Validations
+                # Complexity: Minimum length, use of both letters and numbers, special characters
+                if len(password) < 8:
+                    messages.error(request, "Password must be at least 8 characters long.")
+                    return redirect('uni_staff_registration')
+                if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
+                    messages.error(request, "Password must contain at least one letter, one number, and one special character.")
+                    return redirect('uni_staff_registration')
+
+                role = Role.objects.get(role_id=role_id)
+                user = User(username=username, first_name=first_name, last_name=last_name, email=email,
+                            date_of_birth=date_of_birth, phone_number=phone_number, gender=gender,
+                            address=address, password=password, confirm_password=confirm_password, role=role)
+                user.save()
+
+                # Process the university staff registration form data
+                staff_id = staff_form.cleaned_data['staff_id']
+                staff_type = staff_form.cleaned_data['staff_type']
+                faculty_id = staff_form.cleaned_data['faculty_id']
+                department_id = staff_form.cleaned_data['department_id']
+
+                faculty = Faculty.objects.get(faculty_id=faculty_id)
+                department = Department.objects.get(department_id=department_id)
+
+                university_staff_person = UniversityStaffForm(staff_id=staff_id, user_id=user,
+                                                                department=department, faculty=faculty, staff_type=staff_type)
+                university_staff_person.save()
+
+                # messages.success(request, "Registration successful. You can now log in.")
+                return redirect('login')
+            else:
+                messages.error(request, "Please fill in fields correctly.")
+
+        except Exception as e:
+            error_message = str(e)
+            if 'Duplicate entry' in error_message:
+                duplicate_entry = error_message.split("Duplicate entry ")[1].split(" for key")[0]
+                messages.error(request, f"'{duplicate_entry}' already registered.")
+            else:
+                messages.error(request, "trtururt")
+            print(error_message)
+
+    else:
+        form = RegistrationForm()
+        staff_form = UniversityStaffForm()
+
+    return render(request, 'uni_staff_registration.html', {'form': form, 'staff_form': staff_form})
 
 #outsider form
 
-from django.contrib import messages
-import re
 
 def outsider_registration(request):
     if request.method == 'POST':
@@ -221,7 +335,16 @@ def outsider_registration(request):
                     messages.error(request, "Please enter both first name and last name.")
                     return redirect('outsider_registration')
                 
-                #Date of Birth Validations
+                if not email:
+                    messages.error(request, "Please enter your email address.")
+                    return redirect('outsider_registration')
+                # Format: Email validation using a regular expression
+                if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
+                    messages.error(request, "Invalid email address.")
+                    return redirect('outsider_registration')
+                
+                
+                # Date of Birth Validations
                 if not date_of_birth:
                     messages.error(request, "Please enter your date of birth.")
                     return redirect('outsider_registration')
@@ -244,12 +367,12 @@ def outsider_registration(request):
                 
                 # Password Validations
                 # Complexity: Minimum length, use of both letters and numbers, special characters
-                # if len(password) < 8:
-                #     messages.error(request, "Password must be at least 8 characters long.")
-                #     return redirect('outsider_registration')
-                # if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
-                #     messages.error(request, "Password must contain at least one letter, one number, and one special character.")
-                #     return redirect('outsider_registration')
+                if len(password) < 8:
+                    messages.error(request, "Password must be at least 8 characters long.")
+                    return redirect('outsider_registration')
+                if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
+                    messages.error(request, "Password must contain at least one letter, one number, and one special character.")
+                    return redirect('outsider_registration')
             
                 
                 user = User(username=username, first_name=first_name, last_name=last_name, email=email,
@@ -262,20 +385,25 @@ def outsider_registration(request):
                 outsider_person = Outsider(nic=nic, user_id=user)
                 outsider_person.save()
                 
-                messages.success(request, "Registration successful. You can now log in.")
+                # messages.success(request, "Registration successful. You can now log in.")
                 return redirect('login')
             else:
-                messages.error(request, "Please fill in all fields.")
-        
+                messages.error(request, "Please fill in fields correctly.")
         except Exception as e:
-            messages.error(request, e)
-            print(str(e))  # Print the exception details for debugging purposes
-        
+                    error_message = str(e)
+                    if 'Duplicate entry' in error_message:
+                        duplicate_entry = error_message.split("Duplicate entry ")[1].split(" for key")[0]
+                        messages.error(request, f"'{duplicate_entry}' already registered.")
+                    else:
+                        messages.error(request, "")
+                    print(error_message) 
+ 
     else:
         form = RegistrationForm()
         outsider_form = OutsiderForm()
 
     return render(request, 'outsider_registration.html', {'form': form, 'outsider_form': outsider_form})
+
 
 
 

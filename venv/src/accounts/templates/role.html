@@ -1,11 +1,70 @@
+
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>role</title>
+    <title>Select Role</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/role.css' %}">
+    
+   
+  
 </head>
 <body>
-    <h1>select role</h1>
-    <a href="{% url 'uni_registration' %}"class="ForgotPasswordLink">uni</a>
-    <a href="{% url 'outsider_registration' %}"class="ForgotPasswordLink">outsider</a>
+   
+    {% include 'navbar2.html' %}
+   
+
+
+    <p class="image-text">University Student</p>
+
+
+
+    <div class="LoginPageContainer">
+        <div class="LoginPageInnerContainer">
+            <div class="LoginFormContainer">
+                
+                    <div class="LoginFormInnerContainer" >
+                    
+                    
+                    <a href="{% url 'uni_registration' %}">
+                        <img src="{% static 'images/role1.png' %}" alt="login Image" class="GroupImage">
+                    </a>
+                    <h2 class="header" style="text-decoration: none;">University Student</h2>
+
+                
+                            {% comment %} <label class="label" for="username">
+                                <span>User Name</span>
+                            </label>
+                        {% endcomment %} 
+                    </div>
+                    <div class="LoginFormInnerContainer" style="margin-left:15px">
+                        <a href="{% url 'uni_staff_registration' %}">
+                            <img src="{% static 'images/role2.png' %}" alt="login Image" class="GroupImage">
+                        </a>
+                        <h2 class="header">University Staff</h2>
+                 
+                       
+
+                    
+                                {% comment %} <label class="label" for="username">
+                                    <span>User Name</span>
+                                </label>
+                            {% endcomment %}
+                </div>
+                <div class="LoginFormInnerContainer">
+                    <a href="{% url 'outsider_registration' %}">
+                        <img src="{% static 'images/role3.png' %}" alt="login Image" class="GroupImage">
+                    </a>
+                    <h2 class="header">Outside Person</h2>
+                
+                            {% comment %} <label class="label" for="username">
+                                <span>User Name</span>
+                            </label>
+                        {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>                
+
 </body>
 </html>

@@ -73,6 +73,15 @@ class UniversityPerson(models.Model):
 
     REQUIRED_FIELDS = ['student_id', 'faculty', 'user', 'department']
 
+class UniversityStaffPerson(models.Model):
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    staff_id = models.CharField(primary_key=True, max_length=255)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    staff_type = models.CharField(max_length=255)
+
+    REQUIRED_FIELDS = ['staff_id', 'faculty', 'user', 'department']
     
 
 class Outsider(models.Model):

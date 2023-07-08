@@ -25,7 +25,7 @@ from inventory_management import views
 
 urlpatterns = [
     path('', views.list_items, name='list_items'),
-    path('home2/', views.home2, name='home2'),
+    path('homemain/', views.homemain, name='homemain'),
     path('admin/', admin.site.urls),
     path('list_items/', views.list_items, name='list_items'),
     path('update_items/<str:pk>/', views.update_items, name="update_items"),

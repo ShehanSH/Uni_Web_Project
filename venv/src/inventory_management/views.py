@@ -17,12 +17,12 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def home2(request):
+def homemain(request):
   
     context = {
         
     }
-    return render(request, 'home2.html', context)
+    return render(request, 'homemain.html', context)
 
 
 

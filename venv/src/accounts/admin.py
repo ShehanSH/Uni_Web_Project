@@ -18,4 +18,6 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Faculty)
 admin.site.register(Department)
+admin.site.site_header = 'Inventory Management System'
+
 

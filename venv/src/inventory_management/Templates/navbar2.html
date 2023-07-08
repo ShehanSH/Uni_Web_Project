@@ -12,8 +12,8 @@
     <div class = "headerback" >
     <header >
 
-        <a href="#" ><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
-        <a href="#" class="logo">DEPARTMENT OF SPORT SCIENCE AND PHYSICAL EDUCATION <br>
+        <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
+        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF SPORT SCIENCE AND PHYSICAL EDUCATION <br>
             <span>Faculty of Social Sciences <br> University of Kelaniya. <span></a>
         <div class="menutoggle" onclick="togglemenu();">
         </div>
@@ -22,8 +22,9 @@
             <li><a href="#about">About</a></li>
             <li><a href="#menu">Menu</a></li>
             <li><a href="#expert">Expert</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}
             <li><a href="#contactus">Contact Us</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
         </ul>
     </header>
 </div>

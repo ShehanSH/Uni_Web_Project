@@ -1,7 +1,0 @@
-<!-- university_person_register.html -->
-<form method="POST" action="{% url 'uni_registration' %}">
-    {% csrf_token %}
-    {{ university_form.as_p }}
-    <button type="submit">Register</button>
-  </form>
-  

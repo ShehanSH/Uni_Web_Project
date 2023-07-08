@@ -6,113 +6,62 @@
 
 
 
-
-
-
-
-.messages {
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-  }
-  
-  .messages li {
-    margin-bottom: 5px;
-  }
-  
-  .messages .error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-color: #f5c6cb;
-  }
-  
-  .messages .success {
-    background-color: #d4edda;
-    color: #155724;
-    border-color: #c3e6cb;
-  }
-  
-  .messages .info {
-    background-color: #cce5ff;
-    color: #004085;
-    border-color: #b8daff;
-  }
-  
-  .messages .warning {
-    background-color: #fff3cd;
-    color: #856404;
-    border-color: #ffeeba;
-  }
-  
-
-
-
-  .msg {
-    height: 30px;
-    
-    margin-left: 26%;
-    max-width: 50%;
-    align-items: center;
-    justify-content: center;
-     /* Add red border */
-     /* Add yellow background */
-    
-   
-    
-    
-   
-    border-radius: 20px;
-   margin-top: 100px;
-   margin-bottom: -100px;
-}
-
-
-
-
-
 .LoginPageContainer {
-    height: 600px;
-    /* overflow: auto; */
+    height: 70vh;
+    overflow: auto;
     margin-left: 20%;
     width: 60%;
     align-items: center;
     justify-content: center;
      /* Add red border */
      /* Add yellow background */
-    background-color: #b3b3b3;
-    /* border: #660000 2px solid; */
     
-    border-radius: 20px;
+    border: #660000 2px solid;
+    
+    background-color: #C0C0C0;
    
+    border-radius: 20px;
     margin-top: 150px;
 }
-
 
 
 .LoginPageInnerContainer {
     display: flex;
     min-height: 100%;
+    margin-left: 20px;
+    
 }
 
 .LoginPageInnerContainer .ImageContianer {
-    width: 40%;
+    width: 60%;
     background-color: #660000;
     min-height: 100%;
     padding: 5% 5% 5% 5%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px 0 0 20px;
+    
 }
 
 .LoginPageInnerContainer .ImageContianer .GroupImage {
-    width: 120%;
+    width: 180%;
     display: block;
-    
+}
+
+.LoginPageInnerContainer .ImageContianer .GroupImage:hover {
+    filter: brightness(80%); /* Adjust the brightness as per your preference */
+    cursor: pointer;
+}
+
+.LoginPageInnerContainer .ImageContianer .GroupImage:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: red;
+    opacity: 0.5; /* Adjust the opacity as per your preference */
 }
 
 .LoginPageInnerContainer .LoginFormContainer {
@@ -125,7 +74,8 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    max-width:1200px;
+    max-width: 400px;
+    margin-left: 10%;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .LogoContainer .logo {
@@ -134,16 +84,31 @@
 }
 
 .LoginPageInnerContainer .LoginFormContainer .header {
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 700;
     
 }
 
-.header{
+.header {
     margin-bottom: 20px;
     color: #660000;
+    width: 250px;
+    padding-top: 10px;
+    margin-left: -20px;
+    text-decoration: none !important;
 }
 
+.header:hover {
+    color: #ae9d1d;
+}
+
+.header a {
+    text-decoration: none !important;
+}
+
+.header a:hover {
+    text-decoration: none !important;
+}
 .LoginPageInnerContainer .LoginFormContainer .subHeader {
     color: #9aa4ad;
     margin-top: 5px;
@@ -165,14 +130,14 @@
 }
 
 .LoginPageInnerContainer .LoginFormContainer .inputContainer .label .labelIcon {
-    width: 100px;
+    width: 20px;
     margin-right: 10px;
     display: block;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .inputContainer .input {
     display: block;
-    /* max-width: 3300px; */
+    width: calc(100%);
     font-size: 15px;
     padding: 10px;
     border: 1px solid #d6d7db;
@@ -184,18 +149,14 @@
 
 .abc {
     display: block;
-    width: 400px;
+    width: calc(100%);
     font-size: 15px;
-    padding: 10px;
-    border: 1px solid  #660000;
+    padding: 4px;
+    border: 1px solid #2d47af;
     border-radius: 5px;
     margin-top: 5px;
     outline: 0px !important;
-   
 }
-
-
-
 
 .LoginPageInnerContainer .LoginFormContainer .OptionsContainer {
     display: flex;
@@ -208,7 +169,7 @@
 }
 
 .LoginFormInnerContainer {
-    max-width: 900px;
+    width: 700px;
 }
 
 .LoginPageInnerContainer .LoginFormContainer .checkbox{
@@ -310,7 +271,4 @@
     margin-top: 20px;
 }
 
-.LoginPageInnerContainer .LoginFormContainer .td2{
 
-    margin-left: 90px;
-}

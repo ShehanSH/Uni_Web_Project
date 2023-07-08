@@ -14,7 +14,8 @@ urlpatterns = [
     # path('register/university_person/', views.register_uniPerson, name='university_person_registration'),
     # path('register/outsider/', views.register_outsider, name='register_outsider'),
     # path('register/university_person/', views.university_person_register, name='university_person_register'),
-    path('uni_registration/', views.uni_register, name='uni_registration'),
+    path('uni_registration/', views.uni_registration, name='uni_registration'),
+    path('uni_staff_registration/', views.uni_staff_registration, name='uni_staff_registration'),
     path('test2/', views.test2, name='test'),
 
 ]

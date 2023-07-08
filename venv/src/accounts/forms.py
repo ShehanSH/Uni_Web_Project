@@ -66,22 +66,7 @@ class RegistrationForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     last_name = forms.CharField(label='Last Name', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     email = forms.EmailField(label='Email', max_length=255, widget=forms.EmailInput(attrs={'class': 'abc'}))
-    date_of_birth = forms.DateField(
-        label='Date of Birth',
-        widget=forms.DateInput(attrs={'class': 'abc'}),
-        input_formats=['%Y:%m:%d'],
-        validators=[
-            MinValueValidator(limit_value=date(1900, 1, 1), message='Please enter a valid date of birth.'),
-            MaxValueValidator(limit_value=date.today(), message='The date of birth cannot be in the future.')
-        ]
-    )
-
-    def clean_date_of_birth(self):
-        date_of_birth = self.cleaned_data['date_of_birth']
-        if date_of_birth and date_of_birth > date.today():
-            raise ValidationError('The date of birth cannot be in the future.')
-        return date_of_birth
-    
+    date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(attrs={'class': 'abc', 'placeholder': 'YYYY-MM-DD'}))
     phone_number = forms.CharField(label='Phone Number', max_length=20, widget=forms.TextInput(attrs={'class': 'abc'}))
     gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')], widget=forms.Select(attrs={'class': 'abc'}))
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'class': 'abc'}))
@@ -92,7 +77,35 @@ class RegistrationForm(forms.Form):
 
 class UniversityPersonForm(forms.Form):
     
-    student_id = forms.CharField(label='Student ID', max_length=255,widget=forms.TextInput(attrs={'class': 'abc'}))
+    student_id = forms.CharField(label='Student ID', max_length=255,widget=forms.TextInput(attrs={'class': 'abc','placeholder': '_ _ _ _/_ _ _ _/_ _ _'}))
+    faculty_id = forms.ChoiceField(label='Faculty', widget=forms.Select(attrs={'class': 'abc'}))
+    department_id = forms.ChoiceField(label='Department', widget=forms.Select(attrs={'class': 'abc'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['faculty_id'].choices = self.get_faculty_choices()
+        self.fields['department_id'].choices = self.get_department_choices()
+
+    def get_faculty_choices(self):
+        faculties = Faculty.objects.all()
+        choices = [(faculty.faculty_id, faculty.faculty_name) for faculty in faculties]
+        return choices
+
+    def get_department_choices(self):
+        departments = Department.objects.all()
+        choices = [(department.department_id, department.department_name) for department in departments]
+        return choices
+
+# university staff form
+
+class UniversityStaffForm(forms.Form):
+    STAFF_TYPE_CHOICES = (
+        ('academic', 'Academic Staff'),
+        ('non_academic', 'Non-Academic Staff'),
+    )
+    
+    staff_id = forms.CharField(label='Staff ID', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
+    staff_type = forms.ChoiceField(label='Staff Type', choices=STAFF_TYPE_CHOICES, widget=forms.Select(attrs={'class': 'abc'}))
     faculty_id = forms.ChoiceField(label='Faculty', widget=forms.Select(attrs={'class': 'abc'}))
     department_id = forms.ChoiceField(label='Department', widget=forms.Select(attrs={'class': 'abc'}))
 

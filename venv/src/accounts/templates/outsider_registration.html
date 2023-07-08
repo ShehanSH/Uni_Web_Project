@@ -3,13 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
+
     <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
 
     <script src="{% static 'date-time-phone/jquery-ui.js' %}" ></script>
     <script src="{% static 'date-time-phone/jquery-ui-timepicker-addon.js' %}"></script> 
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/regi1.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/regi3.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
 
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -26,6 +30,7 @@
     <script src="{% static 'js/myjs.js' %}"></script>
     <script src="{% static 'js/pager/paging.js' %}"></script>  
 
+
     <style>
         .error {
             position: relative;
@@ -36,6 +41,7 @@
             top: 0;
             right: 0;
             padding: 5px;
+            
             cursor: pointer;
         }
     </style>
@@ -58,14 +64,11 @@
 
     <div class="LoginPageContainer">
         <div class="LoginPageInnerContainer">
-            <div class="ImageContianer">
-                <img src="{% static 'images/login6.png' %}" alt="login Image" class="GroupImage">
-            </div>
         <table>
             <tr>
             <div class="LoginFormContainer">
-                <div class="LoginFormInnerContainer">
-                    <h2 class="header" style="margin-top:120px">Sign Up.</h2>
+                <div class="LoginFormInnerContainer" style="margin-top:-80px">
+                    <h2 class="header">Sign Up.</h2>
 
                     <form method="post" id="registrationForm">
                         {% csrf_token %}
@@ -89,12 +92,7 @@
                             </label>
                             {{ form.last_name }}
                         </div>
-                         <div class="inputContainer">
-                            <label class="label" for="NIC">
-                                <span>NIC</span>
-                            </label>
-                            {{ outsider_form.nic }}
-                        </div>
+
                     
                         <div class="inputContainer">
                             <label class="label" for="email">
@@ -124,37 +122,58 @@
                             {{ form.gender }}
                         </div>
 
-                        <div class="inputContainer">
-                            <label class="label" for="address">
-                                <span>Address</span>
-                            </label>
-                            {{ form.address }}
-                        </div> 
-
-                        <div class="inputContainer">
-                            <label class="label" for="password">
-                                <span>Password</span>
-                            </label>
-                            {{ form.password }}
-                        </div>
+                          
                     
-                       <div class="inputContainer">
-                            <label class="label" for="confirm_password">
-                                <span>Confirm Password</span>
-                            </label>
-                            {{ form.confirm_password }}
-                        </div> 
-                    
-                        <span>Role</span>
-                        <div class="OptionsContainer">
-                            {{ form.role_id }}
-                        </div>      
-                        <input type="submit" value="Submit Forms" class="LoginButton">
                 </div>
             </div>
             </tr>
 
-            
+            <tr>
+                <div class="LoginFormContainer" style="margin-top:120px">
+                    <div class="LoginFormInnerContainer">
+                        <h2 class="header2"></h2>
+    
+                        <div class="inputContainer">
+                            <label class="label" for="NIC">
+                                <span>NIC</span>
+                            </label>
+                            {{ outsider_form.nic }}
+                        </div>
+                        
+                            {% csrf_token %}
+                            <div class="inputContainer">
+                                <label class="label" for="address">
+                                    <span>Address</span>
+                                </label>
+                                {{ form.address }}
+                            </div>
+    
+    
+                            <div class="inputContainer">
+                                <label class="label" for="password">
+                                    <span>Password</span>
+                                </label>
+                                {{ form.password }}
+                            </div>
+                        
+                           <div class="inputContainer">
+                                <label class="label" for="confirm_password">
+                                    <span>Confirm Password</span>
+                                </label>
+                                {{ form.confirm_password }}
+                            </div> 
+                        
+                            <span>Role</span>
+                            <div class="OptionsContainer">
+                                {{ form.role_id }}
+                            </div>  
+                            
+                                <input type="submit" value="Submit Forms" class="LoginButton">
+                              
+                        
+                    </div>
+                </div>
+                </tr>
             </form>   
         </table>
         </div>
@@ -193,8 +212,25 @@
         
     
          
-        });
+        }); 
       </script>
+    
+
+<!-- Add the CDN link for the inputmask plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+<!-- Add your custom script to initialize the inputmask and validation -->
+<script>
+    $(document).ready(function () {
+        // Initialize inputmask
+        $('#id_student_id').inputmask("A{2,4}/9999/999", {
+            placeholder: "____/____/___",
+            clearIncomplete: true,
+            showMaskOnHover: false
+        });
+    });
+</script>
+
     
 </body>
 </html> 
