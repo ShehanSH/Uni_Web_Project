@@ -154,31 +154,38 @@
             </tr>
 
             <tr>
-                <div class="LoginFormContainer" style="margin-top:-879px">
+                <div class="LoginFormContainer" style="margin-top:-778px">
                     <div class="LoginFormInnerContainer">
                         <h2 class="header2"></h2>
     
                         
                             {% csrf_token %}
                             <div class="inputContainer">
+                                <label class="label" for="Staff ID">
+                                    <span>Staff ID </span>
+                                </label>
+                                {{ university_staff_form.staff_id}}
+                            </div> 
+
+                           <div class="inputContainer">
                                 <label class="label" for="Staff Type">
                                     <span>Staff Type</span>
                                 </label>
-                                {{ staff_form.staff_type}}
-                            </div>
+                                {{ university_staff_form.staff_type}}
+                            </div> 
                         
                             <div class="inputContainer">
                                 <label class="label" for="Faculty">
                                     <span>Faculty</span>
                                 </label>
-                                {{ staff_form.faculty_id }}
+                                {{ university_staff_form.faculty_id }}
                             </div>
                         
                             <div class="inputContainer">
                                 <label class="label" for="Department">
                                     <span>Department</span>
                                 </label>
-                                {{ staff_form.department_id }}
+                                {{ university_staff_form.department_id }}
                             </div>
                             
                                 <input type="submit" value="Submit Forms" class="LoginButton">

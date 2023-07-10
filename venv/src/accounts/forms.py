@@ -103,7 +103,6 @@ class UniversityStaffForm(forms.Form):
         ('academic', 'Academic Staff'),
         ('non_academic', 'Non-Academic Staff'),
     )
-    
     staff_id = forms.CharField(label='Staff ID', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
     staff_type = forms.ChoiceField(label='Staff Type', choices=STAFF_TYPE_CHOICES, widget=forms.Select(attrs={'class': 'abc'}))
     faculty_id = forms.ChoiceField(label='Faculty', widget=forms.Select(attrs={'class': 'abc'}))

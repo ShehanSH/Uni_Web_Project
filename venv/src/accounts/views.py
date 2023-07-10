@@ -4,7 +4,7 @@ from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
 from django.contrib import messages
 from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm
-from .models import User, UniversityPerson, Outsider, Role, Faculty, Department
+from .models import User, UniversityPerson, Outsider, Role, Faculty, Department,UniversityStaffPerson
 from .models import User, Role, Faculty, Department, UniversityPerson, Outsider
 from .forms import RegistrationForm, UniversityPersonForm, OutsiderForm, LoginForm,RoleSelectionForm,UniversityStaffForm,UniversityStaffForm
 import re
@@ -97,7 +97,7 @@ def uni_registration(request):
                 
 
                 role = Role.objects.get(role_id=role_id)
-                if role.role_name != 'University Person':
+                if role.role_name != 'University Student':
                     messages.error(request, "Select the University Person role for registration.")
                     return redirect('uni_registration')
                 
@@ -187,13 +187,14 @@ def uni_registration(request):
 
 # uni_staff_registration
 
+
 def uni_staff_registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        staff_form = UniversityStaffForm(request.POST)
+        university_staff_form = UniversityStaffForm(request.POST)
         
         try:
-            if form.is_valid() and staff_form.is_valid():
+            if form.is_valid() and university_staff_form.is_valid():
                 # Process the user registration form data
                 username = form.cleaned_data['username']
                 first_name = form.cleaned_data['first_name']
@@ -206,22 +207,23 @@ def uni_staff_registration(request):
                 password = form.cleaned_data['password']
                 confirm_password = form.cleaned_data['confirm_password']
                 role_id = form.cleaned_data['role_id'].role_id
+                
 
                 role = Role.objects.get(role_id=role_id)
                 if role.role_name != 'University Staff':
                     messages.error(request, "Select the University Staff role for registration.")
                     return redirect('uni_staff_registration')
-
+                
                 # Check if password and confirm password match
                 if password != confirm_password:
                     messages.error(request, "Password and confirm password do not match.")
                     return redirect('uni_staff_registration')
-
+                
                 # Name Validations
                 if not first_name or not last_name:
                     messages.error(request, "Please enter both first name and last name.")
                     return redirect('uni_staff_registration')
-
+                
                 # Date of Birth Validations
                 if not date_of_birth:
                     messages.error(request, "Please enter your date of birth.")
@@ -230,7 +232,7 @@ def uni_staff_registration(request):
                 if not re.match(r'^\d{4}-\d{2}-\d{2}$', str(date_of_birth)):
                     messages.error(request, "Invalid date of birth format. Please use YYYY-MM-DD.")
                     return redirect('uni_staff_registration')
-
+                
                 # Email Validations
                 if not email:
                     messages.error(request, "Please enter your email address.")
@@ -239,7 +241,7 @@ def uni_staff_registration(request):
                 if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
                     messages.error(request, "Invalid email address.")
                     return redirect('uni_staff_registration')
-
+                
                 # Address Validations
                 if not address:
                     messages.error(request, "Please enter your address.")
@@ -248,7 +250,7 @@ def uni_staff_registration(request):
                 if len(address) > 100:
                     messages.error(request, "Address is too long.")
                     return redirect('uni_staff_registration')
-
+                
                 # Password Validations
                 # Complexity: Minimum length, use of both letters and numbers, special characters
                 if len(password) < 8:
@@ -257,48 +259,47 @@ def uni_staff_registration(request):
                 if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[^A-Za-z0-9]', password):
                     messages.error(request, "Password must contain at least one letter, one number, and one special character.")
                     return redirect('uni_staff_registration')
-
+                
                 role = Role.objects.get(role_id=role_id)
-                user = User(username=username, first_name=first_name, last_name=last_name, email=email,
+                user = User(username=username, first_name=first_name, last_name=last_name,email=email,
                             date_of_birth=date_of_birth, phone_number=phone_number, gender=gender,
                             address=address, password=password, confirm_password=confirm_password, role=role)
                 user.save()
-
-                # Process the university staff registration form data
-                staff_id = staff_form.cleaned_data['staff_id']
-                staff_type = staff_form.cleaned_data['staff_type']
-                faculty_id = staff_form.cleaned_data['faculty_id']
-                department_id = staff_form.cleaned_data['department_id']
+                
+                # Process the university person registration form data
+                staff_id = university_staff_form.cleaned_data['staff_id']
+                staff_type = university_staff_form.cleaned_data['staff_type']
+                faculty_id = university_staff_form.cleaned_data['faculty_id']
+                department_id = university_staff_form.cleaned_data['department_id']
 
                 faculty = Faculty.objects.get(faculty_id=faculty_id)
                 department = Department.objects.get(department_id=department_id)
-
-                university_staff_person = UniversityStaffForm(staff_id=staff_id, user_id=user,
-                                                                department=department, faculty=faculty, staff_type=staff_type)
+                
+                university_staff_person = UniversityStaffPerson(staff_id=staff_id,staff_type=staff_type, faculty=faculty,
+                                                     department=department, user_id=user)
                 university_staff_person.save()
-
+                
                 # messages.success(request, "Registration successful. You can now log in.")
                 return redirect('login')
             else:
                 messages.error(request, "Please fill in fields correctly.")
-
+        
         except Exception as e:
             error_message = str(e)
             if 'Duplicate entry' in error_message:
                 duplicate_entry = error_message.split("Duplicate entry ")[1].split(" for key")[0]
                 messages.error(request, f"'{duplicate_entry}' already registered.")
             else:
-                messages.error(request, "trtururt")
-            print(error_message)
-
+                messages.error(request, "")
+            print(error_message) 
+        
     else:
         form = RegistrationForm()
-        staff_form = UniversityStaffForm()
-
-    return render(request, 'uni_staff_registration.html', {'form': form, 'staff_form': staff_form})
+        university_staff_form = UniversityStaffForm()
+        
+    return render(request, 'uni_staff_registration.html', {'form': form, 'university_staff_form': university_staff_form})
 
 #outsider form
-
 
 def outsider_registration(request):
     if request.method == 'POST':

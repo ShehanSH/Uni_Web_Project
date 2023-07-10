@@ -38,6 +38,7 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
+    path('', include('sports_item_req.urls')),
 
     
 ]

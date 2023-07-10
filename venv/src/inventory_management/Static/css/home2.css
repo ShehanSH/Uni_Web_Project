@@ -9,7 +9,15 @@
 }
 
 
+.formbtn {
+    background-color: #555;
+    border: 2px solid #660000;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
 
+}
 
 
 .slider{
@@ -260,15 +268,16 @@ header .logo
 {
     color: #ffffff;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 18px;
     text-decoration:solid;
-    margin-left: -70px;
+    margin-left: -140px;
 }
 
 header .logo span
 {
     color: #ffffff;
-    font-size: 12px;
+    font-size: 16px;
+    
 }
 
 header .navigation

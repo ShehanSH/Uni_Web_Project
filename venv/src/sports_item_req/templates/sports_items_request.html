@@ -1,0 +1,64 @@
+<h1>Create Sports Item Request</h1>
+<form method="post">
+  {% csrf_token %}
+
+
+  <div>
+    <label class="label" for="Quantity">
+        <span>QUANTITY</span>
+    </label>
+    {{ form.quantity }}
+ 
+</div>
+<div>
+  <label class="label" for="Required Date">
+      <span>Required Date</span>
+  </label>
+  {{ form.required_date }}
+
+</div>
+<div>
+  <label class="label" for="Required Time">
+      <span>Time</span>
+  </label>
+  {{ form.required_time }}
+
+</div>
+<div>
+  <label class="label" for="User ID">
+      <span>User ID</span>
+  </label>
+  {{ form.user_id }}
+
+</div>
+<div>
+  <label class="label" for="Quantity">
+      <span>QUANTITY</span>
+  </label>
+  {{ form.quantity }}
+
+</div>
+<div>
+  <label class="label" for="Item Name">
+      <span>Item name</span>
+  </label>
+  {{ form.item_name }}
+
+</div>
+<div>
+  <label class="label" for="Item Category">
+      <span>Item Category</span>
+  </label>
+  {{ form.item_category }}
+
+</div>
+<div>
+  <label class="label" for="Purpose">
+      <span>Purpose</span>
+  </label>
+  {{ form.purpose }}
+
+</div>
+  
+  <button type="submit">Submit</button>
+</form>

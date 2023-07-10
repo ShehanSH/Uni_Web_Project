@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     'accounts',
     'bootstrap_datepicker_plus',
+    'sports_item_req',
     
     ]
 
@@ -147,3 +148,4 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'accounts.User'
+# AUTH_USER_MODEL = 'sports_item_req.User'

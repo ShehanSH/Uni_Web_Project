@@ -13,12 +13,12 @@
     <header >
 
         <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
-        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF SPORT SCIENCE AND PHYSICAL EDUCATION <br>
-            <span>Faculty of Social Sciences <br> University of Kelaniya. <span></a>
+        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF PHYSICAL EDUCATION <br>
+        <span style="font-weight: normal;">University of Kelaniya, Sri Lanka </span></a>
         <div class="menutoggle" onclick="togglemenu();">
         </div>
         <ul class="navigation">
-            <li><a href="#banner">Home</a></li>
+            <li><a href="{% url 'homemain' %}">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#menu">Menu</a></li>
             <li><a href="#expert">Expert</a></li>

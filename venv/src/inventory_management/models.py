@@ -9,12 +9,14 @@ from django.db import models
 # )
 
 class Category(models.Model):
+	category_id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50, blank=True, null=True)
 	def __str__(self):
 		return self.name
 
 
 class Inventory_Stock(models.Model):
+	item_id = models.AutoField(primary_key=True)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
 	item_name = models.CharField(max_length=50, blank=True, null=True)
 	quantity = models.IntegerField(default='0', blank=True, null=True)
