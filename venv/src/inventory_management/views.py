@@ -5,8 +5,10 @@ from .forms import InventoryCreateForm, InventorySearchForm, InventoryUpdateForm
 from django.http import HttpResponse
 import csv
 from .forms import *
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 def home(request):
     title = "Welcome: This is the Home Page"
     form = "This is home page body"
@@ -96,7 +98,7 @@ def add_items(request):
 
 
 def update_items(request, pk):
-    queryset = Inventory_Stock.objects.get(id=pk)
+    queryset = Inventory_Stock.objects.get(item_id=pk)
     form = InventoryUpdateForm(instance=queryset)
     if request.method == 'POST':
         form = InventoryUpdateForm(request.POST, instance=queryset)
@@ -112,7 +114,7 @@ def update_items(request, pk):
 
 
 def delete_items(request, pk):
-    queryset = Inventory_Stock.objects.get(id=pk) 
+    queryset = Inventory_Stock.objects.get(item_id=pk)
     if request.method == 'POST':
         queryset.delete()
         messages.success(request, 'Item deleted successfully')
@@ -121,7 +123,7 @@ def delete_items(request, pk):
 
 
 def stock_detail(request, pk):
-	queryset = Inventory_Stock.objects.get(id=pk)
+	queryset = Inventory_Stock.objects.get(item_id=pk)
 	context = {
         "title": queryset.item_name,
 		"queryset": queryset,
@@ -130,7 +132,7 @@ def stock_detail(request, pk):
 
 
 def issue_items(request, pk):
-    queryset = Inventory_Stock.objects.get(id=pk)
+    queryset = Inventory_Stock.objects.get(item_id=pk)
     form = IssueForm(request.POST or None, instance=queryset)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -140,7 +142,7 @@ def issue_items(request, pk):
         messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
         instance.save()
 
-        return redirect('/stock_detail/' + str(instance.id))
+        return redirect('/stock_detail/' + str(instance.item_id))
         # return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
@@ -155,7 +157,7 @@ def issue_items(request, pk):
 
 
 def receive_items(request, pk):
-    queryset = Inventory_Stock.objects.get(id=pk)
+    queryset = Inventory_Stock.objects.get(item_id=pk)
     form = ReceiveForm(request.POST or None, instance=queryset)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -165,7 +167,7 @@ def receive_items(request, pk):
         instance.save()
         messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now in Store")
 
-        return redirect('/stock_detail/' + str(instance.id))
+        return redirect('/stock_detail/' + str(instance.item_id))
         # return HttpResponseRedirect(instance.get_absolute_url())
     context = {
         "title": 'Receive ' + str(queryset.item_name),
@@ -178,7 +180,7 @@ def receive_items(request, pk):
 
 
 def reorder_level(request, pk):
-	queryset = Inventory_Stock.objects.get(id=pk)
+	queryset = Inventory_Stock.objects.get(item_id=pk)
 	form = ReorderLevelForm(request.POST or None, instance=queryset)
 	if form.is_valid():
 		item = form.save(commit=False)
@@ -250,3 +252,21 @@ def list_history(request):
 
     return render(request, "list_history.html", context)
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required(login_url='login')
+def index(request):
+    # Get the current user ID and role name
+    user_id = request.user.user_id
+    role_name = request.user.role.role_name
+
+    context = {'user_id': user_id, 'role_name': role_name}
+    return render(request, 'index.html', context)
+
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')  # Replace 'home' with the desired URL after logout

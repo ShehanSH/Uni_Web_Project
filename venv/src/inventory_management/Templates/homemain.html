@@ -102,9 +102,13 @@
     
         <div class="content">
             <h2>Always Choose Good</h2>
-            <p>Lorem ipsum dolor, sit amet eum Quos ipsa ipsum amet eum ullam nulla quaerat optio quidem dolores, molestiae libero similique iusto inventore aliquam dolorem. Ratione perferendis ipsa culpa sapiente totam?
+            <p>  Click here to request sports item or ground booking.
             </p>
-            <a href="#menu" class="btn">Our Menu</a>
+            {% comment %} <a href="accounts/login" class="btn">sports </a><br>
+            <a href="accounts/login" class="btn">grounds </a><br> {% endcomment %}
+            <button onclick="window.location.href = '/';" class="btn" >grounds</button>
+            <button onclick="window.location.href = '/create_sports_item_request/';" class="btn">sports</button>
+            
         </div>
     </section>
 

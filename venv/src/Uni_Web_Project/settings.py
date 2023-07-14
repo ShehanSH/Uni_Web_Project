@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'registration', #should be immediately above 'django.contrib.auth'
     'django.contrib.staticfiles',
     'inventory_management',
-    
+    'sports_items_req',
     'accounts',
     'bootstrap_datepicker_plus',
-    'sports_item_req',
+    
     
     ]
 
@@ -146,6 +146,13 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 # AUTH_USER_MODEL = 'sports_item_req.User'
+
+AUTHENTICATION_BACKENDS = [
+    # 'Uni_Web_Project.backends.custom_auth_backend.CustomAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]

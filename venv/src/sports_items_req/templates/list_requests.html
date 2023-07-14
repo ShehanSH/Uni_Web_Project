@@ -1,0 +1,67 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/item_req.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+ 
+</head>
+<body>
+{% include 'navbar2.html' %}
+
+<div class = "col-sm-10">
+    <div class = "display_table">
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Category</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Controls</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.request_id }}</td>
+                    <td>{{ request.category.name }}</td>
+                    <td>{{ request.item.item_name }}</td>
+                    <td>{{ request.quantity }}</td>
+                    <td>{{ request.get_approval_status_display }}</td>
+                    <td>
+                              <button class="button_one">view</button>
+                              <button class="button_two">delete</button>
+                           
+                    </td>
+                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% for item in queryset %}
+            <tr>
+                <td>{{ request.request_id }}</td>
+                <td>{{ request.category.name }}</td>
+                <td>{{ request.item.item_name }}</td>
+                <td>{{ request.quantity }}</td>
+            
+              <td><a href="{% url 'delete_items' item.item_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
+            
+            </tr>
+        {% endfor %}
+      </table>
+    </div>
+</div> <!--end of col-sm-10-->
+
+</div> <!--end of row-->
+
+
+
+
+</body>
+</html>
+```

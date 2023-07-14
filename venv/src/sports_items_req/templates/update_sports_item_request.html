@@ -1,0 +1,7 @@
+<h2>Update Sports Item Request - Request ID: {{ request_id }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Update</button>
+</form>

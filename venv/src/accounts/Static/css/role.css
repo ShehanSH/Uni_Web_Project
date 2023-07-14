@@ -48,12 +48,14 @@
     display: block;
 }
 
-.LoginPageInnerContainer .ImageContianer .GroupImage:hover {
+.LoginPageInnerContainer .GroupImage:hover {
     filter: brightness(80%); /* Adjust the brightness as per your preference */
     cursor: pointer;
 }
-
-.LoginPageInnerContainer .ImageContianer .GroupImage:hover::before {
+.GroupImage:hover {
+    filter: brightness(120%);
+  }
+.LoginPageInnerContainer .GroupImage:hover::before {
     content: "";
     position: absolute;
     top: 0;

@@ -54,7 +54,7 @@
   <body>
 
 
-    {% include 'navbar2.html' %}
+ 
 
     
     
@@ -106,7 +106,7 @@
                       <input class = "btn btn-primary mybutton" type="submit" value='Search'/>
                     </form>
                     <br>
-                    <a href="/add_items"><div class="formbtn">Add Items</div></a><br><br>
+                    <a href="/add_items"><div class="btn btn-primary mybutton">Add Items</div></a><br><br>
                     <a href="/list_history"><div class="btn btn-primary mybutton">List History</div></a><br>
               </div> <!--end of col-sm-2-->
                       <br>
@@ -134,7 +134,7 @@
                                   <td>
                                     {% if item.quantity <= item.reorder_level %}
                                     <div style="background-color: orange;">
-                                      <a href="{% url 'stock_detail' item.id %}">{{item.quantity}}
+                                      <a href="{% url 'stock_detail' item.item_id %}">{{item.quantity}}
                                     </div>
                                     {% else %}
                                       <a href="{% url 'stock_detail' item.item_id %}">{{item.quantity}}

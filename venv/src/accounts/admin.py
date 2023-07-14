@@ -3,7 +3,7 @@
 # admin.site.register(User)
 
 from django.contrib import admin
-from .models import User, Role
+from .models import CustomUser, Role
 from .models import Faculty, Department
 
 class UserAdmin(admin.ModelAdmin):
@@ -14,7 +14,7 @@ class UserAdmin(admin.ModelAdmin):
 class RoleAdmin(admin.ModelAdmin):
     list_display = ('role_name',)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Faculty)
 admin.site.register(Department)

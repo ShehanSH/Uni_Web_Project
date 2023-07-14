@@ -1,3 +1,22 @@
+<!-- login.html -->
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'role' %}">Register</a></p>
+</body>
+</html> {% endcomment %}
+
+
+
 {% load static %}
 <!DOCTYPE html>
 <html>

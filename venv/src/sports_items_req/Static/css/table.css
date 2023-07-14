@@ -1,0 +1,71 @@
+
+/*Table paination styling*/
+.paging-nav {
+  text-align: right;
+  padding-top: 2px;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.paging-nav a {
+  margin: auto 1px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 1px 7px;
+  background: #3287a8;
+  color: white;
+  border-radius: 100px;
+}
+
+.paging-nav .selected-page {
+  font-weight: bold;
+  color: #dc3545;
+}
+/* End Table paination styling*/
+
+
+/*Align the title to the center of the page*/
+.table{
+	font-size: 13px;
+	text-align: center;
+	width: 60%;
+	margin: auto;
+    margin-top: 150px
+
+	
+}
+
+.table td, .table th{
+  padding: 5px;
+  border: 1px solid #690303;
+  text-align: center;
+}
+.mybutton{
+  width: 100%;
+}
+/*Make alternating colors for the table rows*/
+.table tr:nth-child(odd){
+	background: #B8CAE4
+}
+
+.table tr:nth-child(even){
+	background: #dae5f4
+}
+
+th {
+  background-color: #337ab7;
+  color: white;
+}
+
+
+
+
+.success{
+  list-style: none;
+  background-color: #2e6da4;
+  color: white;
+  text-align: center;
+}
+
+
+

@@ -17,15 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from inventory_management import views
-
-
-
-
+from django.urls import include
 
 
 urlpatterns = [
-    path('', views.list_items, name='list_items'),
-    path('homemain/', views.homemain, name='homemain'),
+    path('list_items', views.list_items, name='list_items'),
+    path('', views.homemain, name='homemain'),
     path('admin/', admin.site.urls),
     path('list_items/', views.list_items, name='list_items'),
     path('update_items/<str:pk>/', views.update_items, name="update_items"),
@@ -38,7 +35,13 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
-    path('', include('sports_item_req.urls')),
-
     
+    # path('accounts/', include('registration.backends.default.urls')),
+    # path('sports_item_req/', include(('sports_item_req.urls', 'sports_item_req'), namespace='sports_item_req')),
+   
+    path('home', views.home, name='home'),
+    path('index/', views.index, name='index'),
+    path('logout/', views.logout_view, name='logout'),
+    
+    path('', include('sports_items_req.urls')),
 ]

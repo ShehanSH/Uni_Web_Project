@@ -1,0 +1,29 @@
+<!-- template.html -->
+
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+        {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+   
+  </head>
+  <body>
+
+    {% include 'navbar2.html' %}
+
+    
+    
+    <h1>Welcome {{ user.first_name }} </h1>
+   <div style = "margin-top:160px">
+    <button onclick="window.location.href = '/';">Home</button>
+    <button onclick="window.location.href = '/create_sports_item_request/';">Sports Items</button>
+   </div>
+</body>
+</html>
+
+

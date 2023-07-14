@@ -3,8 +3,27 @@
   font-family: Rubik;
 }
 
+.registration-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.registration-form > p,
+.registration-form > button {
+  margin-right: 10px;
+}
+
+.login-button {
+  margin-top: 20px;
+}
+
+
+
+
+
 .LoginPageContainer {
-  height: 1500px;
+  height: 1900px;
   /* overflow: auto; */
   margin-left: 10%;
   width: 80%;
@@ -17,7 +36,7 @@
   
   border-radius: 20px;
  
-  margin-top: 150px;
+  margin-top: 100px;
   margin-bottom: 50px;
 
 }
@@ -42,9 +61,9 @@
 }
 
 .LoginPageInnerContainer .ImageContianer .GroupImage {
-  width: 150%;
+  width: 145%;
   display: block;
-  margin-top: -950px;
+  margin-top: -1150px;
 
   
 }
@@ -121,9 +140,11 @@
   width: 400px;
   font-size: 15px;
   padding: 10px;
+  padding-top: 10px;
   border: 1px solid  #660000;
   border-radius: 5px;
-  margin-top: 5px;
+  margin-top: 20px;
+  margin-top: 20px;
   outline: 0px !important;
  
 }
@@ -191,7 +212,7 @@
 .LoginFormContainer .LoginFormInnerContainer .LoginButton {
   margin-top: 30px;
   display: block;
-  width: 100%;
+  width: 400px;
   padding: 10px;
   border-radius: 20px;
   font-weight: bold;

@@ -24,9 +24,25 @@
             <li><a href="#expert">Expert</a></li>
             {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}
             <li><a href="#contactus">Contact Us</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
+            {% if user.is_authenticated %}
+                    {% comment %} <li class="user-name" style="color: white; font-weight: bold;">{{ user.first_name }}</li> {% endcomment %}
+
+                    <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
         </ul>
     </header>
 </div>
 </body>
 </html>
+
+
+{% comment %} <div class="button-frame">
+    <li class="user-name">{{ user.first_name }}</li>
+    <li>
+      <a href="{% url 'logout' %}" class="logout-link">
+        <i class="bx bx-log-out"></i> Logout
+      </a>
+    </li>
+  </div> {% endcomment %}
