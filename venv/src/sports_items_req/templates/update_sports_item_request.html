@@ -1,7 +1,92 @@
-<h2>Update Sports Item Request - Request ID: {{ request_id }}</h2>
 
-<form method="post">
+
+
+{% comment %} <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Update</button>
-</form>
+  
+  <!-- Registration Form -->
+  {{ registration_form.as_p }}
+  
+  <!-- UniStudent Form -->
+  {{ uni_student_form.as_p }}
+  
+  <button type="submit">Register</button>
+</form> {% endcomment %}
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+    <title>uni_staff_registration</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+
+    
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/item_req.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
+
+    <style>
+        .error {
+            position: relative;
+        }
+
+        .error .close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+            
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+<body>
+    {% include 'navbar2.html' %}
+
+    <div class="msg">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                    <span class="close-button">&times;</span>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="LoginPageContainer">
+        <div class="LoginPageInnerContainer">
+            {% comment %} <div class="ImageContianer">
+                <img src="{% static 'images/signup.png' %}" alt="login Image" class="GroupImage">
+            </div> {% endcomment %}
+            <div class="LoginFormContainer">
+                <div class="LoginFormInnerContainer" style="margin-top:0px">
+                    <h2 class="header">Update Sports Item Request</h2>
+                    
+                      <form method="post">
+                        {% csrf_token %}
+                        
+                        {{ form.as_p }}
+                        
+                        <button type="submit" class="LoginButton">Update</button>
+                      </form>
+                     
+                    
+                    {% comment %} <h2>Update Sports Item Request - Request ID: {{ request.request_id }}</h2> {% endcomment %}
+
+
+    
+    <script src="{% static 'js/home2.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+
+</body>
+</html> 

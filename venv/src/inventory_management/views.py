@@ -38,11 +38,11 @@ def test(request):
 
 
 def list_items(request):
-    header = "Sports Items List"
+    
     form = InventorySearchForm(request.POST or None)
     queryset = Inventory_Stock.objects.all()
     context = {
-        "header": header,
+      
         "queryset": queryset,
         "form": form,
     }

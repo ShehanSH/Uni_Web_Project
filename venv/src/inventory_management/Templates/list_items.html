@@ -1,4 +1,5 @@
 
+
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -23,13 +24,62 @@
       href="https://getbootstrap.com/docs/4.4/examples/navbar-fixed/"
     />
 
+
+
+
+     <!-- js part -->
+     <link rel="stylesheet" href="js/date-time-phone/jquery-ui.css">
+     <link rel='stylesheet' href="js/date-time-phone/jquery-ui-timepicker-addon.css" />
+      
+
+
+
+
+
+
+     <!-- js part -->
+
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.css' %}" rel="stylesheet">
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.structure.min.css' %}" rel="stylesheet">
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.theme.min.css' %}" rel="stylesheet">
+      
+
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
     <link href="{% static 'css/stylesheetdelete.css' %}" rel="stylesheet" />
-
+    <link href="{% static 'css/paging.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
     <!-- Favicons -->
-   
+    <link
+      rel="apple-touch-icon"
+      href="/docs/4.4/assets/img/favicons/apple-touch-icon.png"
+      sizes="180x180"
+    />
+    <link
+      rel="icon"
+      href="/docs/4.4/assets/img/favicons/favicon-32x32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="/docs/4.4/assets/img/favicons/favicon-16x16.png"
+      sizes="16x16"
+      type="image/png"
+    />
+    <link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json" />
+    <link
+      rel="mask-icon"
+      href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
+      color="#563d7c"
+    />
+    <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico" />
+    <meta
+      name="msapplication-config"
+      content="/docs/4.4/assets/img/favicons/browserconfig.xml"
+    />
+    <meta name="theme-color" content="#563d7c" />
 
     <style>
       .bd-placeholder-img {
@@ -54,39 +104,7 @@
   <body>
 
 
- 
-
-    
-    
-    <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
-      <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="icon-box">
-              <i class="material-icons">&#xE5CD;</i>
-            </div>
-            <h4 class="modal-title">Are you sure?</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p>Do you really want to delete these records? This process cannot be undone.</p>
-          </div>
-          <div class="modal-footer">
-            <form method="post" action="">
-              {% csrf_token %}
-                <input class="btn btn-danger" type="submit" value="Delete" />
-                <a href="/list_items"><div class="btn btn-secondary" data-dismiss="modal" >Cancel</div></a>
-          </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
+    {% include 'adminNavbar.html' %}
 
 
     <main role="main" class="container">
@@ -98,16 +116,16 @@
        </ul>
       {% endif %}
       <div class="jumbotron">
-          <div class="header"> {{header}} </div>
+          <div class="header" style="padding-bottom:10px"> SPORTS ITEM STOCK </div>
           <div class = "row">
               <div class = "col-sm-2">
                   <form method='POST' action=''>{% csrf_token %}
                       {{form|crispy}}
-                      <input class = "btn btn-primary mybutton" type="submit" value='Search'/>
+                      <input class = "button-frame" type="submit" value='Search'/>
                     </form>
                     <br>
-                    <a href="/add_items"><div class="btn btn-primary mybutton">Add Items</div></a><br><br>
-                    <a href="/list_history"><div class="btn btn-primary mybutton">List History</div></a><br>
+                    <a href="/add_items"><div class="button-frame" >Add Items</div></a><br><br>
+                    <a href="/list_history"><div class="button-frame" >List History</div></a><br>
               </div> <!--end of col-sm-2-->
                       <br>
               <div class = "col-sm-10">
@@ -154,21 +172,24 @@
           </div> <!--end of row-->
       </div>
     </main>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
+  
+
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/myjs.js' %}"></script>
+    <script src="{% static 'js/pager/paging.js' %}"></script>  
+
     <script>
-      window.jQuery ||
-        document.write(
-          '<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>'
-        );
-    </script>
-    <script
-      src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-      crossorigin="anonymous"
-    ></script>
+    $(document).ready(function(){
+  
+      $(".datetimeinput").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
+      $(".table").paging({limit:5});
+
+     
+    });
+  </script>
+  <script src="{% static 'js/home2.js' %}"></script>
+
   </body>
 </html>
+ 

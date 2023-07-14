@@ -1,0 +1,39 @@
+{% load static %}
+<html lang="en">
+<head>
+  
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="{% static 'css/home2.css' %}" rel="stylesheet" />
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+    
+</head>
+<body>
+    <div class = "headerback" >
+    <header >
+
+        <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
+        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF PHYSICAL EDUCATION <br>
+        <span style="font-weight: normal;">University of Kelaniya, Sri Lanka </span></a>
+        <div class="menutoggle" onclick="togglemenu();">
+        </div>
+        <ul class="navigation">
+            <li><a href="{% url 'homemain' %}">Dash Board</a></li>
+            <li><a href="{% url 'add_items' %}">Add Items</a></li>
+            <li><a href="{% url 'list_items' %}">List Items</a></li>
+            <li><a href="{% url 'list_history' %}">List History</a></li> 
+            {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}
+            <li><a href="#contactus">Admin</a></li>
+            {% comment %}{% if user.is_authenticated %}
+                    {% comment %} <li class="user-name" style="color: white; font-weight: bold;">{{ user.first_name }}</li> 
+
+                    <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+                {% endcomment %}
+        </ul>
+    </header>
+</div>
+</body>
+</html>

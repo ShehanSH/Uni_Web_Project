@@ -41,6 +41,20 @@
   
   }
   
+  /* Add styles for normal state */
+a {
+    color: #333;  /* Change the text color */
+    text-decoration: none;  /* Remove underline */
+    /* Add other styles as needed */
+  }
+  
+  /* Add styles for hover state */
+  a:hover {
+    color: #660000;  /* Change the text color on hover */
+    text-decoration: none;  /* Add underline on hover */
+    /* Add other styles as needed */
+    font-weight: bold;
+  }
   
   
   .LoginPageInnerContainer {

@@ -65,9 +65,12 @@ th {
 
 .success{
   list-style: none;
-  background-color: #2e6da4;
+  background-color: #16941a;
   color: white;
   text-align: center;
+  padding: 1px;
+  border-radius: 8px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body{

@@ -55,7 +55,7 @@
     <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
     <link href="{% static 'css/stylesheetdelete.css' %}" rel="stylesheet" />
     <link href="{% static 'css/paging.css' %}" rel="stylesheet" />
-
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
     <!-- Favicons -->
     <link
       rel="apple-touch-icon"
@@ -110,7 +110,7 @@
   <body>
 
 
-    {% include 'navbar2.html' %}
+    {% include 'adminNavbar.html' %}
 
     
     
@@ -154,13 +154,14 @@
        </ul>
       {% endif %}
       <div class="jumbotron">
-     
+        <div class="header" style="padding-bottom:10px"> SPORTS ITEM TRANSACTION HISTORY </div>
         <form method='POST' action=''>{% csrf_token %}
           {{form|crispy}}
-          <input type="submit" value='Search'/>
+          <input type="submit" value='Search' class="button-frame"/>
       </form>
 
       <br>
+      
         <div class="display_table">
             <table class='table'>
               <thead>

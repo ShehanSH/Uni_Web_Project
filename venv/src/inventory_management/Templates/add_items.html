@@ -1,8 +1,7 @@
-{% load crispy_forms_tags %}
+
 
 {% load static %}
-
-
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +24,32 @@
       href="https://getbootstrap.com/docs/4.4/examples/navbar-fixed/"
     />
 
+
+
+
+     <!-- js part -->
+     <link rel="stylesheet" href="js/date-time-phone/jquery-ui.css">
+     <link rel='stylesheet' href="js/date-time-phone/jquery-ui-timepicker-addon.css" />
+      
+
+
+
+
+
+
+     <!-- js part -->
+
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.css' %}" rel="stylesheet">
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.structure.min.css' %}" rel="stylesheet">
+     <link href="{% static 'js/jquery-ui-1.13.2/jquery-ui.theme.min.css' %}" rel="stylesheet">
+      
+
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
     <link href="{% static 'css/mainpage.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/stylesheetdelete.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/paging.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/button.css' %}" rel="stylesheet" />
     <!-- Favicons -->
     <link
       rel="apple-touch-icon"
@@ -77,8 +99,14 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{% static 'css/navbar-top-fixed.css' %}" rel="stylesheet" />
+   
   </head>
   <body>
+
+
+    {% include 'adminNavbar.html' %}
+
+
     
     <main role="main" class="container">
       <div class='success'>
@@ -96,26 +124,29 @@
             <form method='POST' action=''>{% csrf_token %}  
                 {% comment %} Cross-Site Request Forgery - authenticated security method to pass data to database {% endcomment %}
                 {{ form|crispy }} 
-                <input type="submit" value='save'/>
+                <input type="submit" value='save'/ class="button-frame">
             </form>
         </p>
       </div>
     </main>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
+  
+
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui-1.13.2/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/myjs.js' %}"></script>
+    <script src="{% static 'js/pager/paging.js' %}"></script>  
+
     <script>
-      window.jQuery ||
-        document.write(
-          '<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>'
-        );
-    </script>
-    <script
-      src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-      crossorigin="anonymous"
-    ></script>
+    $(document).ready(function(){
+  
+      $(".datetimeinput").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
+      $(".table").paging({limit:5});
+
+     
+    });
+  </script>
+  <script src="{% static 'js/home2.js' %}"></script>
+
   </body>
 </html>
+ 

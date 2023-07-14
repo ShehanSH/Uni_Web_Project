@@ -38,33 +38,38 @@ from django.shortcuts import render
 from .models import SportsItemRequest
 
 
+from django.shortcuts import render
+from .models import SportsItemRequest
+
 def list_requests_view(request):
     user = request.user
+    first_name = user.first_name  # Retrieve user's first name from CustomUser model
     requests = SportsItemRequest.objects.filter(user=user)
     context = {
+        "first_name": first_name,
         "requests": requests
     }
     return render(request, 'list_requests.html', context)
 
 
+
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import SportsItemRequest
-from .forms import SportsItemsRequestForm
+from .forms import SportsItemsRequestForm,SportsItemRequestUpdateForm
+from django.contrib import messages
 
-def update_sports_item_request(request, request_id):
-    sports_item_request = get_object_or_404(SportsItemRequest, request_id=request_id)
-
+def update_sports_item_request(request, pk):
+    queryset = SportsItemRequest.objects.get(request_id=pk)
+    form = SportsItemRequestUpdateForm(instance=queryset)
     if request.method == 'POST':
-        form = SportsItemsRequestForm(request.POST, instance=sports_item_request)
+        form = SportsItemRequestUpdateForm(request.POST, instance=queryset)
         if form.is_valid():
             form.save()
-            return redirect('list_requests')
-    else:
-        form = SportsItemsRequestForm(instance=sports_item_request)
+            # messages.success(request, 'Item updated successfully')
+            return redirect('sports_items_req:list_requests')
 
     context = {
-        'form': form,
-        'request_id': request_id,
+        'form': form
     }
-
     return render(request, 'update_sports_item_request.html', context)
+

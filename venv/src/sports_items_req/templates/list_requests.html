@@ -29,13 +29,13 @@
                 {% for request in requests %}
                 <tr>
                     <td>{{ request.request_id }}</td>
-                    <td>{{ request.category.name }}</td>
-                    <td>{{ request.item.item_name }}</td>
+                   <td>{{ request.category.name }}</td></a>
+                    <td> <a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}">{{ request.item.item_name }}</a></td>
                     <td>{{ request.quantity }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
-                              <button class="button_one">view</button>
-                              <button class="button_two">delete</button>
+                        <button>Edit</button>
+
                            
                     </td>
                    
