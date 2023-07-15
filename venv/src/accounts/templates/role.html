@@ -26,7 +26,7 @@
                     <div class="LoginFormInnerContainer" >
                     
                     
-                    <a href="{% url 'uni_registration' %}">
+                    <a href="{% url 'uni_student_registration' %}">
                         <img src="{% static 'images/role1.png' %}" alt="login Image" class="GroupImage">
                     </a>
                     <h2 class="header" style="text-decoration: none;">University Student</h2>
@@ -52,7 +52,7 @@
                             {% endcomment %}
                 </div>
                 <div class="LoginFormInnerContainer">
-                    <a href="">
+                    <a href="{% url 'outsider_registration' %}">
                         <img src="{% static 'images/role3.png' %}" alt="login Image" class="GroupImage">
                     </a>
                     <h2 class="header">Outside Person</h2>

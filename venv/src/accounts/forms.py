@@ -59,9 +59,10 @@ class UniStaffRegstrationForm(forms.ModelForm):
     
 
 class OutsiderRegstrationForm(forms.ModelForm):
-    nic = forms.CharField(label='NIC', max_length=255, widget=forms.TextInput(attrs={'class': 'abc'}))
-   
+    
     class Meta:
         model = Outsider
-        fields = ('nic')
-      
+        fields = ('nic',)
+        widgets = {
+            'nic': forms.TextInput(attrs={'class': 'abc'}),
+        }

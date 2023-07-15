@@ -23,14 +23,13 @@ urlpatterns = [
    
     
     path('login/', views.login_view, name='login'),
-    path('register/', views.registration_view, name='register'),
-    path('register/', views.registration_view, name='register'),
-    path('home2nd/', views.home2nd, name='home2nd'),
+    # path('register/', views.registration_view, name='register'),
+    # path('register/', views.registration_view, name='register'),
+    # path('home2nd/', views.home2nd, name='home2nd'),
     path('role/', views.role, name='role'),
-    path('uni_registration/', views.uni_registration, name='uni_registration'),
-    path('uni_details/', views.uni_details, name='uni_details'),
-    # path('uni_reg/', views.uni_reg, name='uni_reg'),
+    path('uni_student_registration/', views.uni_student_registration, name='uni_student_registration'),
     path('uni_staff_registration/', views.uni_staff_registration, name='uni_staff_registration'),
-    path('homemain', views.homemain, name='homemain'),
+    path('outsider_registration/', views.outsider_registration, name='outsider_registration'),
+    # path('homemain', views.homemain, name='homemain'),
 
 ]
