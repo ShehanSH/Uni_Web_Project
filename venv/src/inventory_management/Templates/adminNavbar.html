@@ -4,7 +4,7 @@
   
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <link href="{% static 'css/home2.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/adminpage.css' %}" rel="stylesheet" />
     {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
     
 </head>
@@ -12,14 +12,14 @@
     <div class = "headerback" >
     <header >
 
-        <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
-        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF PHYSICAL EDUCATION <br>
+        <a href=""><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
+        <a href="" class="logo">DEPARTMENT OF PHYSICAL EDUCATION <br>
         <span style="font-weight: normal;">University of Kelaniya, Sri Lanka </span></a>
         <div class="menutoggle" onclick="togglemenu();">
         </div>
         <ul class="navigation">
             <li><a href="/admin/">Dashboard</a></li>
-            <li><a href="{% url 'add_items' %}">Add Items</a></li>
+            {% comment %} <li><a href="{% url 'add_items' %}">Add Items</a></li> {% endcomment %}
             <li><a href="{% url 'list_items' %}">List Items</a></li>
             <li><a href="{% url 'list_history' %}">List History</a></li> 
             {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}

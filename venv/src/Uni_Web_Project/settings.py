@@ -268,7 +268,7 @@ JAZZMIN_SETTINGS = {
     "site_icon": None,
 
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to the Uok Web based System",
+    "welcome_sign": "Welcome to the Department Web based System",
 
     # Copyright on the footer
     "copyright": "Department Physical Education",
@@ -289,6 +289,7 @@ JAZZMIN_SETTINGS = {
 
         # Url that gets reversed (Permissions can be added)
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "View Site",  "url": "/list_items/", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},

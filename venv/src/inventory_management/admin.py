@@ -15,9 +15,9 @@ class InventoryCreateAdmin(admin.ModelAdmin):
     form = InventoryCreateForm
     list_filter = ['category']
     search_fields = ['category', 'item_name', 'quantity']
-    # list_editable = ['quantity']
-    # class Meta:
-    # 	model = Inventory_Stock
+    list_editable = ['quantity']
+    class Meta:
+    	model = Inventory_Stock
 
 
 admin.site.register(Inventory_Stock, InventoryCreateAdmin)

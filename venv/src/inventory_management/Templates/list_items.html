@@ -116,7 +116,7 @@
        </ul>
       {% endif %}
       <div class="jumbotron">
-          <div class="header" style="padding-bottom:10px"> SPORTS ITEM STOCK </div>
+          <div class="header" style="padding-bottom:20px"> SPORTS ITEMS STOCK </div>
           <div class = "row">
               <div class = "col-sm-2">
                   <form method='POST' action=''>{% csrf_token %}
@@ -124,7 +124,7 @@
                       <input class = "button-frame" type="submit" value='Search'/>
                     </form>
                     <br>
-                    <a href="/add_items"><div class="button-frame" >Add Items</div></a><br><br>
+                    {% comment %} <a href="/add_items"><div class="button-frame" >Add Items</div></a><br><br> {% endcomment %}
                     <a href="/list_history"><div class="button-frame" >List History</div></a><br>
               </div> <!--end of col-sm-2-->
                       <br>
