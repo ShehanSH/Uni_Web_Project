@@ -25,9 +25,10 @@
             {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}
             <li><a href="#contactus">Contact Us</a></li>
             {% if user.is_authenticated %}
-                    {% comment %} <li class="user-name" style="color: white; font-weight: bold;">{{ user.first_name }}</li> {% endcomment %}
-
                     <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
+                    <li class="user-name" style="color: white; font-weight: bold;">{{ user.username }}</li>
+
+               
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                 {% endif %}

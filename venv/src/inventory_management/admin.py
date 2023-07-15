@@ -24,6 +24,19 @@ admin.site.register(Inventory_Stock, InventoryCreateAdmin)
 admin.site.register(Category)
 
 
+class CustomAdminSite(admin.AdminSite):
+    def get_urls(self):
+        from django.urls import path
+        from inventory_management.views import list_items
+
+        urls = super().get_urls()
+        custom_urls = [
+            path('list_items/', list_items, name='list_items')
+        ]
+        return custom_urls + urls
+
+admin_site = CustomAdminSite(name='custom_admin')
+
 
 
 # Register your models here.

@@ -18,6 +18,6 @@ admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Faculty)
 admin.site.register(Department)
-admin.site.site_header = 'Inventory Management System'
+admin.site.site_header = 'UOK SPORTS ITEMS & GROUND BOOKING SYSTEM'
 
 
