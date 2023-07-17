@@ -1,6 +1,6 @@
 from django import forms
 from .models import Inventory_Stock, Inventory_Stock_History
-
+from accounts.models import CustomUser
 class InventoryCreateForm(forms.ModelForm):
     class Meta:
         model = Inventory_Stock
@@ -50,10 +50,14 @@ class InventoryUpdateForm(forms.ModelForm):
         fields = ['category', 'item_name', 'quantity']
 
 class IssueForm(forms.ModelForm):
+    issue_to = forms.ModelChoiceField(queryset=CustomUser.objects.all(), label='Issue To')
     class Meta:
         model = Inventory_Stock
         fields = ['issue_quantity', 'issue_to']    
         # add to issue by
+    def __init__(self, *args, **kwargs):
+        super(IssueForm, self).__init__(*args, **kwargs)
+        self.fields['issue_to'].widget.attrs['data-ajax--url'] = '/search_users/'   
 
 class ReceiveForm(forms.ModelForm):
     class Meta:

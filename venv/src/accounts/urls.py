@@ -32,4 +32,9 @@ urlpatterns = [
     path('outsider_registration/', views.outsider_registration, name='outsider_registration'),
     # path('homemain', views.homemain, name='homemain'),
 
+    path('reset-password/', views.reset_password, name='reset_password'),
+    path('reset-password/done/', views.reset_password_done, name='reset_password_done'),
+    path('reset-password/confirm/<str:uidb64>/<str:token>/', views.reset_password_confirm, name='reset_password_confirm'),
+    path('reset-password/complete/', views.reset_password_complete, name='reset_password_complete'),
+
 ]

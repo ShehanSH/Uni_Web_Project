@@ -131,19 +131,28 @@ def stock_detail(request, pk):
 	return render(request, "stock_detail.html", context)
 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Inventory_Stock
+from .forms import IssueForm
+
 def issue_items(request, pk):
     queryset = Inventory_Stock.objects.get(item_id=pk)
     form = IssueForm(request.POST or None, instance=queryset)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.receive_quantity = 0
-        instance.quantity -= instance.issue_quantity
-        instance.issue_by = str(request.user)
-        messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
-        instance.save()
 
-        return redirect('/stock_detail/' + str(instance.item_id))
-        # return HttpResponseRedirect(instance.get_absolute_url())
+    if form.is_valid():
+        issue_quantity = form.cleaned_data['issue_quantity']
+
+        if issue_quantity > queryset.quantity:
+            messages.error(request, f"Cannot issue sports item. Stock has only {queryset.quantity} {queryset.item_name}s available.")
+        else:
+            instance = form.save(commit=False)
+            instance.receive_quantity = 0
+            instance.quantity -= issue_quantity
+            instance.issue_by = str(request.user)
+            instance.save()
+            messages.success(request, f"Issued {issue_quantity} {instance.item_name}s SUCCESSFULLY. {instance.quantity} {instance.item_name}s now left in Store")
+            return redirect('/stock_detail/' + str(instance.item_id))
 
     context = {
         "title": 'Issue ' + str(queryset.item_name),
