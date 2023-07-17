@@ -37,6 +37,7 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
+
     
     # path('accounts/', include('registration.backends.default.urls')),
     # path('sports_item_req/', include(('sports_item_req.urls', 'sports_item_req'), namespace='sports_item_req')),
@@ -46,4 +47,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     
     path('', include('sports_items_req.urls')),
+    path('', include('ground_booking.urls')),
 ]

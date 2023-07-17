@@ -17,9 +17,11 @@
             <thead>
                 <tr>
                     <th>Request ID</th>
-                    <th>Category</th>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
+                    <th>Event</th>
+                    <th>Ground</th>
+                    <th>Booking Price</th>
+                    <th>Request Date</th>
+                    <th>Request Time</th>
                     <th>Status</th>
                     <th>Action</th>
                    
@@ -28,14 +30,16 @@
             <tbody>
                 {% for request in requests %}
                 <tr>
-                    <td>{{ request.request_id }}</td>
-                   <td>{{ request.category.name }}</td></a>
-                    <td>{{ request.item.item_name }}</td>
-                    <td>{{ request.quantity }}</td>
+                    <td>{{ request.booking_id }}</td>
+                   <td>{{ request.event.event_name }}</td></a>
+                    {% comment %} <td> <a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}">{{ request.item.item_name }}</a></td> {% endcomment %}
+                    <td> {{ request.ground.ground_name }}</td>
+                    <td> {{ request.ground.booking_price }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.request_time }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
-                        <button><a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}">Update</a></button>
-                        <button><a href="{% url 'sports_items_req:delete_request' request.request_id %}">Delete</a></button>
+                        <button>Edit</button>
 
                            
                     </td>

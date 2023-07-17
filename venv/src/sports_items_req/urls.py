@@ -10,4 +10,5 @@ urlpatterns = [
     path('list_requests/', list_requests_view, name='list_requests'),
     # path('update_sports_item_request/<int:request_id>/', update_sports_item_request, name='update_sports_item_request'),
     path('update_sports_item_request/<str:pk>/', update_sports_item_request, name="update_sports_item_request"),
+    path('delete_request/<str:pk>/', delete_request, name='delete_request'),
 ]

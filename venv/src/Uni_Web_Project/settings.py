@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'sports_items_req',
     'accounts',
     'bootstrap_datepicker_plus',
+    'ground_booking',
     
     
     

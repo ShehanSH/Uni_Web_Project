@@ -6,6 +6,22 @@ from django.contrib.auth.decorators import login_required
 from .forms import SportsItemsRequestForm
 from .models import SportsItemRequest
 
+from django.shortcuts import render
+from .models import SportsItemRequest
+from django.shortcuts import render
+
+from django.shortcuts import render
+from .models import SportsItemRequest
+
+
+from django.shortcuts import render
+from .models import SportsItemRequest
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import SportsItemRequest
+from .forms import SportsItemsRequestForm,SportsItemRequestUpdateForm
+from django.contrib import messages
+
 
 @login_required(login_url='login')
 def create_sports_item_request(request):
@@ -23,8 +39,6 @@ def create_sports_item_request(request):
     return render(request, 'create_sports_item_request.html', {'form': form})
 
 
-from django.shortcuts import render
-from .models import SportsItemRequest
 
 def sports_item_requests_view(request):
     user = request.user
@@ -32,14 +46,7 @@ def sports_item_requests_view(request):
     return render(request, 'sports_item_requests.html', {'requests': requests})
 
 
-from django.shortcuts import render
 
-from django.shortcuts import render
-from .models import SportsItemRequest
-
-
-from django.shortcuts import render
-from .models import SportsItemRequest
 
 def list_requests_view(request):
     user = request.user
@@ -52,11 +59,6 @@ def list_requests_view(request):
     return render(request, 'list_requests.html', context)
 
 
-
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import SportsItemRequest
-from .forms import SportsItemsRequestForm,SportsItemRequestUpdateForm
-from django.contrib import messages
 
 def update_sports_item_request(request, pk):
     queryset = SportsItemRequest.objects.get(request_id=pk)
@@ -73,3 +75,11 @@ def update_sports_item_request(request, pk):
     }
     return render(request, 'update_sports_item_request.html', context)
 
+
+def delete_request(request, pk):
+    queryset = SportsItemRequest.objects.get(request_id=pk)
+    if request.method == 'POST':
+        queryset.delete()
+        messages.success(request, 'Item deleted successfully')
+        return redirect('sports_items_req:list_requests')
+    return render(request, 'delete_request.html')
