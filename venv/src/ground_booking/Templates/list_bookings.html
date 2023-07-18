@@ -40,9 +40,9 @@
                     <td>{{ request.request_time }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
-                        <a href="{% url 'ground_booking:update_ground_booking_request' request.booking_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" class="actionbtn"></a>
+                        <a href="{% url 'ground_booking:update_ground_booking_request' request.booking_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" class="actionbtn" style="  width: 22px; height: 22px;  margin-right: 6px;"></a>
                         {% comment %} <a href="{% url url 'ground_booking:update_ground_booking_request' request.booking_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a> {% endcomment %}
-                        <a href="{% url 'ground_booking:delete_booking_request' request.booking_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" class="actionbtn"></a>
+                        <a href="{% url 'ground_booking:delete_booking_request' request.booking_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" class="actionbtn" style="  width: 22px; height: 22px;  margin-right: 6px;"></a>
 
                            
                     </td>

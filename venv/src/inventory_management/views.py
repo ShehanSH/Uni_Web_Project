@@ -278,4 +278,4 @@ def index(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('home')  # Replace 'home' with the desired URL after logout
+    return redirect('/')  # Replace 'home' with the desired URL after logout

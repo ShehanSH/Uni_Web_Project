@@ -204,7 +204,7 @@ p
 {
     font-size: 1.5em;
     color: #fff;
-    background: #ff0157;
+    background: #660000;
     display: inline-block;
     padding: 10px 30px;
     text-transform: uppercase;
@@ -217,6 +217,8 @@ p
 .btn:hover
 {
     letter-spacing: 5px;
+    color: #000000;
+    background:#F6DD26;
 }
 
 header
@@ -332,7 +334,7 @@ section
 
 .titeText span
 {
-    color: #ff0157;
+    color: #660000;
     font-weight: 700;
     font-size: 1.5em;
 }
@@ -499,7 +501,7 @@ section
     margin-top: 20px;
     color: #111;
     font-size: 1.5em;
-    color: #ff0157;
+    color: #660000;
     font-weight: 600;
 }
 
@@ -551,7 +553,7 @@ section
 {
     font-size: 1em;
     color: #fff;
-    background: #ff0157;
+    background: #660000;
     display: inline-block;
     text-transform: uppercase;
     text-decoration: none;
@@ -564,7 +566,7 @@ section
 }
 
 .footer{
-    background: #ff0157;
+    background: #660000;
     width: 100%;
     height: 70px;
     display: flex;

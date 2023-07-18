@@ -333,7 +333,7 @@ section
 
 .titeText span
 {
-    color: #ff0157;
+    color: #660000;
     font-weight: 700;
     font-size: 1.5em;
 }
@@ -500,7 +500,7 @@ section
     margin-top: 20px;
     color: #111;
     font-size: 1.5em;
-    color: #ff0157;
+    color: #660000;
     font-weight: 600;
 }
 
@@ -552,7 +552,7 @@ section
 {
     font-size: 1em;
     color: #fff;
-    background: #ff0157;
+    background: #660000;
     display: inline-block;
     text-transform: uppercase;
     text-decoration: none;

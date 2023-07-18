@@ -59,3 +59,36 @@ def delete_booking_request(request, pk):
         # messages.success(request, 'Item deleted successfully')        #ADD MESSAGES OF ALL VIEWWWSSSSSSSSSSSSSSSSSS
         return redirect('ground_booking:ground_booking_request')
     return render(request, 'delete_booking_request.html')
+
+from django.http import JsonResponse
+from django.shortcuts import render
+from .models import GroundBookingRequest
+
+from django.shortcuts import render
+from django.http import JsonResponse
+from .models import GroundBookingRequest
+
+def calendar_view(request):
+    return render(request, 'calendar.html')
+
+def all_events(request):
+    # Retrieve all GroundBookingRequest objects
+    bookings = GroundBookingRequest.objects.all()
+
+    # Prepare a list to store events
+    events = []
+
+    for booking in bookings:
+        # Format the event start time
+        start = booking.request_date.strftime('%Y-%m-%d') + 'T' + booking.request_time.strftime('%H:%M:%S')
+
+        # Add the event data to the list
+        events.append({
+            'title': str(booking.ground),
+            'start': start,
+            'approval_status': booking.approval_status,
+        })
+
+    # Return the events as a JSON response
+    return JsonResponse(events, safe=False)
+

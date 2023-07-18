@@ -106,8 +106,8 @@
             </p>
             {% comment %} <a href="accounts/login" class="btn">sports </a><br>
             <a href="accounts/login" class="btn">grounds </a><br> {% endcomment %}
-            <button onclick="window.location.href = '/ground_booking_request/';" class="btn" >grounds</button>
-            <button onclick="window.location.href = '/create_sports_item_request/';" class="btn">sports</button>
+            <button onclick="window.location.href = '/ground_booking_request/';" class="btn">Grounds Booking</button>
+            <button onclick="window.location.href = '/create_sports_item_request/';" class="btn">Sports Items Request</button>
             
         </div>
     </section>
@@ -133,63 +133,7 @@
 <!--Menu Section-->
 
     <section class="menu" id="menu">
-        <div class="title">
-            <h2 class="titeText">Our <span>M</span>enu</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p>
-        </div>
-        <div class="content">
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/sf0N8m6r/burger.jpg">
-                </div>
-                <div class="text">
-                    <h3>Special Burgers</h3>
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/fLzP4rQw/pizza2.jpg">
-                </div>
-                <div class="text">
-                    <h3>Special Pizzas</h3>
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/7PBF4wLj/fries.jpg">
-                </div>
-                <div class="text">
-                    <h3>Tasty Fries</h3>
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/4dWSXQXp/sandwich.jpg">
-                </div>
-                <div class="text">
-                    <h3>Special Sandwichs</h3>
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/5NTDHgL3/taco.jpg">
-                </div>
-                <div class="text">
-                    <h3>Special Tacos</h3>
-                </div>
-            </div>
-            <div class="box">
-                <div class="imgbx">
-                    <img src="https://i.postimg.cc/3N6fvr4R/cc.jpg">
-                </div>
-                <div class="text">
-                    <h3>Cold Drinks</h3>
-                </div>
-            </div>
-        </div>
-        <div class="title">
-            <a href="#" class="btn">View All</a>
-        </div>
+        {% include 'calendar.html' %}
     </section>
 
     <!--Expert Section-->

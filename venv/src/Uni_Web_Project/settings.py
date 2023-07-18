@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap_datepicker_plus',
     'ground_booking',
-    
-    
+
     
     ]
 
+SCHEDULER_HOUR_FORMAT = 12
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
