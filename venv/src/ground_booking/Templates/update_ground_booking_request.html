@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ground Booking Request</title>
-</head>
-<body>
-    
-    
-</body>
-</html>
+
 
 
 {% comment %} <form method="post">
@@ -79,25 +70,19 @@
             </div> {% endcomment %}
             <div class="LoginFormContainer">
                 <div class="LoginFormInnerContainer" style="margin-top:0px">
-                    <h2 class="header">Ground Booking Request</h2>
+                    <h2 class="header">Update Ground Booking Request</h2>
                     
-                    <form method="post">
+                      <form method="post">
                         {% csrf_token %}
+                        
                         {{ form.as_p }}
-                        <button type="submit" class="LoginButton">Submit Request</button>
+                        
+                        <button type="submit" class="LoginButton">Update</button>
                       </form>
-                      <form action="{% url 'ground_booking:list_booking' %}" method="get">
+                     
+                    
+                    {% comment %} <h2>Update Sports Item Request - Request ID: {{ request.request_id }}</h2> {% endcomment %}
 
-                        <button type="submit" class="LoginButton">Go to List Bookings</button>
-                    </form>
-                    
-                    
-                </div>
-            </div>
-       
-        </div>
-       
-    </div>
 
     
     <script src="{% static 'js/home2.js' %}"></script>

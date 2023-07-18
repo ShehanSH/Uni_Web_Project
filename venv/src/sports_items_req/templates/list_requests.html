@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_req.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ground_booking.css' %}">
  
 </head>
 <body>
@@ -34,8 +35,8 @@
                     <td>{{ request.quantity }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
-                        <button><a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}">Update</a></button>
-                        <button><a href="{% url 'sports_items_req:delete_request' request.request_id %}">Delete</a></button>
+                        <a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" class="actionbtn"></a>
+                        <a href="{% url 'sports_items_req:delete_request' request.request_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" class="actionbtn"></a>
 
                            
                     </td>
@@ -43,7 +44,7 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        {% for item in queryset %}
+        {% comment %} {% for item in queryset %}
             <tr>
                 <td>{{ request.request_id }}</td>
                 <td>{{ request.category.name }}</td>
@@ -53,7 +54,7 @@
               <td><a href="{% url 'delete_items' item.item_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
             
             </tr>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
       </table>
     </div>
 </div> <!--end of col-sm-10-->
@@ -65,4 +66,4 @@
 
 </body>
 </html>
-```
+

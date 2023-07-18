@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import GroundBookingRequest,GroundBookingRequest
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .forms import GroundBookingRequestForm
+from .forms import GroundBookingRequestForm,GroundBookingRequestUpdateForm
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -33,3 +33,29 @@ def ground_booking_view(request):
         "requests": requests
     }
     return render(request, 'list_bookings.html', context)
+
+
+
+def update_ground_booking_request(request, pk):
+    queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    form = GroundBookingRequestUpdateForm(instance=queryset)
+    if request.method == 'POST':
+        form = GroundBookingRequestUpdateForm(request.POST, instance=queryset)
+        if form.is_valid():
+            form.save()
+            # messages.success(request, 'Item updated successfully')
+            return redirect('ground_booking:ground_booking_request')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'update_ground_booking_request.html', context)
+
+
+def delete_booking_request(request, pk):
+    queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    if request.method == 'POST':
+        queryset.delete()
+        # messages.success(request, 'Item deleted successfully')        #ADD MESSAGES OF ALL VIEWWWSSSSSSSSSSSSSSSSSS
+        return redirect('ground_booking:ground_booking_request')
+    return render(request, 'delete_booking_request.html')

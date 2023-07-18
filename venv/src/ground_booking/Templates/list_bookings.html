@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/item_req.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ground_booking.css' %}">
  
 </head>
 <body>
@@ -39,7 +40,9 @@
                     <td>{{ request.request_time }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
-                        <button>Edit</button>
+                        <a href="{% url 'ground_booking:update_ground_booking_request' request.booking_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" class="actionbtn"></a>
+                        {% comment %} <a href="{% url url 'ground_booking:update_ground_booking_request' request.booking_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a> {% endcomment %}
+                        <a href="{% url 'ground_booking:delete_booking_request' request.booking_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" class="actionbtn"></a>
 
                            
                     </td>
@@ -47,17 +50,18 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        {% for item in queryset %}
+        {% comment %} {% for item in queryset %}
             <tr>
                 <td>{{ request.request_id }}</td>
                 <td>{{ request.category.name }}</td>
                 <td>{{ request.item.item_name }}</td>
                 <td>{{ request.quantity }}</td>
             
-              <td><a href="{% url 'delete_items' item.item_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a></td>
-            
+              <td><a href="{% url 'delete_items' item.item_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a>
+              <a href="{% url 'delete_items' item.item_id %}#myModal"><img src="{% static 'images/delete1.png' %}" alt="delete Image" style="width: 20px; height: 20px;"></a>
+            </td>
             </tr>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
       </table>
     </div>
 </div> <!--end of col-sm-10-->
