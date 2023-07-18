@@ -13,20 +13,19 @@
     <header >
 
         <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
-        <a href="{% url 'homemain' %}" class="logo">DEPARTMENT OF PHYSICAL EDUCATION <br>
+        <a href="{% url 'homemain' %}" class="logo" style="margin-left:-60px;">DEPARTMENT OF PHYSICAL EDUCATION <br>
         <span style="font-weight: normal;">University of Kelaniya, Sri Lanka </span></a>
         <div class="menutoggle" onclick="togglemenu();">
         </div>
         <ul class="navigation">
             <li><a href="{% url 'homemain' %}">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="calendar/">Calendar</a></li>
-            {% comment %} <li><a href="#testimonials">Testimonials</a></li> {% endcomment %}
+            <li><a href="#Booking_calendar">Calendar</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contactus">Contact Us</a></li>
             {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
-                    <li class="user-name" style="color: white; font-weight: bold;">{{ user.username }}</li>
+                    {% comment %} <li class="user-name" style="color: white; font-weight: bold;">{{ user.username }}</li> {% endcomment %}
 
                
                 {% else %}

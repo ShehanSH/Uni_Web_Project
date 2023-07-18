@@ -4,8 +4,8 @@
   
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <link href="{% static 'css/home2.css' %}" rel="stylesheet" />
-    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+    {% comment %} <link href="{% static 'css/home2.css' %}" rel="stylesheet" /> {% endcomment %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     
 </head>
 <body>
@@ -132,8 +132,14 @@
 
 <!--Menu Section-->
 
-    <section class="menu" id="menu">
+    <section class="menu" id="Booking_calendar">
+        <div class="title">
+            <h2 class="titeText">Booking <span>C</span>alendar</h2>
+            {% comment %} <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p> {% endcomment %}
+        </div>
+        <div style="margin-top:-100px">
         {% include 'calendar.html' %}
+        </div>
     </section>
 
     <!--Expert Section-->
