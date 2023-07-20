@@ -1,0 +1,93 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Bitter);
+
+$bg: hsla(210, 50%, 40%, 1);
+$duration: 0.5s;
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a,
+a:visited {
+  color: #76b7f7;
+}
+
+body {
+  background-color: $bg;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bitter", serif;
+}
+
+body {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 1fr 50px;
+  justify-items: center;
+  align-items: center;
+  -webkit-perspective: 2000px;
+  perspective: 2000px;
+}
+
+.deck {
+  display: flex;
+}
+
+.card-space {
+}
+
+.card-space:hover .card {
+  transform: rotateY(-180deg);
+}
+
+.card {
+  border-radius: 10px;
+  height: 300px;
+  margin: 10px;
+  width: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all $duration ease;
+  & h1 {
+    margin-top: 5px;
+  }
+  & p {
+    margin-top: 0px;
+  }
+}
+
+.face {
+  border-radius: 10px;
+  box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.1);
+  & h1 {
+    padding: 0;
+  }
+  background-color: lighten($bg, 5%);
+  padding: 20px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  &.front {
+    text-align: center;
+    z-index: 20;
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+  }
+  &.back {
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+  }
+}

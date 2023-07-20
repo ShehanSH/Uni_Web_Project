@@ -1,10 +1,11 @@
 {% load static %}
+
 <html lang="en">
 <head>
   
-    <title>Document</title>
+    <title>Home Page</title>
     <link rel="stylesheet" href="style.css">
-    {% comment %} <link href="{% static 'css/home2.css' %}" rel="stylesheet" /> {% endcomment %}
+    <link href="{% static 'css/home2.css' %}" rel="stylesheet" /> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     
 </head>
@@ -118,13 +119,19 @@
         <div class="row">
             <div class="col50">
                 <h2 class="titeText"><span>A</span>bout Us</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste eius, dolorem necessitatibus vel ipsam perspiciatis a? Possimus illo voluptas voluptatem natus quasi blanditiis aliquam est, veritatis laudantium libero iusto nam consectetur ullam molestiae numquam id, voluptates nemo velit totam dicta?
-                <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea alias dolorem quod ratione dicta placeat aut! Neque natus ducimus repellat, dignissimos molestias obcaecati explicabo qui fugiat est, libero earum autem.
+                <p>
+                    The Department of Physical Education (DPE) has been functioning almost since the inception of the University way back in 1959. The DPE provides a wide range of Sports and Recreation programmes for the benefit of internal students of the University. These activities are supported by some of the best sport facilities in the University System in Sri Lanka.
+
+                    The main objective of the Department is to promote and improve the student-sporting prowess and provide opportunities to develop team and individual sports.
+                    
+                    <br><br>The Sports Advisory Board consisting of academic staff members functions in the advisory capacity.
+                    
+                    The Sports Council appointed annually functions as the students organizing arm of the department. Sports Council consist of captains and vice captains of the sports teams of the univrsity.
                 </p>
             </div>
             <div class="col50">
                 <div class="imgbx">
-                    <img src="https://i.postimg.cc/13F2DFKZ/pizza.jpg">
+                    <img src="{% static 'images/aboutus.jpg' %}" alt="Your Image">
                 </div>
             </div>
         </div>
@@ -146,50 +153,50 @@
 
     <section class="expert" id="expert">
         <div class="title">
-            <h2 class="titeText">Our Kitchen <span>E</span>xperts</h2>
+            <h2 class="titeText">Our <span>A</span>chivements</h2>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p>
         </div>
         <div class="content">
             <div class="box">
                 <div class="imgbx">
-                    <img src="https://i.postimg.cc/wx0pBDwf/expert1.jpg">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/23/whatsapp-image-2022-12-16-at-6.29.16-pm.jpeg">
                 </div>
                 <div class="text">
-                    <h3>Expert</h3>
+                    <h3>Rugger</h3>
                 </div>
             </div>
             <div class="box">
                 <div class="imgbx">
-                    <img src="https://i.postimg.cc/8PYgRNQL/expert2.jpg">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/26/whatsapp-image-2022-12-26-at-1.15.00-pm.jpeg">
                 </div>
                 <div class="text">
-                    <h3>Expert</h3>
+                    <h3>Carrom</h3>
                 </div>
             </div>
             <div class="box">
                 <div class="imgbx">
-                    <img src="https://i.postimg.cc/XYySxm4m/expert3.jpg">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/26/whatsapp-image-2022-12-26-at-2.09.09-pm.jpeg">
                 </div>
                 <div class="text">
-                    <h3>Expert</h3>
+                    <h3>Vollyball</h3>
                 </div>
             </div>
             <div class="box">
                 <div class="imgbx">
-                    <img src="https://i.postimg.cc/hv361bwK/expert4.jpg">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/05/whatsapp-image-2022-12-05-at-4.12.53-pm.jpeg">
                 </div>
                 <div class="text">
-                    <h3>Expert</h3>
+                    <h3>Karate</h3>
                 </div>
             </div>
-            <div class="box">
+            {% comment %} <div class="box">
                 <div class="imgbx">
                     <img src="https://i.postimg.cc/hjsHfq1z/expert5.jpg">
                 </div>
                 <div class="text">
                     <h3>Expert</h3>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </section>
 
@@ -203,13 +210,43 @@
         <div class="content">
             <div class="box">
                 <div class="imgbx">
-                    <div class="imgbx">
+                    {% comment %} <div class="imgbx">
                         <img src="https://i.postimg.cc/XJ4Rjvd6/cust1.jpg" alt="">
                     </div>
                     <div class="text">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti magnam quisquam temporibus assumenda nobis officia!</p>
                         <h2>Customer</h2>
-                    </div>
+                    </div> {% endcomment %}
+
+                    
+                    <div class="deck">
+                        <div class="card-space">
+                          <div class="card">
+                            <div class="face front">
+                              <h1>Mission Statement</h1>
+                            </div>
+                            <div class="face back">
+                              <p>A mission statement is a short summary of an organization’s core purpose, focus, and aims. This usually includes a brief description of what the organization does and its key objectives.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-space">
+                          <div class="card">
+                            <div class="face front">
+                              <h1>Vision Statement</h1>
+                            </div>
+                            <div class="face back">
+                              <p>A vision statement is a short description of an organization’s aspirations and the wider impact it aims to create. It should be a guiding beacon to everyone within the organization and something which underpins internal decision-making and determines the intended direction of the organization.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    
+
+
+
                 </div>
             </div>
             <div class="box">
