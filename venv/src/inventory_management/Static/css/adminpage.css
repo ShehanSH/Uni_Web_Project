@@ -445,7 +445,7 @@ section
 
 .testimonial
 {
-    background: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://i.postimg.cc/k5dZs5jR/bg2.jpg);
+    /* background: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://i.postimg.cc/k5dZs5jR/bg2.jpg); */
     background-size: cover;
 }
 

@@ -1,12 +1,11 @@
 {% load static %}
-
 <html lang="en">
 <head>
   
     <title>Home Page</title>
-    <link rel="stylesheet" href="style.css">
+    {% comment %} <link rel="stylesheet" href="style.css"> {% endcomment %}
     <link href="{% static 'css/home2.css' %}" rel="stylesheet" /> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
     
 </head>
 <body>
@@ -154,7 +153,7 @@
     <section class="expert" id="expert">
         <div class="title">
             <h2 class="titeText">Our <span>A</span>chivements</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p>
+            <p style="text-align: center;">Here, at our esteemed university, we celebrate not only academic achievements but also the outstanding accomplishments of our students in the vibrant world of sports. We firmly believe in the power of sports to instill discipline, teamwork, and a competitive spirit that complements our students' academic pursuits.</p>
         </div>
         <div class="content">
             <div class="box">
@@ -202,77 +201,108 @@
 
     <!--testimonial section-->
 
-    <section class="testimonial" id="testimonials">
+    {% comment %} <section class="testimonial" id="testimonials">
         <div class="title white">
             <h2 class="titeText">What they <span>s</span>aid about us</h2>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p>
         </div>
         <div class="content">
-            <div class="box">
-                <div class="imgbx">
-                    {% comment %} <div class="imgbx">
-                        <img src="https://i.postimg.cc/XJ4Rjvd6/cust1.jpg" alt="">
-                    </div>
-                    <div class="text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti magnam quisquam temporibus assumenda nobis officia!</p>
-                        <h2>Customer</h2>
-                    </div> {% endcomment %}
+          
 
-                    
-                    <div class="deck">
-                        <div class="card-space">
-                          <div class="card">
-                            <div class="face front">
-                              <h1>Mission Statement</h1>
-                            </div>
-                            <div class="face back">
-                              <p>A mission statement is a short summary of an organization’s core purpose, focus, and aims. This usually includes a brief description of what the organization does and its key objectives.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card-space">
-                          <div class="card">
-                            <div class="face front">
-                              <h1>Vision Statement</h1>
-                            </div>
-                            <div class="face back">
-                              <p>A vision statement is a short description of an organization’s aspirations and the wider impact it aims to create. It should be a guiding beacon to everyone within the organization and something which underpins internal decision-making and determines the intended direction of the organization.</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                    
-
-
-
-                </div>
-            </div>
+            
             <div class="box">
                 <div class="imgbx">
                     <div class="imgbx">
-                        <img src="https://i.postimg.cc/DzkVN6zZ/cust-2.jpg" alt="">
+                        <img src="{% static 'images/vision.gif' %}" alt="Your GIF">
                     </div>
                     <div class="text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti magnam quisquam temporibus assumenda nobis officia!</p>
-                        <h2>Customer</h2>
+                        <p>A vibrant and exciting sporting life</p>
+                        <h2>Vision</h2>
                     </div>
                 </div>
             </div>
             <div class="box">
                 <div class="imgbx">
                     <div class="imgbx">
-                        <img src="https://i.postimg.cc/s2YFCWBJ/cust3.jpg" alt="">
+                        <img src="{% static 'images/mission.gif' %}" alt="Your GIF">
                     </div>
                     <div class="text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti magnam quisquam temporibus assumenda nobis officia!</p>
-                        <h2>Customer</h2>
+                        <p>Provide widest possible choice in the range of sports, increase level of participation and quality method of delivery to strengthen the foundation for growth to support participation and improved elite sport performance</p>
+                        <h2>Mission</h2>
                     </div>
                 </div>
             </div>
+            <div class="box">
+                <div class="imgbx">
+                    <div class="imgbx">
+                        <img src="{% static 'images/obj.gif' %}" alt="Your GIF">
+                    </div>
+                    <div class="text">
+                        <p>To develop the skills and attitudes needed for the intellectual engagement
+                            and challenge of in-depth university level study' through sport.</p>
+                        <h2>Objectives</h2>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </section> {% endcomment %}
+
+<!--vision mission section-->
+
+    <section class="vision" id="vision">
+        <div class="title white">
+            <h2 class="titeText">Our  <span>V</span>ision <span>M</span>ission <span>O</span>bjective </h2>
+           
+        </div>
+        <div class="content">
+          
+
+            
+            <div class="box">
+                <div class="imgbx">
+                    <div class="imgbx">
+                        <img src="{% static 'images/vision.gif' %}" alt="Your GIF">
+                    </div>
+                    <div class="text">
+                        <p>A vibrant and exciting sporting life</p>
+                        <h2>Vision</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgbx">
+                    <div class="imgbx">
+                        <img src="{% static 'images/mission.gif' %}" alt="Your GIF">
+                    </div>
+                    <div class="text">
+                        <p>Provide widest possible choice in the range of sports, increase level of participation and quality method of delivery to strengthen the foundation for growth to support participation and improved elite sport performance</p>
+                        <h2>Mission</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgbx">
+                    <div class="imgbx">
+                        <img src="{% static 'images/obj.gif' %}" alt="Your GIF">
+                    </div>
+                    <div class="text">
+                        <p>To develop the skills and attitudes needed for the intellectual engagement
+                            and challenge of in-depth university level study' through sport.</p>
+                        <h2>Objectives</h2>
+                    </div>
+                </div>
+            </div>
+         
         </div>
     </section>
+
+
+
+
+
+
+
 
     <!--Contact us section-->
 
@@ -281,7 +311,7 @@
             <h2 class="titeText"><span>C</span>ontact Us</h2>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error, at.</p>
         </div>
-        <form action="https://formspree.io/f/mpzegbrv" method="POST">
+        <form action="https://formspree.io/f/xrgwbapy" method="POST">
         <div class="contactform">
             <h3>Send Message</h3>
             <div class="inputbox">

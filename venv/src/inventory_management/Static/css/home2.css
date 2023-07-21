@@ -11,45 +11,6 @@
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans|Bitter);
 
-html {
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-a,
-a:visited {
-  color: #76b7f7;
-}
-
-body {
-  background-color: hsla(210, 50%, 40%, 1);
-  color: #fff;
-  font-family: "Open Sans", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Bitter", serif;
-}
-
-body {
-  display: grid;
-  height: 100vh;
-  grid-template-rows: 1fr 50px;
-  justify-items: center;
-  align-items: center;
-  -webkit-perspective: 2000px;
-  perspective: 2000px;
-}
 
 .deck {
   display: flex;
@@ -116,43 +77,43 @@ body {
 }
 
 
+
 .slider{
-  width: 100%;
-  height: 600px;
-  /* border-radius: 10px; */
-  overflow: hidden;
-  
-}
-
-.slides{
-  width: 500%;
-  height: 700px;
-  display: flex;
-}
-
-.slides input{
-  display: none;
-}
-
-.slide{
-  width: 20%;
-  transition: 2s;
-}
-
-.slide img{
- 
-  height: 800px;
-
-  position: relative;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://i.postimg.cc/s29LNR86/bg.jpg); */
-    background-size: cover;
+    height: 700px;
+    /* border-radius: 10px; */
+    overflow: hidden;
+    
+  }
   
-}
-
+  .slides{
+    width: 500%;
+    height: 600px;
+    display: flex;
+  }
+  
+  .slides input{
+    display: none;
+  }
+  
+  .slide{
+    width: 20%;
+    transition: 2s;
+  }
+  
+  .slide img{
+   
+    height: 700px;
+  
+    position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* background: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://i.postimg.cc/s29LNR86/bg.jpg); */
+      background-size: cover;
+    
+  }
 /*css for manual slide navigation*/
 
 .navigation-manual{
@@ -540,11 +501,13 @@ section
     object-fit: cover;
 }
 
-.testimonial
+.vision
 {
-    background: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://i.postimg.cc/k5dZs5jR/bg2.jpg);
+    background-color:#555;
     background-size: cover;
 }
+
+
 
 .white .titeText,
 .white p
@@ -552,7 +515,7 @@ section
     color: #fff;
 }
 
-.testimonial .content
+.vision .content
 {
     display: flex;
     justify-content: center;
@@ -561,7 +524,7 @@ section
     margin-top: 40px;
 }
 
-.testimonial .content .box
+.vision .content .box
 {
      width: 350px;
      margin: 20px;
@@ -572,7 +535,7 @@ section
      align-items: center;
      flex-direction: column;
 }
-.testimonial .content .box img
+.vision .content .box img
 {
     position: absolute;
     top: 0;
@@ -582,30 +545,30 @@ section
     object-fit: cover;
     border-radius: 48%;
 }
-.testimonial .content .box .text
+.vision .content .box .text
 {
     text-align: center;
 
 }
-.testimonial .content .box .text p
+.vision .content .box .text p
 {
     color: #666;
     font-style: italic;
 }
 
-.testimonial .content .box .text h2{
+.vision .content .box .text h2{
     margin-top: 20px;
     color: #111;
     font-size: 1.5em;
     color: #660000;
     font-weight: 600;
 }
-
+/* 
 .contactus
 {
     background: url(https://i.postimg.cc/4NmrNq7y/bg3.jpg);
     background-size: cover;
-}
+} */
 
 .contactform
 {
@@ -763,7 +726,7 @@ section
     .expert .content {
         margin-top: 20px;
     }
-    .testimonial .content .box {
+    .vision .content .box {
         margin: 10px;
         padding: 30px;  
     }
@@ -777,3 +740,24 @@ section
         padding: 10px 30px;
     }
 }
+
+
+/* styles.css */
+
+/* Your existing CSS styles for the "box" class */
+.box {
+
+    transition: transform 0.3s ease;
+}
+
+.box:hover {
+    /* Apply the zoom effect on hover */
+    transform: scale(1.1);
+}
+
+
+
+.box:hover .text {
+    opacity: 1;
+}
+
