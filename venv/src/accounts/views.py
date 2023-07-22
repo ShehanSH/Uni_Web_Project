@@ -186,62 +186,38 @@ def login_view(request):
 # views.py
 
 
+# myapp/views.py
 
-User = get_user_model()
+# accounts/views.py
 
-def reset_password(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            messages.error(request, 'No user with this email address.')
-            return render(request, 'reset_password.html')
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+# accounts/views.py
 
-        # Generate a reset password token
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
-        # Send reset password email
-        subject = 'Reset Your Password'
-        message = render_to_string('reset_password_email.html', {
-            'user': user,
-            'uid': uid,
-            'token': token,
-        })
-        from_email = 'your_email@gmail.com'  # Update with your email or use another method to get the sender's email
-        send_mail(subject, message, from_email, [email])
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'accounts/email/password_reset_email.html'
+    subject_template_name = 'accounts/password_reset_subject.txt'  # This was incorrect, remove this line
+    template_name = 'accounts/password_reset_form.html'
+    success_url = 'done/'
+    subject = 'Password Reset Request'  # Set the email subject here
 
-        return redirect('reset_password_done')
+# Rest of the views remain the same...
 
-    return render(request, 'reset_password.html')
 
-def reset_password_done(request):
-    return render(request, 'reset_password_done.html')
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'accounts/email/password_reset_email.html'
+    subject_template_name = 'accounts/email/password_reset_subject.txt'
+    template_name = 'accounts/password_reset_form.html'
+    success_url = 'done/'
 
-def reset_password_confirm(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
 
-    if user is not None and default_token_generator.check_token(user, token):
-        if request.method == 'POST':
-            password = request.POST['password']
-            confirm_password = request.POST['confirm_password']
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = '/accounts/reset/complete/'
 
-            if password == confirm_password:
-                user.set_password(password)
-                user.save()
-                messages.success(request, 'Password reset successfully.')
-                return redirect('reset_password_complete')
-            else:
-                messages.error(request, 'Passwords do not match.')
-    else:
-        messages.error(request, 'Invalid reset link.')
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'accounts/password_reset_complete.html'
 
-    return render(request, 'reset_password_confirm.html')
-
-def reset_password_complete(request):
-    return render(request, 'reset_password_complete.html')

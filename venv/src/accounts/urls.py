@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.urls import include
-
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -32,9 +32,8 @@ urlpatterns = [
     path('outsider_registration/', views.outsider_registration, name='outsider_registration'),
     # path('homemain', views.homemain, name='homemain'),
 
-    path('reset-password/', views.reset_password, name='reset_password'),
-    path('reset-password/done/', views.reset_password_done, name='reset_password_done'),
-    path('reset-password/confirm/<str:uidb64>/<str:token>/', views.reset_password_confirm, name='reset_password_confirm'),
-    path('reset-password/complete/', views.reset_password_complete, name='reset_password_complete'),
-
+    path('reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/complete/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]

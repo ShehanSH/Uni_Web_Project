@@ -161,15 +161,30 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-#emial settings for forgot password
+#email settings for forgot password
+# settings.py
 
+import os
+import environ
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+# settings.py
+
+import os
+import environ
+
+# Load environment variables from .env file
+env = environ.Env()
+environ.Env.read_env()
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP backend for production
+EMAIL_HOST = 'smtp.gmail.com'  # Use your SMTP host here for a production project
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_email_password'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # Access the EMAIL_HOST_USER from the .env file
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Access the EMAIL_HOST_PASSWORD from the .env file
+
+
 
 
 
