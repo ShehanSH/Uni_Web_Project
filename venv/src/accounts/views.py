@@ -28,35 +28,35 @@ def role(request):
     # Logic for role page
     return render(request, 'role.html')
 
+#uni student
 def uni_student_registration(request):
     if request.method == 'POST':
         registration_form = CustomRegistrationForm(request.POST)
         uni_student_form = UniStudentRegstrationForm(request.POST)
         
-        if registration_form.is_valid() and uni_student_form.is_valid():
-            # Save the registration form data
-            user = registration_form.save()
-            
-            # Create the UniStudent instance and associate it with the user
-            uni_student = uni_student_form.save(commit=False)
-            uni_student.user = user
-            uni_student.save()
-            
-            # Redirect to the appropriate page based on the user's role
-            # role_name = user.role.role_name
-            # if role_name == 'Admin':
-            #     return redirect('admin_page')
-            # elif role_name == 'University student':
-            return redirect('login')
+        try:
+            if registration_form.is_valid() and uni_student_form.is_valid():
+                # Check if the user selected the correct role (University Student)
+                selected_role = registration_form.cleaned_data.get('role')
+                if selected_role.role_name != 'University Student':
+                    messages.error(request, "Please select 'University Student' as your user role.")
+                    return redirect('uni_student_registration')
                 
-            # Handle other role-specific redirects or error messages as needed
-            
-        else:
-            # Handle form validation errors
-            messages.error(request, "Please fill in fields correctly.")   
+                user = registration_form.save()
+                uni_student = uni_student_form.save(commit=False)
+                uni_student.user = user
+                uni_student.save()
+                
+                return redirect('login')
+                
+            else:
+                # Handle form validation errors
+                messages.error(request, "Please fill in fields correctly.")   
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
     else:
         registration_form = CustomRegistrationForm()
-        uni_student_form = UniStudentRegstrationForm()
+        uni_student_form =  UniStudentRegstrationForm()
       
     return render(request, 'uni_student_registration.html', {'registration_form': registration_form, 'uni_student_form': uni_student_form})
 
@@ -66,41 +66,59 @@ def uni_staff_registration(request):
         registration_form = CustomRegistrationForm(request.POST)
         uni_staff_form = UniStaffRegstrationForm(request.POST)
         
-        if registration_form.is_valid() and uni_staff_form.is_valid():
-            user = registration_form.save()
-            
-            uni_staff = uni_staff_form.save(commit=False)
-            uni_staff.user = user
-            uni_staff.save()
-            
-            return redirect('login')
-            
-        else:
-            messages.error(request, "Please fill in fields correctly.")   
+        try:
+            if registration_form.is_valid() and uni_staff_form.is_valid():
+                # Check if the user selected the correct role (University Staff)
+                selected_role = registration_form.cleaned_data.get('role')
+                if selected_role.role_name != 'University Staff':
+                    messages.error(request, "Please select 'University Staff' as your user role.")
+                    return redirect('uni_staff_registration')
+                
+                user = registration_form.save()
+                uni_staff = uni_staff_form.save(commit=False)
+                uni_staff.user = user
+                uni_staff.save()
+                
+                return redirect('login')
+                
+            else:
+                # Handle form validation errors
+                messages.error(request, "Please fill in fields correctly.")   
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
     else:
         registration_form = CustomRegistrationForm()
         uni_staff_form = UniStaffRegstrationForm()
       
     return render(request, 'uni_staff_registration.html', {'registration_form': registration_form, 'uni_staff_form': uni_staff_form})
+  
 
 #outider
-
 def outsider_registration(request):
     if request.method == 'POST':
         registration_form = CustomRegistrationForm(request.POST)
         outsider_form = OutsiderRegstrationForm(request.POST)
         
-        if registration_form.is_valid() and outsider_form.is_valid():
-            user = registration_form.save()
-            
-            outsider = outsider_form.save(commit=False)
-            outsider.user = user
-            outsider.save()
-            
-            return redirect('login')
-            
-        else:
-            messages.error(request, "Please fill in fields correctly.")   
+        try:
+            if registration_form.is_valid() and outsider_form.is_valid():
+                # Check if the user selected the correct role (Outsider)
+                selected_role = registration_form.cleaned_data.get('role')
+                if selected_role.role_name != 'Outsider':
+                    messages.error(request, "Please select 'Outsider' as your user role.")
+                    return redirect('outsider_registration')
+                
+                user = registration_form.save()
+                outsider = outsider_form.save(commit=False)
+                outsider.user = user
+                outsider.save()
+                
+                return redirect('login')
+                
+            else:
+                # Handle form validation errors
+                messages.error(request, "Please fill in fields correctly.")   
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
     else:
         registration_form = CustomRegistrationForm()
         outsider_form = OutsiderRegstrationForm()
@@ -108,12 +126,17 @@ def outsider_registration(request):
     return render(request, 'outsider_registration.html', {'registration_form': registration_form, 'outsider_form': outsider_form})
 
 
+
 #login
 
 def login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request, data=request.POST)
-        if form.is_valid():
+        
+        # Check if the form fields are empty
+        if not form.has_changed() or not form.is_valid():
+            messages.error(request, 'Please enter the correct user credentials.')
+        else:
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
@@ -121,9 +144,12 @@ def login_view(request):
                 login(request, user)
                 return redirect('homemain')  # Replace 'home' with your desired URL after login
             else:
-                form.add_error(None, 'Invalid username or password.')
+                # Add an error message for invalid credentials
+                messages.error(request, 'Invalid username or password.')
+                
     else:
         form = CustomLoginForm()
+    
     return render(request, 'login.html', {'form': form})
 
 

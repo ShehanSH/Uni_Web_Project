@@ -61,7 +61,10 @@
 }
 
 .LoginPageInnerContainer .ImageContianer .GroupImage {
-
+  width: 160%;
+  display: block;
+  margin-top: -1300px;
+  height: 400px;
 
   
 }
