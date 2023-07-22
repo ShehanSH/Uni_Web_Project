@@ -21,7 +21,8 @@
             <li><a href="{% url 'homemain' %}">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#Booking_calendar">Calendar</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="{% url 'ground_booking:ground_booking_request' %}">Grounds</a></li>
+            <li><a href="{% url 'sports_items_req:create_sports_item_request' %}">Sports</a></li>
             <li><a href="#contactus">Contact Us</a></li>
             {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>

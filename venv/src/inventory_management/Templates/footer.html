@@ -1,0 +1,64 @@
+
+
+{% load static %}
+<html lang="en">
+<head>
+  
+    
+    {% comment %} <link rel="stylesheet" href="style.css"> {% endcomment %}
+    <link href="{% static 'css/footer.css' %}" rel="stylesheet" /> 
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+    
+</head>
+<body>
+<!--FONT AWESOME-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--GOOGLE FONTS-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+<!--footer-->
+<footer class="padding_4x">
+  <div class="flex">
+    <section class="flex-content padding_1x">
+      <h3>Extra Links</h3>
+      <a href="https://www.kln.ac.lk/">University of Kelaniya</a>
+      <a href="https://ss.kln.ac.lk/">Faculty of Social Sciences</a>
+      <a href="https://units.kln.ac.lk/sports/">Department of Physical Education</a>
+      
+    </section>
+    <section class="flex-content padding_1x">
+      <h3>Quick Links</h3>
+      <a href="{% url 'homemain' %}">Home</a>
+      <a href="ground_booking_request/">Ground Bookings</a>
+      <a href="create_sports_item_request/">Sports Items Request</a>
+    
+    </section>
+    <section class="flex-content padding_1x">
+      <h3>Location</h3>
+      <a href="https://www.google.com/maps/place//@6.9763257,79.9163185,194m/data=!3m1!1e3?entry=ttu" target="_blank">University of Kelaniya</a>
+      <a href="https://www.google.com/maps/place//@6.9763257,79.9163185,194m/data=!3m1!1e3?entry=ttu" target="_blank">
+          <img src="{% static 'images/location.png' %}" alt="Your GIF" class="location">
+      </a>
+      
+      
+    </section>
+   
+ 
+  </div>
+  <div class="flex">
+    <section class="flex-content padding_1x">
+      <p>Copyright ©2023 All rights reserved || Department of Physical Education</p>
+    </section>
+    <section class="flex-content padding_1x">
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-twitter"></i></a>
+      <a href="#"><i class="fa fa-dribbble"></i></a>
+      <a href="#"><i class="fa fa-linkedin"></i></a>
+    </section>
+  </div>
+</footer>
+</body>
+</html>
