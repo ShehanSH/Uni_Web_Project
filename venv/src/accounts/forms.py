@@ -1,6 +1,6 @@
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm,PasswordResetForm
 from .models import CustomUser
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -65,4 +65,26 @@ class OutsiderRegstrationForm(forms.ModelForm):
         fields = ('nic',)
         widgets = {
             'nic': forms.TextInput(attrs={'class': 'abc'}),
+        }
+
+from django.contrib.auth.forms import SetPasswordForm
+
+class SetPasswordForm(SetPasswordForm):
+    
+    class Meta:
+        model = CustomUser
+        fields = ('password1', 'password2')
+        widgets = {
+            'password1': forms.PasswordInput(attrs={'class': 'abc'}),
+            'password2': forms.PasswordInput(attrs={'class': 'abc'}),
+        }
+
+class PasswordResetForm(PasswordResetForm):
+        
+        class Meta:
+            model = CustomUser
+            fields = ('password1', 'password2')
+            widgets = {
+            'password1': forms.PasswordInput(attrs={'class': 'abc'}),
+            'password2': forms.PasswordInput(attrs={'class': 'abc'}),
         }

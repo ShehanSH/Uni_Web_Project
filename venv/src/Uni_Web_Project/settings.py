@@ -96,7 +96,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'web_project',
         'USER': 'shehan',
-        'PASSWORD': 'mypassword',
+        'PASSWORD': '1999@Shehan',
+        
+        
     }
 }
 
@@ -176,13 +178,6 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-# Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP backend for production
-EMAIL_HOST = 'smtp.gmail.com'  # Use your SMTP host here for a production project
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # Access the EMAIL_HOST_USER from the .env file
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Access the EMAIL_HOST_PASSWORD from the .env file
 
 
 

@@ -32,8 +32,7 @@ urlpatterns = [
     path('outsider_registration/', views.outsider_registration, name='outsider_registration'),
     # path('homemain', views.homemain, name='homemain'),
 
-    path('reset/', CustomPasswordResetView.as_view(), name='password_reset'),
-    path('reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/complete/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path("password_change", views.password_change, name="password_change"),
+    path("password_reset/", views.password_reset_request, name="password_reset"),
+    path('reset/<uidb64>/<token>', views.passwordResetConfirm, name='password_reset_confirm'),
 ]
