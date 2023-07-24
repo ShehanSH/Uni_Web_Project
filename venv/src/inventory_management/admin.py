@@ -57,7 +57,7 @@ from .forms import SupplyInventoryForm
 #supply inventory from supplers
 class SupplyInventoryAdmin(admin.ModelAdmin):
     form = SupplyInventoryForm
-    list_display = ['Supplier', 'category', 'item', 'supply_date', 'supply_time', 'supply_quantity', 'price', 'supply_total_value']
+    list_display = ['Supplier', 'category', 'item', 'supply_date', 'supply_time', 'supply_quantity']
     search_fields = ['Supplier__supplier_name', 'category__name', 'item__item_name']
     list_filter = ['supply_date']
 

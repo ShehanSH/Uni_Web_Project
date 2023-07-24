@@ -38,8 +38,7 @@ class Supply_Inventory(models.Model):
     item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
     supply_quantity = models.IntegerField(default=0, blank=True, null=True)
-    price = models.IntegerField(default=0, blank=True, null=True)
-    supply_total_value = models.IntegerField(default=0, blank=True, null=True)
+    
 
     def __str__(self):
         return f"{self.item.item_name} ({self.supply_quantity})"
