@@ -94,6 +94,12 @@ class Department(models.Model):
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+# Define the choices for the gender field
+GENDER_CHOICES = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+)
+
 class CustomUser(AbstractUser):
     user_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=255)
@@ -101,12 +107,12 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
-    gender = models.CharField(max_length=10)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)  # Add the gender field with choices
     address = models.TextField(null=True, blank=True)
     password = models.CharField(max_length=255)
     confirm_password = models.CharField(max_length=255)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
-    # Add the new fields here
+    # Add other fields as needed
 
     def __str__(self):
         return self.username
