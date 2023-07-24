@@ -32,7 +32,7 @@
                     <td>{{ request.request_id }}</td>
                    <td>{{ request.category.name }}</td></a>
                     <td>{{ request.item.item_name }}</td>
-                    <td>{{ request.quantity }}</td>
+                    <td>{{ request.req_quantity }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>
                         <a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}"><img src="{% static 'images/edit.png' %}" alt="delete Image" class="actionbtn"></a>

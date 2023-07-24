@@ -127,7 +127,7 @@ from .models import Supply_Inventory, Supplier, Inventory_Stock, Category
 class SupplyInventoryForm(forms.ModelForm):
     class Meta:
         model = Supply_Inventory
-        fields = ['Supplier', 'category', 'item', 'supply_date', 'supply_time']
+        fields = ['Supplier', 'category', 'item', 'supply_date', 'supply_time', 'supply_quantity']
 
     def __init__(self, *args, **kwargs):
         super(SupplyInventoryForm, self).__init__(*args, **kwargs)

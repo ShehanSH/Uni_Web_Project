@@ -297,3 +297,4 @@ def logout_view(request):
 
 #     return render(request, 'add_supplier.html', {'form': form})
 
+

@@ -21,6 +21,7 @@
                     <th>Event</th>
                     <th>Ground</th>
                     <th>Booking Price</th>
+                    <th>Event Name</th>
                     <th>Request Date</th>
                     <th>Request Time</th>
                     <th>Status</th>
@@ -36,6 +37,7 @@
                     {% comment %} <td> <a href="{% url 'sports_items_req:update_sports_item_request' request.request_id %}">{{ request.item.item_name }}</a></td> {% endcomment %}
                     <td> {{ request.ground.ground_name }}</td>
                     <td> {{ request.ground.booking_price }}</td>
+                    <td> {{ request.event.event_name }}</td>
                     <td>{{ request.request_date }}</td>
                     <td>{{ request.request_time }}</td>
                     <td>{{ request.get_approval_status_display }}</td>

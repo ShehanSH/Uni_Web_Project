@@ -4,20 +4,20 @@ from .models import SportsItemRequest
 class SportsItemsRequestForm(forms.ModelForm):
     class Meta:
         model = SportsItemRequest
-        fields = ('category', 'item', 'request_date', 'request_time', 'quantity')
+        fields = ('category', 'item', 'request_date', 'request_time', 'req_quantity')
         widgets = {
             'category': forms.Select(attrs={'class': 'abc'}),
             'item': forms.Select(attrs={'class': 'abc'}),
             'request_date': forms.DateInput(attrs={'class': 'abc', 'type': 'date'}),
             'request_time': forms.TimeInput(attrs={'class': 'abc', 'type': 'time'}),
-            'quantity': forms.NumberInput(attrs={'class': 'abc'}),
+            'req_quantity': forms.NumberInput(attrs={'class': 'abc'}),
         }
 
 
 class SportsItemRequestUpdateForm(forms.ModelForm):
     class Meta:
         model = SportsItemRequest
-        fields = ('category', 'item', 'request_date', 'request_time', 'quantity')
+        fields = ('category', 'item', 'request_date', 'request_time', 'req_quantity')
         widgets = {
             'category': forms.Select(attrs={'class': 'abc'}),
             'item': forms.Select(attrs={'class': 'abc'}),

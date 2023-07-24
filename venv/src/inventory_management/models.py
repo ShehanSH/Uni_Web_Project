@@ -44,8 +44,7 @@ class Supply_Inventory(models.Model):
         return f"{self.item.item_name} ({self.supply_quantity})"
 
     def save(self, *args, **kwargs):
-        # Calculate the supply_total_value
-        self.supply_total_value = self.price * self.supply_quantity
+        
 
         # Get the corresponding Inventory_Stock object
         inventory_stock = self.item

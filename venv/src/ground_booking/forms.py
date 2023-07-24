@@ -23,10 +23,11 @@ class GroundBookingRequestUpdateForm(forms.ModelForm):
 
     class Meta:
         model = GroundBookingRequest
-        fields = ('request_date', 'request_time', 'ground', 'event')
+        fields = ('request_date', 'request_time', 'ground', 'event', 'event_form')
         widgets = {
             'request_date': forms.DateInput(attrs={'class': 'abc', 'type': 'date'}),
             'request_time': forms.TimeInput(attrs={'class': 'abc', 'type': 'time'}),
             'ground': forms.Select(attrs={'class': 'abc'}),
             'event': forms.Select(attrs={'class': 'abc'}),
+            'event_form': forms.ClearableFileInput(attrs={'class': 'abc', 'type': 'file'}),
         }
