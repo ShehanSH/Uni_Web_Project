@@ -31,7 +31,7 @@ class GroundBookingRequest(models.Model):
     request_time = models.TimeField()
     event = models.ForeignKey(EventType, on_delete=models.CASCADE)
     approval_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='D')
-    event_form = models.ImageField(upload_to='ground_booking_forms/', null=True, blank=True)  # Add the image field
+    event_form = models.ImageField(upload_to='GroundBookingRequestForm/', null=True, blank=True)  # Add the image field
 
     def __str__(self):
         return f"Booking ID: {self.booking_id}, User: {self.user}, Ground: {self.ground}, Event: {self.event}"

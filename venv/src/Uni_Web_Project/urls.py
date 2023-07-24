@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import include, path
 from inventory_management import views
 from django.urls import include
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # path('list_items', views.list_items, name='list_items'),
@@ -49,4 +50,4 @@ urlpatterns = [
     path('', include('sports_items_req.urls')),
     path('', include('ground_booking.urls')),
    
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
