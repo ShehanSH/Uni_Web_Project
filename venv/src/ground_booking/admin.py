@@ -11,7 +11,7 @@ class EventTypeAdmin(admin.ModelAdmin):
     search_fields = ['event_name']
 
 class GroundBookingRequestAdmin(admin.ModelAdmin):
-    list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'approval_status']
+    list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'event_form', 'approval_status']
     list_filter = ['approval_status', 'event']
     search_fields = ['user__username']
 
