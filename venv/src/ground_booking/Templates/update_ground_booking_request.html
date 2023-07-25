@@ -72,7 +72,7 @@
                 <div class="LoginFormInnerContainer" style="margin-top:0px">
                     <h2 class="header">Update Ground Booking Request</h2>
                     
-                      <form method="post">
+                      <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
                         {{ form.as_p }}

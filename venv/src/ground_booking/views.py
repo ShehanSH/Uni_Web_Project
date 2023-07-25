@@ -6,15 +6,19 @@ from .forms import GroundBookingRequestForm,GroundBookingRequestUpdateForm
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from ground_booking.models import GroundBookingRequest  # Adjust the import path as per your project structure
 
 # make a ground booking request.
 @login_required(login_url='login')
 def ground_booking_request(request):
     if request.method == 'POST':
-        form = GroundBookingRequestForm(request.POST)
+        form = GroundBookingRequestForm(request.POST, request.FILES)
         if form.is_valid():
             ground_booking_request = form.save(commit=False)
             ground_booking_request.user = request.user
+            file2 = request.FILES.get('event_form')
+            if file2:  # Check if a file was uploaded before trying to create the object
+                ground_booking_request.event_form = file2
             ground_booking_request.save()
             # Redirect to a success page or perform any other desired action
             return redirect('ground_booking:ground_booking_request')
@@ -22,6 +26,7 @@ def ground_booking_request(request):
         form = GroundBookingRequestForm()
 
     return render(request, 'ground_booking_request.html', {'form': form})
+
 
 
 
@@ -38,13 +43,20 @@ def ground_booking_view(request):
 
 def update_ground_booking_request(request, pk):
     queryset = GroundBookingRequest.objects.get(booking_id=pk)
-    form = GroundBookingRequestUpdateForm(instance=queryset)
     if request.method == 'POST':
-        form = GroundBookingRequestUpdateForm(request.POST, instance=queryset)
+        form = GroundBookingRequestUpdateForm(request.POST, request.FILES, instance=queryset)
         if form.is_valid():
+            # Check if a new file was uploaded
+            file2 = request.FILES.get('event_form')
+            if file2:
+                queryset.event_form = file2
+
             form.save()
-            # messages.success(request, 'Item updated successfully')
+            # Redirect to a success page or perform any other desired action
             return redirect('ground_booking:ground_booking_request')
+
+    else:
+        form = GroundBookingRequestUpdateForm(instance=queryset)
 
     context = {
         'form': form
