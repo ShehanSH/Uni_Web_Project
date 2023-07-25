@@ -38,3 +38,29 @@ class SportsItemRequest(models.Model):
             inventory_item.save()
 
         super().save(*args, **kwargs)
+
+
+class SportsItemReceived(models.Model):
+    APPROVAL_CHOICES = (
+        ('R', 'Recived'),
+        ('N', 'Not Recived'),
+        
+    )
+    ITEM_STATUS = (
+        ('D', 'Damaged'),
+        ('ND', 'Not Damaged'),
+    )
+    received_id = models.AutoField(primary_key=True)
+    request_id = models.ForeignKey(SportsItemRequest, on_delete=models.CASCADE)
+    item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE)
+    received_date = models.DateField()
+    received_time = models.TimeField()
+    received_quantity = models.PositiveIntegerField()
+    received_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='N')
+    item_status = models.CharField(max_length=2, choices=ITEM_STATUS, default='ND')
+    description = models.TextField(max_length=1000, help_text='Enter a brief description of the recived item')
+
+    
