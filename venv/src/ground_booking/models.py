@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser
+from django.db import models
 
 class Ground(models.Model):
     ground_id = models.AutoField(primary_key=True)
@@ -17,8 +18,6 @@ class EventType(models.Model):
 
     def __str__(self):
         return self.event_name
-
-from django.db import models
 
 class GroundBookingRequest(models.Model):
     APPROVAL_CHOICES = (

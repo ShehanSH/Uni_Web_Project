@@ -1,7 +1,5 @@
 from django import forms
-from .models import Ground, EventType,GroundBookingRequest
-
-
+from .models import GroundBookingRequest
 class GroundBookingRequestForm(forms.ModelForm):
     # ground = forms.ModelChoiceField(queryset=Ground.objects.all(), widget=forms.Select(attrs={'class': 'abc'}))
     # event = forms.ModelChoiceField(queryset=EventType.objects.all(), widget=forms.Select(attrs={'class': 'abc'}))

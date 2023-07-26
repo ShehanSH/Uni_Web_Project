@@ -8,7 +8,7 @@
 <html lang="en">
   <head>
     
-    <title>Delete item Page</title>
+    <title>Delete booking</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -26,12 +26,12 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/navbar-top-fixed.css' %}" rel="stylesheet" />
   </head>
-  <body>
+  <body style="background-color: #ffeaec;">
       {% include 'navbar2.html' %}
-    <main role="main" class="container">
-      <div class="jumbotron">
+   
+      
         <!-- Modal HTML -->
-            <div id="myModal" >
+            <div id="myModal" style="margin-top:-600px">
               <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                   <div class="modal-header flex-column">
@@ -49,15 +49,15 @@
                     <form method="post" action="">
                       {% csrf_token %}
                         <input class="btn btn-danger" type="submit" value="Delete" />
-                        <a href="/list_requests"><div class="btn btn-secondary" data-dismiss="modal" >Cancel</div></a>
+                        <a href="/list_booking"><div class="btn btn-secondary" data-dismiss="modal" >Cancel</div></a>
                   </form>
                   </div>
                 </div>
               </div>
             </div>    
-      </div>
+      
 
-    </main>
+  
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

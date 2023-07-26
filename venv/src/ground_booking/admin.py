@@ -1,19 +1,17 @@
 from django.contrib import admin
 from .models import GroundBookingRequest, Ground, EventType
-
+from django.contrib import admin
+from django.utils.html import format_html
+from .models import GroundBookingRequest
 
 class GroundAdmin(admin.ModelAdmin):
     list_display = ['ground_id', 'ground_name', 'area', 'booking_price', 'ground_image']
     search_fields = ['ground_name', 'area']
-    list_display_links = ['ground_name']  # Make ground_name a link to the details page
+    list_display_links = ['ground_name'] 
     
 class EventTypeAdmin(admin.ModelAdmin):
     list_display = ['event_id', 'event_name']
     search_fields = ['event_name']
-
-from django.contrib import admin
-from django.utils.html import format_html
-from .models import GroundBookingRequest
 
 class EventFormFilter(admin.SimpleListFilter):
     title = 'Event Form Submitted'
@@ -60,8 +58,6 @@ class GroundBookingRequestAdmin(admin.ModelAdmin):
 
 # Register the model with the custom admin
 admin.site.register(GroundBookingRequest, GroundBookingRequestAdmin)
-
-
 admin.site.register(Ground, GroundAdmin)
 admin.site.register(EventType, EventTypeAdmin)
 
