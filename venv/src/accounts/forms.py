@@ -88,3 +88,61 @@ class PasswordResetForm(PasswordResetForm):
             'password1': forms.PasswordInput(attrs={'class': 'abc'}),
             'password2': forms.PasswordInput(attrs={'class': 'abc'}),
         }
+            
+
+
+from django import forms
+from .models import CustomUser, UniStudent, UniStaff, Outsider
+
+from django import forms
+from .models import CustomUser, UniStudent, UniStaff, Outsider
+
+class CustomUserForm(forms.ModelForm):
+    
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'date_of_birth', 'phone_number', 'gender', 'address']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'abc'}),
+            'last_name': forms.TextInput(attrs={'class': 'abc'}),
+            'email': forms.EmailInput(attrs={'class': 'abc'}),
+            'date_of_birth': forms.DateInput(attrs={'class': 'abc'}),
+            'phone_number': forms.TextInput(attrs={'class': 'abc'}),
+            'gender': forms.Select(attrs={'class': 'abc'}),
+            'address': forms.Textarea(attrs={'class': 'abc'}),
+        }
+
+class UniStudentForm(forms.ModelForm):
+    faculty = forms.ModelChoiceField(queryset=Faculty.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'abc'}))
+    department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'abc'}))
+    class Meta:
+        model = UniStudent
+        fields = ['student_id', 'faculty', 'department']
+        widgets = {
+            'student_id': forms.TextInput(attrs={'class': 'abc'}),
+            'faculty': forms.TextInput(attrs={'class': 'abc'}),
+            'department': forms.TextInput(attrs={'class': 'abc'}),
+            # Add widgets for other fields in UniStudentForm as needed
+        }
+
+class UniStaffForm(forms.ModelForm):
+    faculty = forms.ModelChoiceField(queryset=Faculty.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'abc'}))
+    department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label=None, widget=forms.Select(attrs={'class': 'abc'}))
+    class Meta:
+        model = UniStaff
+        fields = ['staff_id', 'faculty', 'department']
+        widgets = {
+            'staff_id': forms.TextInput(attrs={'class': 'abc'}),
+            'faculty': forms.TextInput(attrs={'class': 'abc'}),
+            'department': forms.TextInput(attrs={'class': 'abc'}),
+            # Add widgets for other fields in UniStaffForm as needed
+        }
+
+class OutsiderForm(forms.ModelForm):
+    class Meta:
+        model = Outsider
+        fields = ['nic']
+        widgets = {
+            'nic': forms.TextInput(attrs={'class': 'abc'}),
+            # Add widgets for other fields in OutsiderForm as needed
+        }

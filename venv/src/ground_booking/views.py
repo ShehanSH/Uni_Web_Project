@@ -9,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 from ground_booking.models import GroundBookingRequest  # Adjust the import path as per your project structure
 
 # make a ground booking request.
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from .forms import GroundBookingRequestForm
+
 @login_required(login_url='login')
 def ground_booking_request(request):
     if request.method == 'POST':
@@ -17,15 +21,18 @@ def ground_booking_request(request):
             ground_booking_request = form.save(commit=False)
             ground_booking_request.user = request.user
             file2 = request.FILES.get('event_form')
-            if file2:  # Check if a file was uploaded before trying to create the object
+            if file2:
                 ground_booking_request.event_form = file2
             ground_booking_request.save()
-            # Redirect to a success page or perform any other desired action
+            messages.success(request, 'Ground booking request submitted successfully.')
             return redirect('ground_booking:ground_booking_request')
+        else:
+            messages.error(request, 'Error submitting the ground booking request. Please check the form and try again.')
     else:
         form = GroundBookingRequestForm()
 
     return render(request, 'ground_booking_request.html', {'form': form})
+
 
 
 
@@ -41,8 +48,18 @@ def ground_booking_view(request):
 
 
 
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from .forms import GroundBookingRequestUpdateForm
+from .models import GroundBookingRequest
+
 def update_ground_booking_request(request, pk):
-    queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    try:
+        queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    except GroundBookingRequest.DoesNotExist:
+        messages.error(request, 'Ground booking request with the specified ID does not exist.')
+        return redirect('ground_booking:ground_booking_request')
+
     if request.method == 'POST':
         form = GroundBookingRequestUpdateForm(request.POST, request.FILES, instance=queryset)
         if form.is_valid():
@@ -52,9 +69,12 @@ def update_ground_booking_request(request, pk):
                 queryset.event_form = file2
 
             form.save()
-            # Redirect to a success page or perform any other desired action
+            messages.success(request, 'Ground booking request updated successfully.')
             return redirect('ground_booking:ground_booking_request')
 
+        else:
+            messages.error(request, 'Error updating the ground booking request. Please check the form and try again.')
+    
     else:
         form = GroundBookingRequestUpdateForm(instance=queryset)
 
@@ -64,13 +84,25 @@ def update_ground_booking_request(request, pk):
     return render(request, 'update_ground_booking_request.html', context)
 
 
+
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from .models import GroundBookingRequest
+
 def delete_booking_request(request, pk):
-    queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    try:
+        queryset = GroundBookingRequest.objects.get(booking_id=pk)
+    except GroundBookingRequest.DoesNotExist:
+        messages.error(request, 'Ground booking request with the specified ID does not exist.')
+        return redirect('ground_booking:ground_booking_request')
+
     if request.method == 'POST':
         queryset.delete()
-        # messages.success(request, 'Item deleted successfully')        #ADD MESSAGES OF ALL VIEWWWSSSSSSSSSSSSSSSSSS
+        messages.success(request, 'Ground booking request deleted successfully.')
         return redirect('ground_booking:ground_booking_request')
+        
     return render(request, 'delete_booking_request.html')
+
 
 from django.http import JsonResponse
 from django.shortcuts import render

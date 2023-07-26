@@ -1,3 +1,4 @@
+  
 * {
     /* margin: 0px; */
     font-family: Rubik;
@@ -23,7 +24,7 @@
   
   
   .LoginPageContainer {
-    height: 600px;
+    height: 1400px;
     /* overflow: auto; */
     margin-left: 30%;
     width: 40%;
@@ -187,7 +188,6 @@
   .LoginFormInnerContainer {
     max-width: 900px;
     margin-top: -100px;
-    
   }
   
   .LoginPageInnerContainer .LoginFormContainer .checkbox{

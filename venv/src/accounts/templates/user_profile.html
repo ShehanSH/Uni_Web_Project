@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Profile</title>
-</head>
-<body>
-
-   
-
-
-
-
-{% comment %} <form method="post">
-  {% csrf_token %}
-  
-  <!-- Registration Form -->
-  {{ registration_form.as_p }}
-  
-  <!-- UniStudent Form -->
-  {{ uni_student_form.as_p }}
-  
-  <button type="submit">Register</button>
-</form> {% endcomment %}
-
-
 
 {% load static %}
 <!DOCTYPE html>
@@ -93,17 +68,37 @@
         <div class="LoginPageInnerContainer">
             
             <div class="LoginFormContainer">
-                <div class="LoginFormInnerContainer" style="margin-top:0px; margin-left:60px;">
+                <div class="LoginFormInnerContainer" style="margin-top:0px; margin-left:60px; border:2px solid; padding: 10px 10px 10px 10px; border-radius: 20px;">
                     <h2 class="header">User Profile</h2>
                    
                     
                         
                         
-                        <span class="details">  Username: </span> <span class = "details2">{{ user.username }}</span> 
-                        
+                        <span class="details">  Username: </span> <span class = "details2">{{ user.username }}</span> </br>
+                        <span class="details">  Email: </span> <span class = "details2">{{ user.email }}</span> </br>
+                        <span class="details">  Address: </span> <span class = "details2">{{ user.username }}</span> </br>
+                        <span class="details">  Phone Number: </span> <span class = "details2">{{ user.username }}</span> </br>
+
+                        {% if user.role_id == 2 %}
+                        <!-- Display UniStudent details -->
+                        <span class="details">Student ID:</span> <span class="details2">{{ unistudent.student_id }}</span> <br>
+                        <span class="details">Faculty:</span> <span class="details2">{{ unistudent.faculty }}</span> <br>
+                        <span class="details">Department:</span> <span class="details2">{{ unistudent.department }}</span> <br>
+                    {% elif user.role_id == 3 %}
+                        <!-- Display UniStaff details -->
+                        <span class="details">Staff ID:</span> <span class="details2">{{ unistaff.staff_id }}</span> <br>
+                        <span class="details">Faculty:</span> <span class="details2">{{ unistaff.faculty }}</span> <br>
+                        <span class="details">Department:</span> <span class="details2">{{ unistaff.department }}</span> <br>
+                        <!-- Add other UniStaff-specific fields if needed -->
+                    {% elif user.role_id == 4 %}
+                        <!-- Display Outsider details -->
+                        <span class="details">NIC:</span> <span class="details2">{{ outsider.nic }}</span> <br>
+                        <!-- Add other Outsider-specific fields if needed -->
+                    {% endif %}
                         <a href="{% url 'edit_user_profile' %}"><button type="submit" class="LoginButton">Edit Profile</button></a>
                         <a href="{% url 'delete_user_profile' %}"><button type="submit" class="LoginButton">Delete Account</button></a>
                     
+
                       
                     
                 </div>

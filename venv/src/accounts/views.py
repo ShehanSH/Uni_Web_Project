@@ -356,26 +356,87 @@ def activateEmail(request, user, to_email):
     else:
         messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
 
+from .models import CustomUser, Role, Faculty, Department, UniStudent, Outsider, UniStaff
 
 @login_required
 def user_profile(request):
     user = request.user
     context = {'user': user}
+
+    if user.role_id == 2:
+        # Get UniStudent details
+        try:
+            unistudent = UniStudent.objects.get(user=user)
+            context['unistudent'] = unistudent
+        except UniStudent.DoesNotExist:
+            pass
+
+    elif user.role_id == 3:
+        # Get UniStaff details
+        try:
+            unistaff = UniStaff.objects.get(user=user)
+            context['unistaff'] = unistaff
+        except UniStaff.DoesNotExist:
+            pass
+
+    elif user.role_id == 4:
+        # Get Outsider details
+        try:
+            outsider = Outsider.objects.get(user=user)
+            context['outsider'] = outsider
+        except Outsider.DoesNotExist:
+            pass
+
     return render(request, 'user_profile.html', context)
 
+
+
+from .models import CustomUser, UniStudent, UniStaff, Outsider
+from .forms import CustomUserForm, UniStudentForm, UniStaffForm, OutsiderForm
 @login_required
 def edit_user_profile(request):
     user = request.user
-    if request.method == 'POST':
-        # Update the user details based on the submitted form data
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        # Update other fields as needed
-        user.save()
-        return redirect('user_profile')
+    user_role_id = user.role_id
 
-    context = {'user': user}
-    return render(request, 'edit_user_profile.html', context)
+    # Get the relevant user instance based on role_id
+    custom_user_instance = user
+    uni_student_instance = UniStudent.objects.filter(user=user).first()
+    uni_staff_instance = UniStaff.objects.filter(user=user).first()
+    outsider_instance = Outsider.objects.filter(user=user).first()
+
+    # Initialize the forms before the if blocks
+    custom_user_form = CustomUserForm(request.POST or None, instance=custom_user_instance)
+    uni_student_form = UniStudentForm(request.POST or None, instance=uni_student_instance)
+    uni_staff_form = UniStaffForm(request.POST or None, instance=uni_staff_instance)
+    outsider_form = OutsiderForm(request.POST or None, instance=outsider_instance)
+
+    if request.method == 'POST':
+        if user_role_id == 2:
+            if custom_user_form.is_valid() and uni_student_form.is_valid():
+                custom_user_form.save()
+                uni_student_form.save()
+                # Redirect to the user profile page after saving
+                return redirect('user_profile')
+        elif user_role_id == 3:
+            if custom_user_form.is_valid() and uni_staff_form.is_valid():
+                custom_user_form.save()
+                uni_staff_form.save()
+                # Redirect to the user profile page after saving
+                return redirect('user_profile')
+        elif user_role_id == 4:
+            if custom_user_form.is_valid() and outsider_form.is_valid():
+                custom_user_form.save()
+                outsider_form.save()
+                # Redirect to the user profile page after saving
+                return redirect('user_profile')
+
+    return render(request, 'edit_user_profile.html', {
+        'custom_user_form': custom_user_form,
+        'uni_student_form': uni_student_form,
+        'uni_staff_form': uni_staff_form,
+        'outsider_form': outsider_form,
+    })
+
 
 @login_required
 def delete_user_profile(request):
