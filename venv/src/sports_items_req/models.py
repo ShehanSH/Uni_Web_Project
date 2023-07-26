@@ -59,8 +59,22 @@ class SportsItemReceived(models.Model):
     received_date = models.DateField()
     received_time = models.TimeField()
     received_quantity = models.PositiveIntegerField()
+    damage_quantity = models.PositiveIntegerField(null=True,  blank=True)
     received_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='N')
     item_status = models.CharField(max_length=2, choices=ITEM_STATUS, default='ND')
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the recived item')
 
-    
+    def save(self, *args, **kwargs):
+        # Check if the received_status is changing to 'Recived' from a different value
+        if self.pk and self.received_status == 'R' and self._state.adding is False:
+            # Get the Inventory_Stock object corresponding to the received item
+            inventory_item = Inventory_Stock.objects.get(item_id=self.item_id)
+
+            # Calculate the new stock_quantity by adding the received_quantity
+            new_stock_quantity = inventory_item.stock_quantity + self.received_quantity
+
+            # Update the stock_quantity in the Inventory_Stock model
+            inventory_item.stock_quantity = new_stock_quantity
+            inventory_item.save()
+
+        super().save(*args, **kwargs)

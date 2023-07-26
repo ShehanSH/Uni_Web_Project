@@ -26,23 +26,26 @@ class SportsItemRequestUpdateForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class': 'abc'}),
         }
 
-from accounts.models import CustomUser
-from inventory_management.models import Category, Inventory_Stock
+
+
+
+from django import forms
+from .models import SportsItemReceived
+
+from django import forms
+from .models import SportsItemReceived
+
+from django import forms
+from .models import SportsItemReceived
 
 class SportsItemReceivedForm(forms.ModelForm):
     class Meta:
         model = SportsItemReceived
-        fields = ('request_id', 'user', 'category', 'item', 'received_date', 'received_time', 'received_quantity', 'received_status', 'item_status', 'description')
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = kwargs.get('instance')
-        if instance and instance.request_id:
-            # If the form is being used to update an existing instance, set the queryset
-            # of 'user', 'category', and 'item' fields based on the 'request_id' value.
-            request_id = instance.request_id
-            self.fields['user'].queryset = CustomUser.objects.filter(sportsitemrequest__request_id=request_id)
-            self.fields['category'].queryset = Category.objects.filter(sportsitemrequest__request_id=request_id)
-            self.fields['item'].queryset = Inventory_Stock.objects.filter(sportsitemrequest__request_id=request_id)
+        # Filter the request_id choices to only include SportsItemRequest IDs with approval_status 'Issued'
+        self.fields['request_id'].queryset = self.fields['request_id'].queryset.filter(approval_status='I')
 
-       
+   

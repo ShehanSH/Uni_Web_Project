@@ -8,13 +8,25 @@ class SportsItemRequestAdmin(admin.ModelAdmin):
     actions = ['issue_sports_items']
 
    
+
+
+from django.contrib import admin
+from .models import SportsItemRequest, SportsItemReceived
+from .forms import SportsItemsRequestForm, SportsItemRequestUpdateForm, SportsItemReceivedForm
+
 class SportsItemReceivedAdmin(admin.ModelAdmin):
-    list_display = ['request_id', 'user', 'category', 'item', 'received_date', 'received_time', 'received_quantity', 'received_status', 'item_status', 'description']
+    list_display = ['request_id', 'user', 'category', 'item', 'received_date', 'received_time', 'received_quantity', 'damage_quantity','received_status', 'item_status', 'description']
     list_filter = ['category', 'received_status', 'item_status', 'user', ]
-    
+    form = SportsItemReceivedForm
+
+
+# Register the model with the custom admin class
+admin.site.register(SportsItemReceived, SportsItemReceivedAdmin)
+
+
 
 
 
 # Register the admin class
 admin.site.register(SportsItemRequest, SportsItemRequestAdmin)
-admin.site.register(SportsItemReceived, SportsItemReceivedAdmin)
+
