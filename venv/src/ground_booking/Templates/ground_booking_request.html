@@ -140,7 +140,7 @@
                 <img src="{% static 'images/signup.png' %}" alt="login Image" class="GroupImage">
             </div> {% endcomment %}
             <div class="LoginFormContainer">
-                <div class="LoginFormInnerContainer" style="margin-top:-200px">
+                <div class="LoginFormInnerContainer" style="margin-top:-400px">
                     <h2 class="header">Ground Booking Request</h2>
                     
                     <form method="post" enctype="multipart/form-data" id="bookingForm">
@@ -149,7 +149,7 @@
                         <button type="submit" class="LoginButton" id= "bookingButton">Submit Booking Request</button>
                       </form>
                       
-                      <div style="margin-left:450px; margin-top:-400px">
+                      <div style="margin-left:450px; margin-top:-600px">
                       <form action="{% url 'ground_booking:list_booking' %}" method="get">
 
                         <button type="submit" class="LoginButton">Go to My Bookings</button>

@@ -40,6 +40,16 @@
             
             cursor: pointer;
         }
+        textarea {
+            width: 100%; /* Adjust the width as needed */
+            height: 400px; /* Adjust the height as needed */
+            resize: none; /* Prevent textarea resizing */
+            font-size: 14px; /* Adjust the font size */
+            font-family: Arial, sans-serif; /* Adjust the font family */
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add padding */
+            box-sizing: border-box; /* Include padding and border in total width/height */
+          }
 
         
     </style>
@@ -60,6 +70,64 @@
         {% endif %}
     </div>
 
+
+
+
+    <div class="container" style = "width:700px; margin:80px auto ;">
+        <h1 class="text-center" style="margin:40px 0;text-align:center">Terms & Conditions </h1>
+        <form style = "width:700px; margin:-10px auto ;">
+            <div class="form-group">
+                <textarea class="w-200" cols="100" rows="15" readonly>
+                    Sports Item Request Process:
+                    - Users can request sports items through our website.
+                    - The admin will review and approve the sports item requests based on availability.
+                    - Once the sports item request is approved, university students or staff members can proceed to the respective department with their university identity card to collect the sports item.
+
+                    Sports Item Issuing and Returning:
+                    - Users must present their university identity card during the sports item collection process.
+                    - Upon using the sports item, the user must return it to the designated department.
+                    - Users can retrieve their identity card after handing over the sports item.
+
+                    Responsibility for Sports Items:
+                    - Users are responsible for using the sports item with care and must ensure it is not damaged during use.
+                    - Any damages or loss of the sports item during the user's possession will be the responsibility of the user, and appropriate charges may apply.
+
+                    First Come First Serve Policy:
+                    - Sports items are issued on a first-come, first-serve basis to ensure a fair distribution process.
+                    - Users are encouraged to request sports items in advance to secure their preferred items.
+
+                    Safety and Regulations:
+                    - Users must follow all safety guidelines and regulations while using the sports items.
+                    - Misuse of sports items or engaging in activities that pose a risk to personal safety or others is strictly prohibited.
+
+                    Limited Availability:
+                    - The availability of sports items may vary depending on demand and usage.
+                    - Our department reserves the right to limit the quantity of sports items issued to any user or to suspend the issuance of certain items as needed.
+
+                    Personal Information:
+                    - The personal information collected during the sports item request process will be handled in accordance with our privacy policy.
+
+                    Modification of Terms:
+                    - Our department may modify or update these terms and conditions at any time. Users will be notified of any changes.
+
+                    Liability and Indemnity:
+                    - Our department and the respective university departments shall not be liable for any injury, loss, or damage incurred during the use of sports items.
+                    - Users agree to indemnify our department and the respective university departments from any claims, losses, or damages arising from their use of sports items.
+
+                    Acceptance of Terms:
+                    - By making a sports item request, users acknowledge that they have read, understood, and agreed to these terms and conditions.
+                </textarea>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
+                <label class="form-check-label" for="exampleCheck1">I have read and accept the terms of conditions</label>
+            </div>
+            
+        </form>
+    </div>
+    
+
+
     <div class="LoginPageContainer">
         <div class="LoginPageInnerContainer">
             {% comment %} <div class="ImageContianer">
@@ -69,16 +137,16 @@
                 <div class="LoginFormInnerContainer" style="margin-top:0px">
                     <h2 class="header">Create Sports Item Request</h2>
                     
-                      <form method="post">
+                      <form method="post" >
                         {% csrf_token %}
                         
                         {{ form.as_p }}
                         
-                        <button type="submit" class="LoginButton">Submit Request</button>
+                        <button type="submit" class="LoginButton" id="bookingButton">Submit Request</button>
                       </form>
                       <form action="{% url 'sports_items_req:list_requests' %}" method="get">
 
-                        <button type="submit" class="LoginButton">Go to List Requests</button>
+                        <button type="submit" class="LoginButton">Go to My Requests</button>
                     </form>
                     
                     
@@ -92,6 +160,41 @@
     
     <script src="{% static 'js/home2.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
+    <script>
+        // Get references to the checkbox and the button
+        const termsCheckbox = document.getElementById('exampleCheck1');
+        const bookingButton = document.getElementById('bookingButton');
+    
+        // Add an event listener to the checkbox
+        termsCheckbox.addEventListener('change', function () {
+            // Enable the button if the checkbox is checked, disable it otherwise
+            if (termsCheckbox.checked) {
+                bookingButton.disabled = false;
+                bookingButton.style.backgroundColor = '#660000';
+                bookingButton.style.color = '#FFFFFF';
+                bookingButton.style.fontWeight = 'bold';
+                bookingButton.style.cursor = 'pointer'; // Add cursor pointer on hover
+            } else {
+                bookingButton.disabled = true;
+                bookingButton.style.backgroundColor = 'white';
+                bookingButton.style.color = '#000000';
+                bookingButton.style.fontWeight = 'normal';
+                bookingButton.style.cursor = 'default'; // Reset cursor to default on uncheck
+            }
+        });
+    
+        // Add a click event listener to the booking button
+        bookingButton.addEventListener('click', function () {
+            // Check if the checkbox is checked before submitting the form
+            if (!termsCheckbox.checked) {
+                alert('Please accept the terms of contract before submitting the booking request.');
+            } else {
+                // Checkbox is checked, manually trigger form submission
+                const bookingForm = document.getElementById('bookingForm');
+                bookingForm.submit();
+            }
+        });
+    </script>
 
 </body>
 </html> 
