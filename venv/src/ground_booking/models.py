@@ -6,7 +6,8 @@ class Ground(models.Model):
     ground_name = models.CharField(max_length=255)
     area = models.CharField(max_length=100)
     booking_price = models.DecimalField(max_digits=10, decimal_places=2)
-
+    ground_image = models.ImageField(upload_to='ground_images/', blank=True, null=True)
+    
     def __str__(self):
         return self.ground_name
 
@@ -31,7 +32,8 @@ class GroundBookingRequest(models.Model):
     request_time = models.TimeField()
     event = models.ForeignKey(EventType, on_delete=models.CASCADE)
     approval_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='D')
-    event_form = models.FileField(upload_to='GroundBookingRequestForm/', null=True, blank=True)  # Add the image field
+    event_form = models.FileField(upload_to='GroundBookingRequestForm/', null=True, blank=True)
+    payment_receipt = models.FileField(upload_to='GroundBookingRequestForm/', null=True, blank=True)  # Add the image field
 
     def __str__(self):
         return f"Booking ID: {self.booking_id}, User: {self.user}, Ground: {self.ground}, Event: {self.event}"

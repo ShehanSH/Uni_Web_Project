@@ -36,7 +36,7 @@
 
     
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/item_req.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ground_req.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/msg.css' %}">
 
     <style>
@@ -52,7 +52,17 @@
             
             cursor: pointer;
         }
-
+        
+        textarea {
+            width: 100%; /* Adjust the width as needed */
+            height: 400px; /* Adjust the height as needed */
+            resize: none; /* Prevent textarea resizing */
+            font-size: 14px; /* Adjust the font size */
+            font-family: Arial, sans-serif; /* Adjust the font family */
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add padding */
+            box-sizing: border-box; /* Include padding and border in total width/height */
+          }
         
     </style>
 </head>
@@ -72,29 +82,89 @@
         {% endif %}
     </div>
 
-    <div class="LoginPageContainer">
+
+    <div class="container" style = "width:700px; margin:80px auto ;">
+        <h1 class="text-center" style="margin:40px 0;text-align:center">Terms & Conditions </h1>
+        <form style = "width:700px; margin:-10px auto ;">
+            <div class="form-group">
+                <textarea class="w-200" cols="100" rows="15" readonly>
+                    Booking Request Process:
+                        - Users can request to book a ground through our website. The booking request should be submitted well in advance of the event date.
+                        - After receiving your booking request, we will initiate the process of seeking event approval from the university.
+                        - Your booking will be confirmed only after the university grants approval and you have completed the payment and event form submission process.
+                    
+                    Submission Requirements:
+                    - To secure your booking, users must submit the event form and payment receipt at least 2 days before the scheduled event date.
+                    - Failure to submit the required documents within the specified time frame will result in the automatic cancellation of the booking request.
+                    
+                    Cancellation and Refund Policy:
+                    - In the event of cancellation by the user, refund eligibility will be subject to the university's policies and guidelines.
+                    - If the university cancels the booking for any reason, a full refund will be issued to the user.
+                    
+                    Ground Usage Guidelines:
+                    - Users must adhere to the university's rules and regulations while using the ground premises for their event.
+                    - Any damage caused to the ground or its facilities during the event will be the responsibility of the user.
+                    
+                    Liability:
+                    - Our Department is not liable for any injury, loss, or damage incurred during the event.
+                    - Users are responsible for the safety and security of all attendees during their event.
+                    
+                    Prohibited Activities:
+                    - The following activities are strictly prohibited on the ground premises.
+                    - Users found engaging in any prohibited activities may face legal action and cancellation of their current and future bookings.
+                    
+                    Privacy Policy:
+                    - Any personal information collected during the booking process will be handled in accordance with our privacy policy.
+                    
+                    Dispute Resolution:
+                    - In the event of any disputes or disagreements, both parties agree to attempt to resolve the matter through amicable negotiations.
+                    
+                    Modifications to Terms:
+                    - Our Department reserves the right to modify or update these terms and conditions at any time. Users will be notified of any changes.
+                    
+                    Acceptance of Terms:
+                    - By submitting a booking request, users acknowledge that they have read, understood, and agreed to these terms and conditions.
+                </textarea>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
+                <label class="form-check-label" for="exampleCheck1">I have read and accept the terms of conditions</label>
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="LoginPageContainer"   style="width:1000px;margin-top:-50px">
         <div class="LoginPageInnerContainer">
             {% comment %} <div class="ImageContianer">
                 <img src="{% static 'images/signup.png' %}" alt="login Image" class="GroupImage">
             </div> {% endcomment %}
             <div class="LoginFormContainer">
-                <div class="LoginFormInnerContainer" style="margin-top:0px">
+                <div class="LoginFormInnerContainer" style="margin-top:-200px">
                     <h2 class="header">Ground Booking Request</h2>
                     
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" id="bookingForm">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="LoginButton">Submit Request</button>
+                        <button type="submit" class="LoginButton" id= "bookingButton">Submit Booking Request</button>
                       </form>
+                      
+                      <div style="margin-left:450px; margin-top:-400px">
                       <form action="{% url 'ground_booking:list_booking' %}" method="get">
 
-                        <button type="submit" class="LoginButton">Go to List Bookings</button>
+                        <button type="submit" class="LoginButton">Go to My Bookings</button>
+                        
+                    </form>
+
+                    <form action="{% url 'ground_booking:ground_details' %}" method="get">
+
+                        <button type="submit" class="LoginButton">Show Grounds Details</button>
                         
                     </form>
                     
 
-                    <a href="{% url 'ground_booking:calendar' %}"><button type="submit" class="LoginButton">Check Ground Availabilty</button></a>
-                    
+                    <a href="{% url 'ground_booking:calendar' %}"><button type="submit" class="LoginButton">Check Grounds Availabilty</button></a>
+                </div>
                 </div>
             </div>
        
@@ -105,6 +175,43 @@
     
     <script src="{% static 'js/home2.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
-
+    <script>
+        // Get references to the checkbox and the button
+        const termsCheckbox = document.getElementById('exampleCheck1');
+        const bookingButton = document.getElementById('bookingButton');
+    
+        // Add an event listener to the checkbox
+        termsCheckbox.addEventListener('change', function () {
+            // Enable the button if the checkbox is checked, disable it otherwise
+            if (termsCheckbox.checked) {
+                bookingButton.disabled = false;
+                bookingButton.style.backgroundColor = '#660000';
+                bookingButton.style.color = '#FFFFFF';
+                bookingButton.style.fontWeight = 'bold';
+                bookingButton.style.cursor = 'pointer'; // Add cursor pointer on hover
+            } else {
+                bookingButton.disabled = true;
+                bookingButton.style.backgroundColor = 'white';
+                bookingButton.style.color = '#000000';
+                bookingButton.style.fontWeight = 'normal';
+                bookingButton.style.cursor = 'default'; // Reset cursor to default on uncheck
+            }
+        });
+    
+        // Add a click event listener to the booking button
+        bookingButton.addEventListener('click', function () {
+            // Check if the checkbox is checked before submitting the form
+            if (!termsCheckbox.checked) {
+                alert('Please accept the terms of contract before submitting the booking request.');
+            } else {
+                // Checkbox is checked, manually trigger form submission
+                const bookingForm = document.getElementById('bookingForm');
+                bookingForm.submit();
+            }
+        });
+    </script>
+    
+    
+    
 </body>
 </html> 

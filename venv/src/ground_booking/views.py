@@ -104,3 +104,17 @@ def all_events(request):
     # Return the events as a JSON response
     return JsonResponse(events, safe=False)
 
+from .models import Ground
+from django.shortcuts import render, get_object_or_404
+from .models import Ground
+
+from django.shortcuts import render
+from .models import Ground
+
+def ground_details_view(request):
+    all_grounds = Ground.objects.all()
+    context = {
+        "all_grounds": all_grounds
+    }
+    return render(request, 'ground_details.html', context)
+

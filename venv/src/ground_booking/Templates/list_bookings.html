@@ -26,6 +26,7 @@
                     <th>Request Date</th>
                     <th>Request Time</th>
                     <th>Event Form</th>
+                    <th>Payment Receipt</th>
                     <th>Status</th>
                     <th>Action</th>
                    
@@ -47,6 +48,13 @@
                         <a href="{{ request.event_form.url }}" download>Download Event Form</a>
                         {% else %}
                             No Event Form Uploaded 
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if request.payment_receipt %}
+                        <a href="{{ request.payment_receipt.url }}" download>Download Payment Receipt</a>
+                        {% else %}
+                            No Payment Receipt Uploaded 
                         {% endif %}
                     </td>
                     <td>{{ request.get_approval_status_display }}</td>

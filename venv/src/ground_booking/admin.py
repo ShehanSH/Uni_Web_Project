@@ -3,9 +3,10 @@ from .models import GroundBookingRequest, Ground, EventType
 
 
 class GroundAdmin(admin.ModelAdmin):
-    list_display = ['ground_id', 'ground_name', 'area', 'booking_price']
+    list_display = ['ground_id', 'ground_name', 'area', 'booking_price', 'ground_image']
     search_fields = ['ground_name', 'area']
-
+    list_display_links = ['ground_name']  # Make ground_name a link to the details page
+    
 class EventTypeAdmin(admin.ModelAdmin):
     list_display = ['event_id', 'event_name']
     search_fields = ['event_name']
@@ -32,7 +33,7 @@ class EventFormFilter(admin.SimpleListFilter):
         return queryset
 
 class GroundBookingRequestAdmin(admin.ModelAdmin):
-    list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'display_event_form', 'approval_status']
+    list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'display_payment_form', 'display_payment_receipt','approval_status' ]
     list_filter = ['approval_status', 'event', EventFormFilter]
     search_fields = ['user__username']
 
@@ -41,12 +42,21 @@ class GroundBookingRequestAdmin(admin.ModelAdmin):
             return False
         return True
 
-    def display_event_form(self, obj):
+    def display_payment_form(self, obj):
         if obj.event_form:
             return format_html('<a href="{}" download target="_blank">Event Form Download</a>', obj.event_form.url)
         else:
             return 'Not Submitted'
-    display_event_form.short_description = 'Event Form'
+    display_payment_form.short_description = 'Event Form'
+
+    def display_payment_receipt(self, obj):
+        if obj.payment_receipt:
+            return format_html('<a href="{}" download target="_blank">Payment Receipt Download</a>', obj.payment_receipt.url)
+        else:
+            return 'Not Submitted'
+    display_payment_receipt.short_description = 'Payment Receipt'
+
+
 
 # Register the model with the custom admin
 admin.site.register(GroundBookingRequest, GroundBookingRequestAdmin)

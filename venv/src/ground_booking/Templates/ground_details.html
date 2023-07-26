@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+<head>
+  
+    <title>Ground Details</title>
+    {% comment %} <link rel="stylesheet" href="style.css"> {% endcomment %}
+    <link href="{% static 'css/ground.css' %}" rel="stylesheet" /> 
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+    
+</head>
+<body>
+    {% include 'navbar2.html' %}
+
+    {% comment %} <h1>All Ground Details</h1>
+    <ul>
+        {% for ground in all_grounds %}
+        <li>
+            <strong>Name:</strong> {{ ground.ground_name }}<br>
+            <strong>Area:</strong> {{ ground.area }}<br>
+            <strong>Booking Price:</strong> Rs.{{ ground.booking_price }}<br>
+            {% if ground.ground_image %}
+            <img src="{{ ground.ground_image.url }}" alt="{{ ground.ground_name }}" width="200">
+            {% endif %}
+            <br><br>
+        </li>
+        {% endfor %}
+    </ul> {% endcomment %}
+
+
+
+    <section class="expert" id="expert">
+        <div class="title">
+            <h2 class="titeText">All <span>G</span>round Details</h2>
+            <p style="text-align: center;">Welcome to our University Ground Details Page! Here, you can explore all the captivating features and amenities our university grounds have to offer. From lush green open spaces to cutting-edge athletic facilities, our grounds are designed to cater to all your recreational and academic needs.</p>
+        </div>
+        <div class="content">
+            {% for ground in all_grounds %}
+            <div class="box">
+               
+                <div class="imgbx">
+                    {% if ground.ground_image %}
+                        <img src="{{ ground.ground_image.url }}" alt="{{ ground.ground_name }}" width="200">
+                    {% endif %}
+                </div>
+                <div class="text">
+                    <h3>Name:</h3> <h3 style="color:#660000; font-weight:bold;">{{ ground.ground_name }} </h3>
+                    <h3>Area:</h3><h3 style="color:#660000; font-weight:bold;">{{ ground.area }} sq ft</h3>
+                    <h3>Booking Price:</h3><h3 style="color:#660000; font-weight:bold;">Rs. {{ ground.booking_price }} </h3>
+                    <button onclick="window.location.href = '/ground_booking_request/';" class="btn" style=" height:60px; font-size:15px;">Book Now</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+</body>
+</html>

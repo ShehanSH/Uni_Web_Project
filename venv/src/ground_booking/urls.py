@@ -3,7 +3,8 @@ from django.urls import path
 from .views import *
 from django.urls import path
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 app_name = 'ground_booking'
 
 urlpatterns = [
@@ -13,6 +14,11 @@ urlpatterns = [
     path('delete_booking_request/<str:pk>/', delete_booking_request, name='delete_booking_request'),
     path('all_events/', all_events, name='all_events'),
     path('calendar/', calendar_view, name='calendar'),
+
+     path('ground/details/', views.ground_details_view, name='ground_details'),
     
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
