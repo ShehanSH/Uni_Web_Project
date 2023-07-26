@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User Profile</title>
+</head>
+<body>
+    <h1>Edit User Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        <!-- Display user details in input fields for editing -->
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" value="{{ user.first_name }}">
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" value="{{ user.last_name }}">
+        <!-- Add other fields as needed -->
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

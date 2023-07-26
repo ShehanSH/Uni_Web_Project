@@ -355,3 +355,35 @@ def activateEmail(request, user, to_email):
                 received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
     else:
         messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
+
+
+@login_required
+def user_profile(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'user_profile.html', context)
+
+@login_required
+def edit_user_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        # Update the user details based on the submitted form data
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        # Update other fields as needed
+        user.save()
+        return redirect('user_profile')
+
+    context = {'user': user}
+    return render(request, 'edit_user_profile.html', context)
+
+@login_required
+def delete_user_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        # Delete the user account
+        user.delete()
+        return redirect('homemain')  # Redirect to the homepage or any other appropriate page
+
+    context = {'user': user}
+    return render(request, 'delete_user_profile.html', context)

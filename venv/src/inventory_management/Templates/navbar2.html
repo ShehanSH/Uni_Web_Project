@@ -26,8 +26,8 @@
             <li><a href="#contactus">Contact Us</a></li>
             {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
-                    <a href><li><img src="{% static 'images/user.png' %}" alt="Your Image" class="userlogo"></li> </a>
-
+                    <a href = "{% url 'user_profile' %}"><li><img src="{% static 'images/user.png' %}" alt="Your Image" class="userlogo"></li> </a>
+                   
                
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
