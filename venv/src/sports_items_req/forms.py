@@ -23,7 +23,7 @@ class SportsItemRequestUpdateForm(forms.ModelForm):
             'item': forms.Select(attrs={'class': 'abc'}),
             'request_date': forms.DateInput(attrs={'class': 'abc', 'type': 'date'}),
             'request_time': forms.TimeInput(attrs={'class': 'abc', 'type': 'time'}),
-            'quantity': forms.NumberInput(attrs={'class': 'abc'}),
+            'req_quantity': forms.NumberInput(attrs={'class': 'abc'}),
         }
 
 

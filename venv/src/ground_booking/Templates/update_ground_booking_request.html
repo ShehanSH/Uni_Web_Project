@@ -56,7 +56,7 @@
             {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
                     {{ message }}
-                    <span class="close-button">&times;</span>
+                   
                 </li>
             {% endfor %}
         </ul>
@@ -70,7 +70,7 @@
             </div> {% endcomment %}
             <div class="LoginFormContainer">
                 <div class="LoginFormInnerContainer" style="margin-top:0px">
-                    <h2 class="header">Update Ground Booking Request</h2>
+                    <h2 class="header">Update Booking Request</h2>
                     
                       <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}

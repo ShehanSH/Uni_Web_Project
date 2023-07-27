@@ -26,7 +26,7 @@
     height: 900px;
     /* overflow: auto; */
     margin-left: 30%;
-    width: 40%;
+    width: 45%;
     align-items: center;
     justify-content: center;
      /* Add red border */
@@ -104,12 +104,13 @@ a {
   .LoginPageInnerContainer .LoginFormContainer .header {
     font-size: 32px;
     font-weight: 700;
-    
+    text-align: center;
   }
   
   .header{
     margin-bottom: 20px;
     color: #660000;
+
   }
   
   .LoginPageInnerContainer .LoginFormContainer .subHeader {

@@ -59,7 +59,7 @@ class SportsItemReceived(models.Model):
     received_date = models.DateField()
     received_time = models.TimeField()
     received_quantity = models.PositiveIntegerField()
-    damage_quantity = models.PositiveIntegerField(null=True,  blank=True)
+    damage_quantity = models.PositiveIntegerField(null=True,  blank=True, default=0)
     received_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='N')
     item_status = models.CharField(max_length=2, choices=ITEM_STATUS, default='ND')
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the recived item')

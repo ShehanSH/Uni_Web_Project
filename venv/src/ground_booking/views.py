@@ -55,7 +55,7 @@ def update_ground_booking_request(request, pk):
 
             form.save()
             messages.success(request, 'Ground booking request updated successfully.')
-            return redirect('ground_booking:ground_booking_request')
+            return redirect('ground_booking:list_booking')
 
         else:
             messages.error(request, 'Error updating the ground booking request. Please check the form and try again.')
@@ -80,7 +80,7 @@ def delete_booking_request(request, pk):
     if request.method == 'POST':
         queryset.delete()
         messages.success(request, 'Ground booking request deleted successfully.')
-        return redirect('ground_booking:ground_booking_request')
+        return redirect('ground_booking:list_booking')
         
     return render(request, 'delete_booking_request.html')
 
