@@ -297,4 +297,15 @@ def logout_view(request):
 
 #     return render(request, 'add_supplier.html', {'form': form})
 
+from .models import Category, Supplier, Inventory_Stock, Supply_Inventory
+from .forms import InventoryStockForm
 
+
+def inventory_chart(request):
+    inventorys = Inventory_Stock.objects.all()
+    context = {
+        "inventorys": inventorys,
+       
+    }
+
+    return render(request, 'inventoryChart.html', context)

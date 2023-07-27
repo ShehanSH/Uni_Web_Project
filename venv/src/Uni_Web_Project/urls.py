@@ -21,6 +21,7 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     # path('list_items', views.list_items, name='list_items'),
     path('admin/', admin.site.urls),
@@ -43,8 +44,8 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     # path('sports_item_req/', include(('sports_item_req.urls', 'sports_item_req'), namespace='sports_item_req')),
    
-    # path('home', views.home, name='home'),
-    # path('index/', views.index, name='index'),
+    # path('chart', chart.home, name='home'),
+    path('inventory_chart/', views.inventory_chart, name='inventory_chart'),
     path('logout/', views.logout_view, name='logout'),
     
     path('', include('sports_items_req.urls')),
