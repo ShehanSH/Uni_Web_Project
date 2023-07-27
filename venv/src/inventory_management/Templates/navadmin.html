@@ -1,0 +1,49 @@
+{% load static %}
+<html lang="en">
+<head>
+  
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="{% static 'css/adminNav.css' %}" rel="stylesheet" />
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+    
+</head>
+<body>
+    <div class = "headerback" >
+    <header >
+
+        <a href="{% url 'homemain' %}"><img src="{% static 'images/unilogo.png' %}" alt="Your Image" class="unilogo"></a>
+        <a href="{% url 'homemain' %}" class="logo" style="margin-left:-20px;">DEPARTMENT OF PHYSICAL EDUCATION <br>
+        <span style="font-weight: normal;">University of Kelaniya, Sri Lanka </span></a>
+        <div class="menutoggle" onclick="togglemenu();">
+        </div>
+        <ul class="navigation">
+            <li><a href="{% url 'homemain' %}">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#Booking_calendar">Calendar</a></li>
+            <li><a href="{% url 'ground_booking:ground_booking_request' %}">Grounds</a></li>
+            <li><a href="{% url 'sports_items_req:create_sports_item_request' %}">Sports</a></li>
+            <li><a href="#contactus">Contact Us</a></li>
+            {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}"><i class="bx bx-log-out"></i> Logout</a></li>
+                    <a href = "{% url 'user_profile' %}"><li><img src="{% static 'images/user.png' %}" alt="Your Image" class="userlogo"></li> </a>
+                   
+               
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+        </ul>
+    </header>
+</div>
+</body>
+</html>
+
+
+{% comment %} <div class="button-frame">
+    <li class="user-name">{{ user.first_name }}</li>
+    <li>
+      <a href="{% url 'logout' %}" class="logout-link">
+        <i class="bx bx-log-out"></i> Logout
+      </a>
+    </li>
+  </div> {% endcomment %}

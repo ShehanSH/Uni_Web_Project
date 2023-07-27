@@ -1,0 +1,309 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.min.js"></script>
+  
+</head>
+
+   
+<body class="page">
+    {% include 'navadmin.html' %}
+    <div class="sidebar">
+        <div class="brand">
+          <p>B<span>rand</span></p>
+        </div>
+        <ul class="nav-list">
+            
+          <li class="nav-item">
+            <img src="{% static 'images/sports.png' %}" alt="Your Image" style="width:40px; height:40px; margin-left:-20px;">
+            <a href="#inventory">
+              <span class="nav-item__icon">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              
+              <span class="nav-item__text">
+                 inventory
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#inventoryTrends">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                Messages
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#">
+              <span class="nav-item__icon">
+                <ion-icon name="people-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                 Groups
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#">
+              <span class="nav-item__icon">
+                <ion-icon name="person-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                 Friends
+              </span>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#">
+              <span class="nav-item__icon avatar">J</span>
+              <span class="nav-item__text">
+                  John Doe
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#">
+              <span class="nav-item__icon logout">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                 Logout
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+      <section class="expert" id="inventory">
+        <div class="title">
+            <h2 class="titeText">Stock Quantity <span>vs </span>Reorder Level</h2>
+            <p style="text-align: center;">Compares the current stock quantity and reorder level for each item in the inventory. This chart helps in identifying items that are low in stock and may require replenishment based on their reorder levels.</p>
+        </div>
+        <div class="chart" >
+            <div>
+                <label for="categorySelect">Select Category:</label>
+                <select id="categorySelect" onchange="updateChart()">
+                    <option value="all">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <canvas id="myChart" width="400" height="250"></canvas>
+            
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart;
+            
+                // Sample data (replace this with your actual data from the backend)
+                const inventoryData = [
+                    {% for inventory in inventorys %}
+                    {
+                        item_name: "{{ inventory.item_name }}",
+                        category_name: "{{ inventory.category.category_name }}",
+                        stock_quantity: {{ inventory.stock_quantity }},
+                        reorder_level: {{ inventory.reorder_level }}
+                    },
+                    {% endfor %}
+                ];
+            
+                // Organize data by categories
+                const categories = Array.from(new Set(inventoryData.map(item => item.category_name)));
+            
+                function updateChart() {
+                    const selectedCategory = document.getElementById('categorySelect').value;
+            
+                    // Filter data based on the selected category
+                    const filteredData = selectedCategory === 'all' ? inventoryData : inventoryData.filter(item => item.category_name === categories[selectedCategory]);
+            
+                    if (myChart) {
+                        myChart.destroy(); // Destroy the existing chart to update it with new data
+                    }
+            
+                    myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: filteredData.map(item => item.item_name),
+                            datasets: [
+                                {
+                                    label: 'Stock Quantity',
+                                    data: filteredData.map(item => item.stock_quantity),
+                                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 3
+                                },
+                                {
+                                    label: 'Reorder Level',
+                                    data: filteredData.map(item => item.reorder_level),
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 0.7)',
+                                    borderWidth: 3
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            
+                // Initial chart creation
+                updateChart();
+            </script>
+            
+        </div>
+        
+    </section>
+
+        {% comment %} CHART2 {% endcomment %}
+
+
+        <section class="expert" id="inventoryTrends">
+            <div class="title">
+                <h2 class="titeText">Stock Quantity, Damage Quantity, and Lost Quantity <span>Trends</span></h2>
+                <p style="text-align: center;">Visualizes the trends of stock quantity, damage quantity, and lost quantity for each item in the inventory over time. This chart helps in tracking changes in inventory levels, identifying potential issues with damages and losses, and facilitating better inventory management decisions.</p>
+            </div>
+            <div class="chart">
+                <canvas id="inventoryLineChart" width="400" height="250"></canvas>
+            </div>
+            
+            <script>
+                var ctx = document.getElementById('inventoryLineChart').getContext('2d');
+                var inventoryLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for inventory in inventorys %} '{{ inventory.item_name }}', {% endfor %}],
+                        datasets: [
+                            {
+                                label: 'Stock Quantity',
+                                data: [{% for inventory in inventorys %} {{ inventory.stock_quantity }}, {% endfor %}],
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                fill: true,
+                            },
+                            {
+                                label: 'Damage Quantity',
+                                data: [{% for inventory in inventorys %} {{ inventory.damage_quantity }}, {% endfor %}],
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                fill: true,
+                            },
+                            {
+                                label: 'Lost Quantity',
+                                data: [{% for inventory in inventorys %} {{ inventory.lost_quantity }}, {% endfor %}],
+                                borderColor: 'rgba(255, 206, 86, 1)',
+                                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                fill: true,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Item Name'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Quantity'
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+        
+        {% comment %} CHART3 {% endcomment %}
+
+        <section class="expert" id="itemQuantitiesByCategory">
+            <div class="title">
+                <h2 class="titeText">Item Quantities (Stock, Damage, and Lost) by Category</h2>
+                <p style="text-align: center;">This stacked bar chart displays the quantities of items (Stock, Damage, and Lost) for each category, allowing easy comparison of quantities within each category.</p>
+            </div>
+            <div class="chart">
+                <canvas id="stackedBarChart" width="400" height="250"></canvas>
+            </div>
+        
+            <script>
+                var ctx = document.getElementById('stackedBarChart').getContext('2d');
+        
+                // Sample data (replace this with your actual data from the backend)
+                const inventoryData = [
+                    {% for inventory in inventorys %}
+                    {
+                        item_name: "{{ inventory.item_name }}",
+                        category_name: "{{ inventory.category.name }}",
+                        stock_quantity: {{ inventory.stock_quantity }},
+                        damage_quantity: {{ inventory.damage_quantity }},
+                        lost_quantity: {{ inventory.lost_quantity }}
+                    },
+                    {% endfor %}
+                ];
+        
+                // Organize data by categories
+                const categories = Array.from(new Set(inventoryData.map(item => item.category_name)));
+                const datasets = categories.map(category => ({
+                    label: category,
+                    data: inventoryData.filter(item => item.category_name === category).map(item => ({
+                        x: item.item_name,
+                        y: [item.stock_quantity, item.damage_quantity, item.lost_quantity]
+                    })),
+                    backgroundColor: getRandomColor()
+                }));
+        
+                function getRandomColor() {
+                    return 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.8)';
+                }
+        
+                var stackedBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: inventoryData.map(item => item.item_name),
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Item Name'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Quantity'
+                                },
+                                stacked: true
+                            }
+                        }
+                    }
+                });
+            </script>
+</body>
+</html>
+

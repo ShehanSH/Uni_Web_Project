@@ -26,7 +26,29 @@ def homemain(request):
     }
     return render(request, 'homemain.html', context)
 
+def testchart(request):
+    categories = Category.objects.all()
+    selected_category_id = request.GET.get('category')  # Get the selected category ID from the request
+    
+    if selected_category_id:
+        inventorys = Inventory_Stock.objects.filter(category_id=selected_category_id)
+    else:
+        inventorys = Inventory_Stock.objects.all()
 
+    context = {
+        "inventorys": inventorys,
+        "categories": categories,
+        "selected_category_id": int(selected_category_id) if selected_category_id else None,
+    }
+    return render(request, 'testchart.html', context)
+
+
+def test2(request):
+  
+    context = {
+        
+    }
+    return render(request, 'test2.html', context)
 
 # def test(request):
 #     title = "Welcome: This is the test Page"

@@ -3,13 +3,24 @@
 <head>
   
     <title>Chart Page</title>
-    <link href="{% static 'css/home2.css' %}" rel="stylesheet" /> 
+    <link href="{% static 'css/h.css' %}" rel="stylesheet" /> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.min.js"></script>
+    
 </head>
 <body>
-    {% include 'navbar2.html' %}
+    {% include 'navadmin.html' %}
+    <div style="margin-top:150px">
+        <div>
+            <h4>Add Data</h4>
+            <hr>
 
-    <canvas id="myChart" width="400" height="250"></canvas>
+            
+
+        </div>
+
+    <div style="width:200px;" >
+        <canvas id="myChart" width="400" height="250"></canvas>
+   
                 <script>
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var myChart = new Chart(ctx, {
@@ -50,6 +61,63 @@
                     }
                 });
                 </script>
+
+    </div>
+
+
+
+
+    
+    <section class="expert" id="expert">
+        <div class="title">
+            <h2 class="titeText">Our <span>A</span>chivements</h2>
+            <p style="text-align: center;">Here, at our esteemed university, we celebrate not only academic achievements but also the outstanding accomplishments of our students in the vibrant world of sports. We firmly believe in the power of sports to instill discipline, teamwork, and a competitive spirit that complements our students' academic pursuits.</p>
+        </div>
+        <div class="content">
+            <div class="box">
+                <div class="imgbx">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/23/whatsapp-image-2022-12-16-at-6.29.16-pm.jpeg">
+                </div>
+                <div class="text">
+                    <h3>Rugger</h3>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgbx">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/26/whatsapp-image-2022-12-26-at-1.15.00-pm.jpeg">
+                </div>
+                <div class="text">
+                    <h3>Carrom</h3>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgbx">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/26/whatsapp-image-2022-12-26-at-2.09.09-pm.jpeg">
+                </div>
+                <div class="text">
+                    <h3>Vollyball</h3>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgbx">
+                    <img src="https://units.kln.ac.lk/sports/images/2022/12/05/whatsapp-image-2022-12-05-at-4.12.53-pm.jpeg">
+                </div>
+                <div class="text">
+                    <h3>Karate</h3>
+                </div>
+            </div>
+            {% comment %} <div class="box">
+                <div class="imgbx">
+                    <img src="https://i.postimg.cc/hjsHfq1z/expert5.jpg">
+                </div>
+                <div class="text">
+                    <h3>Expert</h3>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </section>
+
+
 
 
 </body>

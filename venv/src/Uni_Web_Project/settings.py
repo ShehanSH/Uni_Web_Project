@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap_datepicker_plus',
     'ground_booking',
-
+   
     
     ]
 

@@ -27,6 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
    
     path('', views.homemain, name='homemain'),
+    path('testchart/', views.testchart, name='testchart'),
+    
     
     # path('list_items/', views.list_items, name='list_items'),
     # path('update_items/<str:pk>/', views.update_items, name="update_items"),
@@ -39,6 +41,7 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     # path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
+    
 
     
     # path('accounts/', include('registration.backends.default.urls')),
