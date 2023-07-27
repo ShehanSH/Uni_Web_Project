@@ -86,11 +86,53 @@ admin.site.register(Category, CategoryAdmin)
 #inventory stock
 from .models import Inventory_Stock
 from .forms import InventoryStockForm
+from django.contrib import admin
+from inventory_management.models import Inventory_Stock
+
+class DamageQuantityFilter(admin.SimpleListFilter):
+    title = 'Damage Quantity'
+    parameter_name = 'damage_quantity__gt'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('1', 'Has Damage'),  # Display 'Has Damage' as a filter option
+            ('0', 'No Damage'),   # Display 'No Damage' as a filter option
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == '1':
+            return queryset.exclude(damage_quantity__exact=0)
+        elif value == '0':
+            return queryset.filter(damage_quantity__exact=0)
+
+
+class LostQuantityFilter(admin.SimpleListFilter):
+    title = 'Lost Quantity'
+    parameter_name = 'lost_quantity__gt'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('1', 'Has Lost'),  # Display 'Has Lost' as a filter option
+            ('0', 'No Lost'),   # Display 'No Lost' as a filter option
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == '1':
+            return queryset.exclude(lost_quantity__exact=0)
+        elif value == '0':
+            return queryset.filter(lost_quantity__exact=0)
+
+
 class InventoryStockAdmin(admin.ModelAdmin):
     form = InventoryStockForm
-    list_display = ['item_name', 'category', 'stock_quantity', 'reorder_level']
+    list_display = ['item_name', 'category', 'stock_quantity', 'damage_quantity', 'lost_quantity', 'reorder_level']
     search_fields = ['item_name']
-    list_filter = ['category']
+    list_filter = ['category', DamageQuantityFilter, LostQuantityFilter]
+
+
+
 
 
 admin.site.register(Inventory_Stock, InventoryStockAdmin)

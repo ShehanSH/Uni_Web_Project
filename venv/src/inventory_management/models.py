@@ -24,6 +24,8 @@ class Inventory_Stock(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     stock_quantity = models.IntegerField(default=0, blank=True, null=True)
+    damage_quantity = models.IntegerField(default=0, blank=True, null=True)
+    lost_quantity = models.IntegerField(default=0, blank=True, null=True)
     reorder_level = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):

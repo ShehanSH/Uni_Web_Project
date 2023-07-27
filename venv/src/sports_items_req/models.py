@@ -46,10 +46,17 @@ class SportsItemReceived(models.Model):
         ('N', 'Not Recived'),
         
     )
-    ITEM_STATUS = (
+    DAMAGE_STATUS = (
         ('D', 'Damaged'),
-        ('ND', 'Not Damaged'),
+        ('ND', 'No Damaged'),
+        
     )
+
+    LOST_STATUS = (
+        ('L', 'Lost'),
+        ('NL', 'No Losted'),    
+    )
+
     received_id = models.AutoField(primary_key=True)
     request_id = models.ForeignKey(SportsItemRequest, on_delete=models.CASCADE)
     item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE)
@@ -60,21 +67,33 @@ class SportsItemReceived(models.Model):
     received_time = models.TimeField()
     received_quantity = models.PositiveIntegerField()
     damage_quantity = models.PositiveIntegerField(null=True,  blank=True, default=0)
+    lost_quantity = models.PositiveIntegerField(null=True,  blank=True, default=0)
     received_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='N')
-    item_status = models.CharField(max_length=2, choices=ITEM_STATUS, default='ND')
-    description = models.TextField(max_length=1000, help_text='Enter a brief description of the recived item')
+    damage_status = models.CharField(max_length=2, choices=DAMAGE_STATUS, default='ND')
+    lost_status = models.CharField(max_length=2, choices=LOST_STATUS, default='NL')
+    description = models.TextField(max_length=1000, help_text='Enter a brief description of the received item')
 
     def save(self, *args, **kwargs):
-        # Check if the received_status is changing to 'Recived' from a different value
-        if self.pk and self.received_status == 'R' and self._state.adding is False:
+        if self.received_status == 'R':  # Check if the received_status is 'Recived'
             # Get the Inventory_Stock object corresponding to the received item
             inventory_item = Inventory_Stock.objects.get(item_id=self.item_id)
 
             # Calculate the new stock_quantity by adding the received_quantity
             new_stock_quantity = inventory_item.stock_quantity + self.received_quantity
 
-            # Update the stock_quantity in the Inventory_Stock model
+            # Update the fields in the Inventory_Stock model
             inventory_item.stock_quantity = new_stock_quantity
+
+            if self.damage_status == 'D':  # Check if damage_status is 'Damaged'
+                # Calculate the new damage_quantity for Inventory_Stock
+                new_damage_quantity = inventory_item.damage_quantity + self.damage_quantity
+                inventory_item.damage_quantity = new_damage_quantity
+
+            if self.lost_status == 'L':  # Check if lost_status is 'Lost'
+                # Calculate the new lost_quantity for Inventory_Stock
+                new_lost_quantity = inventory_item.lost_quantity + self.lost_quantity
+                inventory_item.lost_quantity = new_lost_quantity
+
             inventory_item.save()
 
         super().save(*args, **kwargs)

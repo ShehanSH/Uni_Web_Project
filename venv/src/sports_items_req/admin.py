@@ -15,8 +15,8 @@ from .models import SportsItemRequest, SportsItemReceived
 from .forms import SportsItemsRequestForm, SportsItemRequestUpdateForm, SportsItemReceivedForm
 
 class SportsItemReceivedAdmin(admin.ModelAdmin):
-    list_display = ['request_id', 'user', 'category', 'item', 'received_date', 'received_time', 'received_quantity', 'damage_quantity','received_status', 'item_status', 'description']
-    list_filter = ['category', 'received_status', 'item_status', 'user', 'request_id']
+    list_display = ['request_id', 'user', 'category', 'item', 'received_date', 'received_time', 'received_quantity', 'damage_quantity','lost_quantity', 'received_status', 'damage_status','lost_status', 'description']
+    list_filter = ['category', 'received_status', 'damage_status', 'lost_status', 'user', 'request_id']
     form = SportsItemReceivedForm
 
 
