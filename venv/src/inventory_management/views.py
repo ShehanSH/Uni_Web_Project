@@ -26,6 +26,13 @@ def homemain(request):
     }
     return render(request, 'homemain.html', context)
 
+def slidebar(request):
+  
+    context = {
+        
+    }
+    return render(request, 'slidebar.html', context)
+
 def testchart(request):
     categories = Category.objects.all()
     selected_category_id = request.GET.get('category')  # Get the selected category ID from the request
@@ -331,3 +338,73 @@ def inventory_chart(request):
     }
 
     return render(request, 'inventoryChart.html', context)
+
+
+
+# views.py
+from django.shortcuts import render
+from .models import Inventory_Stock
+# views.py
+from django.shortcuts import render
+from .models import Inventory_Stock
+from .forms import CategoryFilterForm,InventoryReorderFilterForm
+
+def inventory_chart_view(request):
+    # Retrieve data from the model
+    queryset = Inventory_Stock.objects.all()
+
+    # Handle category filter using the form
+    form = CategoryFilterForm(request.GET)
+    if form.is_valid():
+        category = form.cleaned_data.get('categories')
+        if category:
+            queryset = queryset.filter(category=category)
+
+    # Prepare data for the Plotly bar chart
+    item_names = [item.item_name for item in queryset]
+    stock_quantity = [item.stock_quantity for item in queryset]
+    damage_quantity = [item.damage_quantity for item in queryset]
+    lost_quantity = [item.lost_quantity for item in queryset]
+
+    # Prepare data for the Plotly bar chart - Reorder level
+    reorder_level = [item.reorder_level for item in queryset]
+
+    # Pass data and form to the template
+    context = {
+        'item_names': item_names,
+        'stock_quantity': stock_quantity,
+        'damage_quantity': damage_quantity,
+        'lost_quantity': lost_quantity,
+        'reorder_level': reorder_level,
+        'form': form,
+    }
+
+    return render(request, 'inventory_chart_view.html', context)
+
+def inventory_reorder_chart_view(request):
+    # Retrieve data from the model
+    queryset = Inventory_Stock.objects.all()
+
+    # Handle category filter using the form
+    form = InventoryReorderFilterForm(request.GET)
+    if form.is_valid():
+        category = form.cleaned_data.get('categories')
+        if category:
+            queryset = queryset.filter(category=category)
+
+    # Prepare data for the Plotly bar chart
+    item_names = [item.item_name for item in queryset]
+    stock_quantity = [item.stock_quantity for item in queryset]
+    # Prepare data for the Plotly bar chart - Reorder level
+    reorder_level = [item.reorder_level for item in queryset]
+
+    # Pass data and form to the template
+    context = {
+        'item_names': item_names,
+        'stock_quantity': stock_quantity,
+      
+        'reorder_level': reorder_level,
+        'form': form,
+    }
+
+    return render(request, 'inventory_reorder_chart_view.html', context)

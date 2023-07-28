@@ -119,8 +119,34 @@ body {
 }
 
 .chart{
-  width: 800px;
+  width: 1200px;
   height: 600px;
   padding: 40px 40px 40px 40px;
-  margin-left: 300px;
+  margin-left: 150px;
+}
+
+.fillerbtn {
+  width: 80px;
+  height: 40px;
+  background-color:#660000;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  
+  margin-top: 20px;
+}
+
+.fillerbtn:hover {
+  width: 80px;
+  height: 40px;
+  background-color:#F6DD26;
+  border: none;
+  border-radius: 5px;
+  color: #020202;
+  font-size: 16px;
+  cursor: pointer;
+  
+  margin-top: 20px;
 }

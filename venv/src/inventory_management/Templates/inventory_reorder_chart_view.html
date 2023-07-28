@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Inventory Stock Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+  {% include 'slidebar.html' %}
+   
+    <section class="expert" id="inventoryTrends">
+        <div class="title">
+            <h2 class="titeText">Stock Quantity <span>vs</span> Reorder Level</h2>
+            <p style="text-align: center;">Compares the current stock quantity and reorder level for each item in the inventory.</p>
+        </div>
+
+        <div class="chart">
+            <div id="category-filter">
+                <form method="get">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Filter" class="fillerbtn">
+                </form>
+            </div>
+            <div id="bar-chart"></div>
+            <script>
+                // Data for the bar chart
+                var data = [
+                    {
+                        x: {{ item_names|safe }},
+                        y: {{ stock_quantity|safe }},
+                        type: 'bar',
+                        name: 'Stock Quantity'
+                    },
+                    {
+                        x: {{ item_names|safe }},
+                        y: {{ reorder_level|safe }},
+                        type: 'bar',
+                        name: 'Reorder Level'
+                    }
+                ];
+
+                // Layout for the bar chart
+                var layout = {
+                    title: 'Stock Quantity vs. Reorder Level',
+                    barmode: 'group', // Use 'group' for grouped bars, or 'stack' for stacked bars
+                    xaxis: { title: 'Item Names' },
+                    yaxis: { title: 'Quantity' }
+                };
+
+                // Render the bar chart
+                Plotly.newPlot('bar-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

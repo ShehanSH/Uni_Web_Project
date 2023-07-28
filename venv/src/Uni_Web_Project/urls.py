@@ -28,7 +28,7 @@ urlpatterns = [
    
     path('', views.homemain, name='homemain'),
     path('testchart/', views.testchart, name='testchart'),
-    
+    path('', views.slidebar, name='slidebar'),
     
     # path('list_items/', views.list_items, name='list_items'),
     # path('update_items/<str:pk>/', views.update_items, name="update_items"),
@@ -48,7 +48,11 @@ urlpatterns = [
     # path('sports_item_req/', include(('sports_item_req.urls', 'sports_item_req'), namespace='sports_item_req')),
    
     # path('chart', chart.home, name='home'),
-    path('inventory_chart/', views.inventory_chart, name='inventory_chart'),
+    # path('inventory_chart/', views.inventory_chart, name='inventory_chart'),
+    path('inventory_chart_view/', views.inventory_chart_view, name='inventory_chart_view'),
+    path('inventory_chart_view/<int:category_id>/', views.inventory_chart_view, name='inventory_chart_view_filtered'),
+    path('inventory_reorder_chart_view/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view'),
+    path('inventory_reorder_chart_view/<int:category_id>/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view_filtered'),
     path('logout/', views.logout_view, name='logout'),
     
     path('', include('sports_items_req.urls')),

@@ -1,0 +1,84 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Inventory Stock Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+</head>
+
+<body class="page">
+    {% include 'navadmin.html' %}
+
+<div class="sidebar">
+    <div class="brand">
+      <p>B<span>rand</span></p>
+    </div>
+    <ul class="nav-list">
+        
+        <li class="nav-item">
+            <a href="{% url 'inventory_chart_view' %}">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                Chart 1
+              </span>
+            </a>
+          </li>
+      <li class="nav-item">
+        <a href="{% url 'inventory_reorder_chart_view' %}">
+          <span class="nav-item__icon">
+            <ion-icon name="chatbox-outline"></ion-icon>
+          </span>
+          <span class="nav-item__text">
+            Chart 2
+          </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#">
+          <span class="nav-item__icon">
+            <ion-icon name="people-outline"></ion-icon>
+          </span>
+          <span class="nav-item__text">
+             Groups
+          </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#">
+          <span class="nav-item__icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </span>
+          <span class="nav-item__text">
+             Friends
+          </span>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="#">
+          <span class="nav-item__icon avatar">J</span>
+          <span class="nav-item__text">
+              John Doe
+          </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#">
+          <span class="nav-item__icon logout">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </span>
+          <span class="nav-item__text">
+             Logout
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</body>
+</html>

@@ -151,3 +151,16 @@ class InventoryStockForm(forms.ModelForm):
     class Meta:
         model = Inventory_Stock
         fields = ['category', 'item_name', 'stock_quantity', 'damage_quantity', 'lost_quantity', 'reorder_level']
+
+# forms.py
+from django import forms
+from .models import Category
+
+class CategoryFilterForm(forms.Form):
+    categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="All", required=False)
+
+class InventoryReorderFilterForm(forms.Form):
+    categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="All", required=False)
+
+class InventoryStockCountFilterForm(forms.Form):
+    categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="All", required=False)
