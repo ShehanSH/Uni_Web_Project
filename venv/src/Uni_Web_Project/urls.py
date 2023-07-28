@@ -52,6 +52,7 @@ urlpatterns = [
     path('inventory_chart_view/', views.inventory_chart_view, name='inventory_chart_view'),
     path('inventory_chart_view/<int:category_id>/', views.inventory_chart_view, name='inventory_chart_view_filtered'),
     path('inventory_reorder_chart_view/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view'),
+    path('inventory_stock_count_chart_view/', views.inventory_stock_count_chart_view, name='inventory_stock_count_chart_view'),
     path('inventory_reorder_chart_view/<int:category_id>/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view_filtered'),
     path('logout/', views.logout_view, name='logout'),
     

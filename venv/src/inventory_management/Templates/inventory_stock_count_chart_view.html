@@ -1,0 +1,39 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Inventory Stock Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+  {% include 'slidebar.html' %}
+   
+  <section class="expert" id="inventoryStockCount">
+    <div class="title">
+        <h2 class="titeText">Inventory Stock Count <span>by</span> Category</h2>
+        <p style="text-align: center;">Displays the count of items in each category.</p>
+    </div>
+
+    <div style="margin-left:80px; width:90%; height:90%">
+        <div id="pie-chart"></div>
+    <script>
+        // Data for the pie chart
+        var data = [{
+            labels: {{ category_names|safe }},
+            values: {{ stock_percentages|safe }},
+            type: 'pie'
+        }];
+
+        // Layout for the pie chart
+        var layout = {
+            title: 'Inventory Stock Count by Category'
+        };
+
+        // Render the pie chart
+        Plotly.newPlot('pie-chart', data, layout);
+    </script>
+    </div>
+</section>
+</body>
+</html>

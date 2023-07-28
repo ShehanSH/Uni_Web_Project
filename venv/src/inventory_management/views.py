@@ -349,6 +349,7 @@ from django.shortcuts import render
 from .models import Inventory_Stock
 from .forms import CategoryFilterForm,InventoryReorderFilterForm
 
+#CHART 1 stock quantity, damage quantity, lost quantity vs item name
 def inventory_chart_view(request):
     # Retrieve data from the model
     queryset = Inventory_Stock.objects.all()
@@ -381,6 +382,8 @@ def inventory_chart_view(request):
 
     return render(request, 'inventory_chart_view.html', context)
 
+
+#CHART 2 stock quantity, reorder level vs item name
 def inventory_reorder_chart_view(request):
     # Retrieve data from the model
     queryset = Inventory_Stock.objects.all()
@@ -408,3 +411,25 @@ def inventory_reorder_chart_view(request):
     }
 
     return render(request, 'inventory_reorder_chart_view.html', context)
+
+from django.shortcuts import render
+from .models import Category, Inventory_Stock
+from .forms import InventoryStockCountFilterForm
+from django.db import models
+
+#CHART 3 stock quantity vs item name with category
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from .forms import CategoryForm
+from .models import Inventory_Stock
+
+def inventory_stock_count_chart_view(request):
+    stock_items = Inventory_Stock.objects.all()
+    total_stock_quantity = sum(item.stock_quantity for item in stock_items)
+    
+    category_names = [item.category.name for item in stock_items]
+    stock_percentages = [(item.stock_quantity / total_stock_quantity) * 100 for item in stock_items]
+
+    context = {'category_names': category_names, 'stock_percentages': stock_percentages}
+    return render(request, 'inventory_stock_count_chart_view.html', context)
