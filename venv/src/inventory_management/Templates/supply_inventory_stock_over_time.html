@@ -1,0 +1,57 @@
+<!-- supply_inventory_stock_over_time.html -->
+{% load static %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Supply Inventory Stock over Time</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    <section class="expert" id="inventoryStockChart">
+        <div class="title">
+            <h2 class="titeText">Inventory Stock over Time</h2>
+        </div>
+
+        <div style="margin-left:140px; width:85%; height:85%;" >
+            <div id="date-filter" class="form-inline">
+                <form method="get" class="form-inline">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Filter" class="btn btn-primary">
+                </form>
+            </div>
+            <div id="inventory-stock-line-chart"></div>
+            <script>
+                // Data for the inventory stock line chart
+                var data = [
+                    {
+                        x: {{ supply_dates|safe }},
+                        y: {{ supply_quantity|safe }},
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        line: {shape: 'linear'},
+                        marker: {size: 8}
+                    }
+                ];
+
+                // Layout for the inventory stock line chart
+                var layout = {
+                    title: 'Inventory Stock over Time',
+                    xaxis: {
+                        title: 'Dates',
+                    },
+                    yaxis: {
+                        title: 'Total supply_quantity',
+                    },
+                };
+
+                // Render the inventory stock line chart
+                Plotly.newPlot('inventory-stock-line-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

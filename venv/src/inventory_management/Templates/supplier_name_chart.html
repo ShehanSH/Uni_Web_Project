@@ -1,0 +1,68 @@
+<!-- supplier_name_chart.html -->
+{% load static %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Supplier Name Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for form layout */
+        #supplier-filter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        #supplier-filter .fillerbtn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    <section class="expert" id="supplierChart">
+        <div class="title">
+            <h2 class="titeText">Supply Inventory Quantity <span>by</span> Supplier</h2>
+        </div>
+
+        <div style="margin-left:140px; width:85%; height:85%;" >
+            <div id="supplier-filter">
+                <form method="get">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Filter" class="fillerbtn">
+                </form>
+            </div>
+            <div id="supplier-bar-chart"></div>
+            <script>
+                // Data for the supplier bar chart
+                var data = [
+                    {
+                        x: {{ supplier_names|safe }},
+                        y: {{ supply_quantity|safe }},
+                        type: 'bar',
+                    }
+                ];
+
+                // Layout for the supplier bar chart
+                var layout = {
+                    title: 'Supply_Inventory by Supplier',
+                    xaxis: {
+                        title: 'Supplier Names',
+                    },
+                    yaxis: {
+                        title: 'Total supply quantity',
+                    },
+                };
+
+                // Render the supplier bar chart
+                Plotly.newPlot('supplier-bar-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

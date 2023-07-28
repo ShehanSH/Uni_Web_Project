@@ -1,0 +1,50 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Supplier Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    <section class="expert" id="supplierChart">
+        <div class="title">
+            <h2 class="titeText">Supply Quantity <span>vs</span> Category</h2>
+        </div>
+
+        <div style="margin-left:140px; width:85%; height:85%;" >
+            <!-- supplier_chart_view.html -->
+
+            <div id="category-filter">
+                <form method="get">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Filter" class="fillerbtn">
+                </form>
+            </div>
+            <div id="supplier-pie-chart"></div>
+            <script>
+                // Data for the supplier pie chart
+                var data = [
+                    {
+                        labels: {{ item_names|safe }},
+                        values: {{ supply_percentages|safe }},
+                        type: 'pie',
+                        textinfo: 'label+percent',
+                        insidetextorientation: 'radial'
+                    }
+                ];
+            
+                // Layout for the supplier pie chart
+                var layout = {
+                    title: 'Percentage of supply quantity by Category'
+                };
+            
+                // Render the supplier pie chart
+                Plotly.newPlot('supplier-pie-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

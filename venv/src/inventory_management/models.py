@@ -43,7 +43,7 @@ class Supply_Inventory(models.Model):
     
 
     def __str__(self):
-        return f"{self.item.item_name} ({self.supply_quantity})"
+        return f"{self.item.item_name}"
 
     def save(self, *args, **kwargs):
         

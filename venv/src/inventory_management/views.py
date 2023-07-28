@@ -433,3 +433,170 @@ def inventory_stock_count_chart_view(request):
 
     context = {'category_names': category_names, 'stock_percentages': stock_percentages}
     return render(request, 'inventory_stock_count_chart_view.html', context)
+
+
+#supplier CHART 1
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from .forms import SupplierChartFilterForm
+from .models import Supply_Inventory
+from django.db.models import Sum
+
+import plotly.graph_objs as go
+from django.shortcuts import render
+from django.db.models import Sum  # Import Sum to perform aggregation
+from .forms import SupplierChartFilterForm
+from .models import Supply_Inventory
+
+def supplier_chart_view(request):
+    # Retrieve data from the model
+    queryset = Supply_Inventory.objects.all()
+
+    # Handle category and date range filters using the form
+    form = SupplierChartFilterForm(request.GET)
+    if form.is_valid():
+      
+        start_date = form.cleaned_data.get('start_date')
+        end_date = form.cleaned_data.get('end_date')
+
+    
+        if start_date:
+            queryset = queryset.filter(supply_date__gte=start_date)
+        if end_date:
+            queryset = queryset.filter(supply_date__lte=end_date)
+
+    # Calculate the total supply_quantity for each category
+    category_totals = (
+        queryset.values('category__name')  # Use 'category__name' instead of 'category_name'
+        .annotate(total_supply=Sum('supply_quantity'))
+    )
+
+    # Prepare data for the Plotly pie chart
+    item_names = [item['category__name'] for item in category_totals]
+    supply_quantity = [item['total_supply'] for item in category_totals]
+
+    # Calculate the percentage for each category
+    total_supply_quantity = sum(supply_quantity)
+    supply_percentages = [(qty / total_supply_quantity) * 100 for qty in supply_quantity]
+
+    # Pass data and form to the template
+    context = {
+        'item_names': item_names,
+        'supply_percentages': supply_percentages,
+        'form': form,
+    }
+
+    return render(request, 'supplier_chart_view.html', context)
+
+#supplier CHART 2
+
+# views.py
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from django.db.models import Sum
+from .forms import SupplierNameChartFilterForm
+from .models import Supply_Inventory
+
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from django.db.models import Sum
+from .forms import SupplierNameChartFilterForm
+from .models import Supplier, Supply_Inventory
+
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from django.db.models import Sum
+from .forms import SupplierNameChartFilterForm
+from .models import Supplier, Supply_Inventory
+
+def supplier_name_chart(request):
+    # Retrieve data from the model
+    queryset = Supply_Inventory.objects.all()
+
+    # Handle supplier, start date, and end date filters using the form
+    form = SupplierNameChartFilterForm(request.GET)
+    if form.is_valid():
+        supplier = form.cleaned_data.get('suppliers')
+        start_date = form.cleaned_data.get('start_date')
+        end_date = form.cleaned_data.get('end_date')
+
+        if supplier:
+            queryset = queryset.filter(Supplier=supplier)
+        if start_date:
+            queryset = queryset.filter(supply_date__gte=start_date)
+        if end_date:
+            queryset = queryset.filter(supply_date__lte=end_date)
+
+    # Calculate the total supply_quantity for each supplier
+    supplier_totals = (
+        queryset.values('Supplier__supplier_name')
+        .annotate(total_supply=Sum('supply_quantity'))
+    )
+
+    # Prepare data for the Plotly bar chart
+    supplier_names = [item['Supplier__supplier_name'] for item in supplier_totals]
+    supply_quantity = [item['total_supply'] for item in supplier_totals]
+
+    # Pass data and form to the template
+    context = {
+        'supplier_names': supplier_names,
+        'supply_quantity': supply_quantity,
+        'form': form,
+    }
+
+    return render(request, 'supplier_name_chart.html', context)
+
+
+#CHART 3
+
+# views.py
+import plotly.graph_objs as go
+from django.shortcuts import render
+from django.db.models import Sum
+from .forms import SupplierNameChartFilterForm
+from .models import Supply_Inventory
+
+def supply_inventory_stock_over_time(request):
+    # Retrieve data from the model
+    queryset = Supply_Inventory.objects.all()
+
+    # Handle supplier, start date, and end date filters using the form
+    form = SupplierNameChartFilterForm(request.GET)
+    if form.is_valid():
+        supplier = form.cleaned_data.get('suppliers')
+        start_date = form.cleaned_data.get('start_date')
+        end_date = form.cleaned_data.get('end_date')
+
+        if supplier:
+            queryset = queryset.filter(Supplier=supplier)
+        if start_date:
+            queryset = queryset.filter(supply_date__gte=start_date)
+        if end_date:
+            queryset = queryset.filter(supply_date__lte=end_date)
+
+    # Calculate the total supply_quantity for each date
+    date_totals = (
+        queryset.values('supply_date')
+        .annotate(total_supply=Sum('supply_quantity'))
+    )
+
+    # Prepare data for the Plotly line chart
+    supply_dates = [item['supply_date'] for item in date_totals]
+    supply_quantity = [item['total_supply'] for item in date_totals]
+
+    # Pass data and form to the template
+    context = {
+        'supply_dates': supply_dates,
+        'supply_quantity': supply_quantity,
+        'form': form,
+    }
+
+    return render(request, 'supply_inventory_stock_over_time.html', context)
+
+
+
+

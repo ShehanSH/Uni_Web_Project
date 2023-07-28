@@ -156,6 +156,7 @@ class InventoryStockForm(forms.ModelForm):
 from django import forms
 from .models import Category
 
+#inventory charts
 class CategoryFilterForm(forms.Form):
     categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="All", required=False)
 
@@ -164,3 +165,42 @@ class InventoryReorderFilterForm(forms.Form):
 
 class InventoryStockCountFilterForm(forms.Form):
     categories = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="All", required=False)
+
+#supplier charts
+#CHART 1
+from .models import Supply_Inventory
+class SupplierChartFilterForm(forms.Form):
+ 
+    start_date = forms.DateField(
+        label='Start Date', required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'style': 'padding: 5px; margin-bottom: 10px;margin-top: 10px;'})
+    )
+    end_date = forms.DateField(
+        label='End Date', required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'style': 'padding: 5px;'})
+    )
+
+#CHART 2
+from .models import Supplier
+
+# forms.py
+from django import forms
+from .models import Supplier
+
+class SupplierNameChartFilterForm(forms.Form):
+    suppliers = forms.ModelChoiceField(
+        queryset=Supplier.objects.all(),
+        empty_label="All",
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control form-control-inline'})
+    )
+    start_date = forms.DateField(
+        label='Start Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    end_date = forms.DateField(
+        label='End Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )

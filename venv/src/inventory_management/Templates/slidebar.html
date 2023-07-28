@@ -16,7 +16,16 @@
       <p>B<span>rand</span></p>
     </div>
     <ul class="nav-list">
-        
+        <li class="nav-item">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text" style="color:#660000; font-weight:bold;">
+                INVENTORY
+              </span>
+            </a>
+          </li>
+
         <li class="nav-item">
             <a href="{% url 'inventory_chart_view' %}">
               <span class="nav-item__icon">
@@ -47,37 +56,99 @@
           </span>
         </a>
       </li>
+      
+    </ul>
+
+    <ul class="nav-list">
+        <li class="nav-item">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text" style="color:#660000; font-weight:bold;">
+                Supply
+              </span>
+            </a>
+          </li>
+
+        <li class="nav-item">
+            <a href="{% url 'supplier_chart_view' %}">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                Chart 1
+              </span>
+            </a>
+          </li>
+      <li class="nav-item">
+        <a href="{% url 'supplier_name_chart' %}">
+          <span class="nav-item__icon">
+            <ion-icon name="chatbox-outline"></ion-icon>
+          </span>
+          <span class="nav-item__text">
+            Chart 2
+          </span>
+        </a>
+      </li>
       <li class="nav-item">
         <a href="{% url 'inventory_stock_count_chart_view' %}">
           <span class="nav-item__icon">
-            <ion-icon name="person-outline"></ion-icon>
+            <ion-icon name="people-outline"></ion-icon>
           </span>
           <span class="nav-item__text">
-             Friends
+             Chart 3
           </span>
         </a>
       </li>
+      
     </ul>
+
+
     <ul class="nav-list">
+        <li class="nav-item">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text" style="color:#660000; font-weight:bold;">
+                sports
+              </span>
+            </a>
+          </li>
+
+        <li class="nav-item">
+            <a href="{% url 'inventory_chart_view' %}">
+              <span class="nav-item__icon">
+                <ion-icon name="chatbox-outline"></ion-icon>
+              </span>
+              <span class="nav-item__text">
+                Chart 1
+              </span>
+            </a>
+          </li>
       <li class="nav-item">
-        <a href="#">
-          <span class="nav-item__icon avatar">J</span>
+        <a href="{% url 'inventory_reorder_chart_view' %}">
+          <span class="nav-item__icon">
+            <ion-icon name="chatbox-outline"></ion-icon>
+          </span>
           <span class="nav-item__text">
-              John Doe
+            Chart 2
           </span>
         </a>
       </li>
       <li class="nav-item">
-        <a href="#">
-          <span class="nav-item__icon logout">
-            <ion-icon name="log-out-outline"></ion-icon>
+        <a href="{% url 'inventory_stock_count_chart_view' %}">
+          <span class="nav-item__icon">
+            <ion-icon name="people-outline"></ion-icon>
           </span>
           <span class="nav-item__text">
-             Logout
+             Chart 3
           </span>
         </a>
       </li>
+      
     </ul>
+    
+    
   </div>
 
 </body>

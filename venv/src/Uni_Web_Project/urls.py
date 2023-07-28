@@ -41,7 +41,7 @@ urlpatterns = [
     # path('accounts/', include('registration.backends.default.urls')),
     # path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
-    
+    path('logout/', views.logout_view, name='logout'),
 
     
     # path('accounts/', include('registration.backends.default.urls')),
@@ -54,7 +54,11 @@ urlpatterns = [
     path('inventory_reorder_chart_view/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view'),
     path('inventory_stock_count_chart_view/', views.inventory_stock_count_chart_view, name='inventory_stock_count_chart_view'),
     path('inventory_reorder_chart_view/<int:category_id>/', views.inventory_reorder_chart_view, name='inventory_reorder_chart_view_filtered'),
-    path('logout/', views.logout_view, name='logout'),
+
+
+    path('supplier_chart_view/', views.supplier_chart_view, name='supplier_chart_view'),
+    path('supplier_name_chart/', views.supplier_name_chart, name='supplier_name_chart'),
+    path('supply_inventory_stock_over_time/', views.supply_inventory_stock_over_time, name='supply_inventory_stock_over_time'),
     
     path('', include('sports_items_req.urls')),
     path('', include('ground_booking.urls')),
