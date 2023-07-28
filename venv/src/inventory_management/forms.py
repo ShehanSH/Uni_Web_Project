@@ -172,14 +172,15 @@ from .models import Supply_Inventory
 class SupplierChartFilterForm(forms.Form):
  
     start_date = forms.DateField(
-        label='Start Date', required=False,
-        widget=forms.DateInput(attrs={'type': 'date', 'style': 'padding: 5px; margin-bottom: 10px;margin-top: 10px;'})
+        label='Start Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
     )
     end_date = forms.DateField(
-        label='End Date', required=False,
-        widget=forms.DateInput(attrs={'type': 'date', 'style': 'padding: 5px;'})
+        label='End Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
     )
-
 #CHART 2
 from .models import Supplier
 
@@ -204,3 +205,25 @@ class SupplierNameChartFilterForm(forms.Form):
         required=False,
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
     )
+
+#chart 3
+# forms.py
+class InventoryStockOverTimeFilterForm(forms.Form):
+ 
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="All",
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control form-control-inline'})
+    )
+    start_date = forms.DateField(
+        label='Start Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    end_date = forms.DateField(
+        label='End Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+

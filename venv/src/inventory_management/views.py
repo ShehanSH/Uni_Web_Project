@@ -560,19 +560,29 @@ from django.db.models import Sum
 from .forms import SupplierNameChartFilterForm
 from .models import Supply_Inventory
 
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import Supply_Inventory
+from .forms import InventoryStockOverTimeFilterForm
+import json
+
+# views.py
 def supply_inventory_stock_over_time(request):
     # Retrieve data from the model
     queryset = Supply_Inventory.objects.all()
 
-    # Handle supplier, start date, and end date filters using the form
-    form = SupplierNameChartFilterForm(request.GET)
+    # Handle item, category, start date, and end date filters using the form
+    form = InventoryStockOverTimeFilterForm(request.GET)
     if form.is_valid():
-        supplier = form.cleaned_data.get('suppliers')
+        item = form.cleaned_data.get('items')
+        category = form.cleaned_data.get('category')
         start_date = form.cleaned_data.get('start_date')
         end_date = form.cleaned_data.get('end_date')
 
-        if supplier:
-            queryset = queryset.filter(Supplier=supplier)
+        if item:
+            queryset = queryset.filter(item=item)
+        if category:
+            queryset = queryset.filter(category=category)
         if start_date:
             queryset = queryset.filter(supply_date__gte=start_date)
         if end_date:
@@ -585,13 +595,13 @@ def supply_inventory_stock_over_time(request):
     )
 
     # Prepare data for the Plotly line chart
-    supply_dates = [item['supply_date'] for item in date_totals]
-    supply_quantity = [item['total_supply'] for item in date_totals]
+    supply_dates = [item['supply_date'].strftime('%Y-%m-%d') for item in date_totals]
+    total_supply_quantity = [item['total_supply'] for item in date_totals]
 
     # Pass data and form to the template
     context = {
         'supply_dates': supply_dates,
-        'supply_quantity': supply_quantity,
+        'total_supply_quantity': total_supply_quantity,
         'form': form,
     }
 

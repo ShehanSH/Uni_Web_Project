@@ -1,55 +1,74 @@
-<!-- supply_inventory_stock_over_time.html -->
+<!-- inventory_stock_over_time_chart.html -->
 {% load static %}
 
 <html lang="en">
 <head>
     <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
-    <title>Supply Inventory Stock over Time</title>
+    <title>Inventory Stock over time</title>
     <!-- Include Plotly.js from CDN -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* This style is to make the form fields inline */
+        .form-inline {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    
+        /* This style is to adjust the width of each form field in the inline form */
+        .form-inline .form-control-inline {
+            width: 150px; /* Adjust the width as needed */
+            margin-right: 10px; /* Optional: Add some spacing between fields */
+        }
+    </style>
+    
 </head>
 <body class="page">
     {% include 'slidebar.html' %}
-    <section class="expert" id="inventoryStockChart">
+    <section class="expert" id="itemChart">
         <div class="title">
-            <h2 class="titeText">Inventory Stock over Time</h2>
+            <h2 class="titeText">Inventory Stock <span>over</span> time</h2>
         </div>
 
-        <div style="margin-left:140px; width:85%; height:85%;" >
-            <div id="date-filter" class="form-inline">
+        <div style="margin-left:140px; width:85%; height:85%; margin-top:30px;" >
+            <div id="item-filter">
                 <form method="get" class="form-inline">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Filter" class="btn btn-primary">
+                    {{ form.category }}
+                    {{ form.start_date }}
+                    {{ form.end_date }}
+                    <input type="submit" value="Filter" class="fillerbtn">
                 </form>
+                
+                
             </div>
-            <div id="inventory-stock-line-chart"></div>
+            <div id="inventory-line-chart"></div>
             <script>
-                // Data for the inventory stock line chart
+                // Data for the inventory line chart
                 var data = [
                     {
                         x: {{ supply_dates|safe }},
-                        y: {{ supply_quantity|safe }},
+                        y: {{ total_supply_quantity|safe }},
                         type: 'scatter',
                         mode: 'lines+markers',
-                        line: {shape: 'linear'},
-                        marker: {size: 8}
                     }
                 ];
 
-                // Layout for the inventory stock line chart
+                // Layout for the inventory line chart
                 var layout = {
-                    title: 'Inventory Stock over Time',
+                    title: 'Inventory Stock over time',
                     xaxis: {
-                        title: 'Dates',
+                        title: 'Supply Dates',
+                        type: 'date',
+                        tickformat: '%Y-%m-%d', // Adjust the date format as needed
                     },
                     yaxis: {
-                        title: 'Total supply_quantity',
+                        title: 'Total supply quantity',
                     },
                 };
 
-                // Render the inventory stock line chart
-                Plotly.newPlot('inventory-stock-line-chart', data, layout);
+                // Render the inventory line chart
+                Plotly.newPlot('inventory-line-chart', data, layout);
             </script>
         </div>
     </section>
