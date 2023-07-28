@@ -27,7 +27,7 @@ body {
  
   cursor: pointer;
   background: #e6d347;
-  transition: 0.5s;
+  transition: 1s;
   overflow-y:scroll;
 }
 
@@ -127,8 +127,8 @@ body {
 }
 
 .fillerbtn {
-  width: 80px;
-  height: 40px;
+  width: 70px;
+  height:30px;
   background-color:#660000;
   border: none;
   border-radius: 5px;
@@ -140,8 +140,8 @@ body {
 }
 
 .fillerbtn:hover {
-  width: 80px;
-  height: 40px;
+  width: 70px;
+  height: 30px;
   background-color:#F6DD26;
   border: none;
   border-radius: 5px;

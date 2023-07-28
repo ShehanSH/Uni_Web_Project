@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import create_sports_item_request, list_requests_view, update_sports_item_request
 from .views import *
+from . import views
 
 app_name = 'sports_items_req'
 
@@ -11,4 +12,6 @@ urlpatterns = [
     # path('update_sports_item_request/<int:request_id>/', update_sports_item_request, name='update_sports_item_request'),
     path('update_sports_item_request/<str:pk>/', update_sports_item_request, name="update_sports_item_request"),
     path('delete_request/<str:pk>/', delete_request, name='delete_request'),
+
+    path('sports_item_req_status/', views.sports_item_req_status, name='sports_item_req_status'),
 ]

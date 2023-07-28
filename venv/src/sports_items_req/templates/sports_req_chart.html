@@ -1,0 +1,64 @@
+<!-- sports_req_chart.html -->
+{% load static %}
+
+<html lang="en">
+<head>
+    <title>Sports Item Request Status</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Sports Item Request Status</h1>
+    <form method="get" class="form-inline">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.approval_status.id_for_label }}">Approval Status:</label>
+            {{ form.approval_status }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.start_date.id_for_label }}">Start Date:</label>
+            {{ form.start_date }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.end_date.id_for_label }}">End Date:</label>
+            {{ form.end_date }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.category.id_for_label }}">Category:</label>
+            {{ form.category }}
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+    
+    <div style="max-width: 600px; margin: 20px auto;">
+        <div id="approval-status-bar-chart"></div>
+        <script>
+            // Data for the approval status bar chart
+            var data = [
+                {
+                    x: {{ approval_status_names|safe }},
+                    y: {{ approval_status_count|safe }},
+                    type: 'bar',
+                    marker: {
+                        color: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)'],
+                    },
+                },
+            ];
+
+            // Layout for the approval status bar chart
+            var layout = {
+                title: 'Sports Item Request Status', // Add title here
+                xaxis: {
+                    title: 'Approval Status',
+                },
+                yaxis: {
+                    title: 'Count of Requests',
+                },
+            };
+
+            // Render the approval status bar chart
+            Plotly.newPlot('approval-status-bar-chart', data, layout);
+        </script>
+    </div>
+</body>
+</html>

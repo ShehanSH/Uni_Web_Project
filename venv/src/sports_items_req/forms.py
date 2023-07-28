@@ -49,3 +49,40 @@ class SportsItemReceivedForm(forms.ModelForm):
         self.fields['request_id'].queryset = self.fields['request_id'].queryset.filter(approval_status='I')
 
    
+# forms.py
+from django import forms
+from .models import SportsItemRequest,Category
+
+# forms.py
+from django import forms
+from .models import SportsItemRequest
+
+class SportsItemReqStatusForm(forms.Form):
+    APPROVAL_CHOICES = (
+        ('', 'All'),  # Empty option for 'All' category
+        ('A', 'Approval'),
+        ('D', 'Disapproval'),
+        ('I', 'Issued'),
+    )
+
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="All",
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control form-control-inline'})
+    )
+    start_date = forms.DateField(
+        label='Start Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    end_date = forms.DateField(
+        label='End Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    approval_status = forms.ChoiceField(
+        choices=APPROVAL_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control form-control-inline'})
+    )
