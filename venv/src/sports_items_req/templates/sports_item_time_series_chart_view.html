@@ -1,0 +1,75 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Sports Item Time Series Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    
+    <section class="expert" id="sportsItemTimeSeriesChart">
+        <div class="title">
+            <h2 class="titeText">Sports Item Requests and Received <span>Time</span> Series </h2>
+            <p style="text-align: center;">Displays the trend of sports item requests and received items over time.</p>
+        </div>
+
+        <form method="get" class="form-inline" style="text-align: center;">
+            {% csrf_token %}
+            {{ form.categories }}
+            {{ form.start_date }}
+            {{ form.end_date }}
+            
+            <input type="submit" value="Filter" class="fillerbtn">
+        </form>
+        
+        <div style="margin-left:140px; width:85%; height:85%">
+            <div id="time-series-line-chart"></div>
+            <script>
+                // Data for the time series line chart
+                var requestTimestamps = [{% for timestamp in request_timestamps %}'{{ timestamp|date:"Y-m-d" }}',{% endfor %}];
+                var requestCounts = [{% for count in request_counts %}{{ count }},{% endfor %}];
+                var receivedTimestamps = [{% for timestamp in received_timestamps %}'{{ timestamp|date:"Y-m-d" }}',{% endfor %}];
+                var receivedCounts = [{% for count in received_counts %}{{ count }},{% endfor %}];
+
+                // Create the traces for the time series line chart
+                var traceRequested = {
+                    x: requestTimestamps,
+                    y: requestCounts,
+                    name: 'Requested',
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                };
+                var traceReceived = {
+                    x: receivedTimestamps,
+                    y: receivedCounts,
+                    name: 'Received',
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                };
+
+                // Define the data array
+                var data = [traceRequested, traceReceived];
+
+                // Layout for the time series line chart
+                var layout = {
+                    title: 'Sports Item Requests and Received Time Series Chart',
+                    xaxis: {
+                        title: 'Date',
+                        type: 'category', // Use category type for dates without time
+                        tickformat: '%Y-%m-%d', // Adjust the date format as needed
+                    },
+                    yaxis: {
+                        title: 'Count of Requests/Received'
+                    },
+                };
+
+                // Render the time series line chart
+                Plotly.newPlot('time-series-line-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

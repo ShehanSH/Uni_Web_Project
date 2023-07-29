@@ -11,28 +11,33 @@
    
   <section class="expert" id="inventoryStockCount">
     <div class="title">
-        <h2 class="titeText">Inventory Stock Count <span>by</span> Category</h2>
+        <h2 class="titeText">Inventory Stock Count <span>by</span> Items</h2>
         <p style="text-align: center;">Displays the count of items in each category.</p>
     </div>
 
+    <form method="get" style="text-align: center;">
+        {{ form }}
+        <button type="submit" class="fillerbtn ">Filter</button>
+    </form>
+
     <div style="margin-left:140px; width:85%; height:85%">
         <div id="pie-chart"></div>
-    <script>
-        // Data for the pie chart
-        var data = [{
-            labels: {{ category_names|safe }},
-            values: {{ stock_percentages|safe }},
-            type: 'pie'
-        }];
+        <script>
+            // Data for the pie chart
+            var data = [{
+                labels: {{ category_names|safe }},
+                values: {{ stock_percentages|safe }},
+                type: 'pie'
+            }];
 
-        // Layout for the pie chart
-        var layout = {
-            title: 'Inventory Stock Count by Category'
-        };
+            // Layout for the pie chart
+            var layout = {
+                title: 'Inventory Stock Count by Item'
+            };
 
-        // Render the pie chart
-        Plotly.newPlot('pie-chart', data, layout);
-    </script>
+            // Render the pie chart
+            Plotly.newPlot('pie-chart', data, layout);
+        </script>
     </div>
 </section>
 </body>

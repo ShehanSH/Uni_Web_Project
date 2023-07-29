@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Sports Item Requests Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+  {% include 'slidebar.html' %}
+    <section class="expert" id="inventoryTrends">
+        <div class="title">
+            <h2 class="titeText">Sports Item Requests <span>by</span> Approval Status</h2>
+            <p style="text-align: center;">Compares the request quantity for each item in the inventory based on approval status.</p>
+        </div>
+    <div style="margin-left:40px; width:85%; height:85%; margin-top:30px;" >
+        <div class="chart">
+            <div id="filter-form">
+                <form method="get" class="form-inline">
+                    {% csrf_token %}
+                    {{form.categories}}
+                    {{ form.start_date }}
+                    {{ form.end_date }}
+                    
+                    <input type="submit" value="Filter" class="fillerbtn">
+                </form>
+            </div>
+            <div id="bar-chart">{{ chart_div|safe }}</div>
+        </div>
+    </div>
+    </section>
+</body>
+</html>

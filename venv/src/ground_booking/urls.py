@@ -15,6 +15,8 @@ urlpatterns = [
     path('all_events/', all_events, name='all_events'),
     path('calendar/', calendar_view, name='calendar'),
     path('ground/details/', views.ground_details_view, name='ground_details'),
+
+    path('ground_booking_bar_chart/', views.ground_booking_bar_chart_view, name='ground_booking_bar_chart'),
     
 ]
 

@@ -424,18 +424,33 @@ from django.shortcuts import render
 from .forms import CategoryForm
 from .models import Inventory_Stock
 
+from django.shortcuts import render
+from .forms import InventoryStockCountFilterForm
+from .models import Inventory_Stock
+
 def inventory_stock_count_chart_view(request):
+    form = InventoryStockCountFilterForm(request.GET)
     stock_items = Inventory_Stock.objects.all()
+
+    # Apply category filter if selected
+    if form.is_valid() and form.cleaned_data['categories']:
+        stock_items = stock_items.filter(category=form.cleaned_data['categories'])
+
     total_stock_quantity = sum(item.stock_quantity for item in stock_items)
     
-    category_names = [item.category.name for item in stock_items]
+    category_names = [item.item_name for item in stock_items]
     stock_percentages = [(item.stock_quantity / total_stock_quantity) * 100 for item in stock_items]
 
-    context = {'category_names': category_names, 'stock_percentages': stock_percentages}
+    context = {
+        'form': form,
+        'category_names': category_names,
+        'stock_percentages': stock_percentages,
+    }
     return render(request, 'inventory_stock_count_chart_view.html', context)
 
 
-#supplier CHART 1
+
+#supplier CHART 
 # views.py
 import plotly.graph_objs as go
 from django.shortcuts import render

@@ -119,3 +119,55 @@ def ground_details_view(request):
     }
     return render(request, 'ground_details.html', context)
 
+
+
+from django.shortcuts import render
+from .forms import GroundBookingFilterForm
+from .models import GroundBookingRequest
+
+def ground_booking_bar_chart_view(request):
+    form = GroundBookingFilterForm(request.GET)
+    ground_bookings = GroundBookingRequest.objects.all()
+
+    # Apply date filter if selected
+    if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        ground_bookings = ground_bookings.filter(request_date__range=[start_date, end_date])
+
+    # Apply ground name filter if selected
+    ground_name_filter = form.cleaned_data.get('ground_name')
+    if ground_name_filter:
+        ground_bookings = ground_bookings.filter(ground__ground_name=ground_name_filter)
+
+    # Create a dictionary to store counts for each event and approval status
+    event_approval_counts = {}
+
+    for booking in ground_bookings:
+        event_name = booking.event.event_name
+        approval_status = booking.get_approval_status_display()
+
+        # Initialize count to 0 if event_approval_counts entry doesn't exist
+        if (event_name, approval_status) not in event_approval_counts:
+            event_approval_counts[(event_name, approval_status)] = 0
+
+        # Increment the count for the specific event and approval status
+        event_approval_counts[(event_name, approval_status)] += 1
+
+    # Prepare the data for the chart
+    event_names = []
+    approval_statuses = []
+    counts = []
+
+    for (event_name, approval_status), count in event_approval_counts.items():
+        event_names.append(event_name)
+        approval_statuses.append(approval_status)
+        counts.append(count)
+
+    context = {
+        'form': form,
+        'event_names': event_names,
+        'approval_statuses': approval_statuses,
+        'counts': counts,
+    }
+    return render(request, 'ground_booking_bar_chart_view.html', context)

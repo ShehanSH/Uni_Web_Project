@@ -1,0 +1,78 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Stacked Bar Chart - Inventory Items</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+
+    <section class="expert" id="stackedBarChart">
+        <div class="title">
+            <h2 class="titeText">Requested vs Remaining <span>In</span> the Inventory</h2>
+            <p style="text-align: center;">Quantity of items in the inventory - requested, issued, remaining</p>
+        </div>
+
+         
+        <form method="get" class="form-inline" style="text-align: center;">
+            {% csrf_token %}
+            {{form.categories}}
+            {{ form.start_date }}
+            {{ form.end_date }}
+            
+            <input type="submit" value="Filter" class="fillerbtn">
+        </form>
+        <div style="margin-left:140px; width:85%; height:85%">
+            <div id="stacked-bar-chart"></div>
+            <script>
+                // Data for the stacked bar chart
+                var itemNames = [{% for name in item_names %}'{{ name }}',{% endfor %}];
+                var requestedQuantities = [{% for quantity in requested_quantities %}{{ quantity }},{% endfor %}];
+                var issuedQuantities = [{% for quantity in issued_quantities %}{{ quantity }},{% endfor %}];
+                var remainingQuantities = [{% for quantity in remaining_quantities %}{{ quantity }},{% endfor %}];
+
+                // Create the traces for the stacked bar chart
+                var traceRequested = {
+                    x: itemNames,
+                    y: requestedQuantities,
+                    name: 'Requested',
+                    type: 'bar'
+                };
+                var traceIssued = {
+                    x: itemNames,
+                    y: issuedQuantities,
+                    name: 'Issued',
+                    type: 'bar'
+                };
+                var traceRemaining = {
+                    x: itemNames,
+                    y: remainingQuantities,
+                    name: 'Remaining',
+                    type: 'bar'
+                };
+
+                // Define the data array
+                var data = [traceRequested, traceIssued, traceRemaining];
+
+                // Layout for the stacked bar chart
+                var layout = {
+                    title: 'Quantity of Items in the Inventory - Requested, Issued, Remaining',
+                    xaxis: {
+                        title: 'Sports Items'
+                    },
+                    yaxis: {
+                        title: 'Quantity of Items'
+                    },
+                    barmode: 'stack' // Stacked bar chart
+                };
+
+                // Render the stacked bar chart
+                Plotly.newPlot('stacked-bar-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>

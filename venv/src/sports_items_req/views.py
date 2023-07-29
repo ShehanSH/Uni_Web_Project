@@ -67,57 +67,216 @@ def delete_request(request, pk):
 
 
 # views.py
+import plotly.graph_objs as go
 from django.shortcuts import render
 from .models import SportsItemRequest
-from .forms import SportsItemReqStatusForm
+from django.db import models
 
-# views.py
+
 from django.shortcuts import render
-from .models import SportsItemRequest
-from .forms import SportsItemReqStatusForm
-import plotly.graph_objects as go
+from .models import Inventory_Stock
+from .forms import ItemRequestFilterForm
+import plotly.graph_objs as go
 
-def sports_item_req_status(request):
-    form = SportsItemReqStatusForm(request.GET)
+def item_request_chart_view(request):
+    # Retrieve data from the model
+    queryset = SportsItemRequest.objects.all()
 
-    # Filter data based on the form's input
-    filtered_data = SportsItemRequest.objects.all()
+    # Handle filters using the form
+    form = ItemRequestFilterForm(request.GET)
     if form.is_valid():
-        approval_status = form.cleaned_data.get('approval_status')
         start_date = form.cleaned_data.get('start_date')
         end_date = form.cleaned_data.get('end_date')
-        category = form.cleaned_data.get('category')
+        category = form.cleaned_data.get('categories')
 
-        if approval_status:
-            filtered_data = filtered_data.filter(approval_status=approval_status)
         if start_date:
-            filtered_data = filtered_data.filter(request_date__gte=start_date)
+            queryset = queryset.filter(request_date__gte=start_date)
         if end_date:
-            filtered_data = filtered_data.filter(request_date__lte=end_date)
+            queryset = queryset.filter(request_date__lte=end_date)
         if category:
-            filtered_data = filtered_data.filter(category=category)
-
-    # Count requests in each approval status category
-    approval_count = {
-        'Approval': filtered_data.filter(approval_status='A').count(),
-        'Disapproval': filtered_data.filter(approval_status='D').count(),
-        'Issued': filtered_data.filter(approval_status='I').count(),
-    }
+            queryset = queryset.filter(category=category)
 
     # Prepare data for the Plotly bar chart
-    labels = list(approval_count.keys())
-    data = list(approval_count.values())
+    approval_status_choices = dict(SportsItemRequest.APPROVAL_CHOICES)
+    item_names = []
+    request_quantity_approval = []
+    request_quantity_disapproval = []
+    request_quantity_issued = []
 
-    # Create the Plotly bar chart
-    bar_chart = go.Figure(data=[go.Bar(x=labels, y=data)])
+    for item in queryset:
+        item_names.append(item.item.item_name)
+        if item.approval_status == 'A':
+            request_quantity_approval.append(item.req_quantity)
+            request_quantity_disapproval.append(0)
+            request_quantity_issued.append(0)
+        elif item.approval_status == 'D':
+            request_quantity_approval.append(0)
+            request_quantity_disapproval.append(item.req_quantity)
+            request_quantity_issued.append(0)
+        elif item.approval_status == 'I':
+            request_quantity_approval.append(0)
+            request_quantity_disapproval.append(0)
+            request_quantity_issued.append(item.req_quantity)
 
-    # Convert the chart to HTML and pass it to the template
-    chart_div = bar_chart.to_html(full_html=False)
+    # Create traces for each approval status
+    trace_approval = go.Bar(x=item_names, y=request_quantity_approval, name='Approval', marker=dict(color='green'))
+    trace_disapproval = go.Bar(x=item_names, y=request_quantity_disapproval, name='Disapproval', marker=dict(color='red'))
+    trace_issued = go.Bar(x=item_names, y=request_quantity_issued, name='Issued', marker=dict(color='blue'))
+
+    # Prepare the data for the chart
+    data = [trace_approval, trace_disapproval, trace_issued]
+
+    # Layout for the bar chart
+    layout = go.Layout(
+        title='Sports Item Requests by Approval Status',
+        xaxis=dict(title='Item Names'),
+        yaxis=dict(title='Request Quantity'),
+        barmode='group'  # Use 'group' for grouped bars
+    )
+
+    # Render the bar chart
+    chart = go.Figure(data=data, layout=layout)
+    chart_div = chart.to_html(full_html=False)
 
     context = {
         'form': form,
-        'chart_div': chart_div,
+        'chart_div': chart_div
     }
 
-    return render(request, 'sports_req_chart.html', context)
+    return render(request, 'item_request_chart_view.html', context)
 
+
+from django.shortcuts import render
+
+from .models import SportsItemRequest
+from datetime import datetime
+
+# def sports_item_requests_trend_chart_view(request):
+#     form = SportsItemRequestFilterForm(request.GET)
+#     requests = SportsItemRequest.objects.all()
+
+#     # Apply date filter if selected
+#     if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:
+#         start_date = form.cleaned_data['start_date']
+#         end_date = form.cleaned_data['end_date']
+#         requests = requests.filter(request_date__range=[start_date, end_date])
+
+#     # Apply category filter if selected
+#     category_filter = form.cleaned_data.get('categories')
+#     if category_filter:
+#         requests = requests.filter(category=category_filter)
+
+#     timestamps = [datetime.combine(request.request_date, datetime.min.time()) for request in requests]
+#     request_counts = [requests.filter(request_date=request.request_date).count() for request in requests]
+
+#     context = {
+#         'form': form,
+#         'timestamps': timestamps,
+#         'request_counts': request_counts,
+#     }
+#     return render(request, 'sports_item_requests_trend_chart_view.html', context)
+
+from django.shortcuts import render
+from .forms import SportsItemRequestReceivedFilterForm
+from .models import SportsItemRequest, SportsItemReceived
+
+def sports_item_trend_chart_view(request):
+    form = SportsItemRequestReceivedFilterForm(request.GET)
+    requests = SportsItemRequest.objects.all()
+    received_items = SportsItemReceived.objects.all()
+
+    # Apply date filter if selected
+    if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        requests = requests.filter(request_date__range=[start_date, end_date])
+        received_items = received_items.filter(received_date__range=[start_date, end_date])
+
+    # Apply category filter if selected
+    category_filter = form.cleaned_data.get('categories')
+    if category_filter:
+        requests = requests.filter(category=category_filter)
+        received_items = received_items.filter(category=category_filter)
+
+    request_timestamps = [request.request_date for request in requests]
+    request_counts = [requests.filter(request_date=request.request_date).count() for request in requests]
+
+    received_timestamps = [received.received_date for received in received_items]
+    received_counts = [received_items.filter(received_date=received.received_date).count() for received in received_items]
+
+    context = {
+        'form': form,
+        'request_timestamps': request_timestamps,
+        'request_counts': request_counts,
+        'received_timestamps': received_timestamps,
+        'received_counts': received_counts,
+    }
+    return render(request, 'sports_item_trend_chart_view.html', context)
+
+
+from django.shortcuts import render
+from .forms import SportsItemRequestStackedFilterForm
+from .models import SportsItemRequest, Inventory_Stock
+from django.db.models import Sum
+
+def stacked_bar_chart_view(request):
+    form = SportsItemRequestStackedFilterForm(request.GET)
+    inventory_items = Inventory_Stock.objects.all()
+
+    if form.is_valid():
+        # Apply category filter if selected
+        category_filter = form.cleaned_data.get('categories')
+        if category_filter:
+            inventory_items = inventory_items.filter(category=category_filter)
+
+    item_names = [item.item_name for item in inventory_items]
+    requested_quantities = [SportsItemRequest.objects.filter(item=item).aggregate(Sum('req_quantity'))['req_quantity__sum'] or 0 for item in inventory_items]
+    issued_quantities = [SportsItemRequest.objects.filter(item=item, approval_status='I').aggregate(Sum('req_quantity'))['req_quantity__sum'] or 0 for item in inventory_items]
+    remaining_quantities = [item.stock_quantity - issued_quantity for item, issued_quantity in zip(inventory_items, issued_quantities)]
+
+    context = {
+        'form': form,
+        'item_names': item_names,
+        'requested_quantities': requested_quantities,
+        'issued_quantities': issued_quantities,
+        'remaining_quantities': remaining_quantities,
+    }
+    return render(request, 'stacked_bar_chart_view.html', context)
+
+
+from django.shortcuts import render
+from .forms import SportsItemRequestReceivedFilterForm
+from .models import SportsItemRequest, SportsItemReceived
+
+def sports_item_time_series_chart_view(request):
+    form = SportsItemRequestReceivedFilterForm(request.GET)
+    requests = SportsItemRequest.objects.all()
+    received_items = SportsItemReceived.objects.all()
+
+    # Apply date filter if selected
+    if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:
+        start_date = form.cleaned_data['start_date']
+        end_date = form.cleaned_data['end_date']
+        requests = requests.filter(request_date__range=[start_date, end_date])
+        received_items = received_items.filter(received_date__range=[start_date, end_date])
+
+    # Apply category filter if selected
+    category_filter = form.cleaned_data.get('categories')
+    if category_filter:
+        requests = requests.filter(category=category_filter)
+        received_items = received_items.filter(category=category_filter)
+
+    request_timestamps = [request.request_date for request in requests]
+    request_counts = [requests.filter(request_date=request.request_date).count() for request in requests]
+
+    received_timestamps = [received.received_date for received in received_items]
+    received_counts = [received_items.filter(received_date=received.received_date).count() for received in received_items]
+
+    context = {
+        'form': form,
+        'request_timestamps': request_timestamps,
+        'request_counts': request_counts,
+        'received_timestamps': received_timestamps,
+        'received_counts': received_counts,
+    }
+    return render(request, 'sports_item_time_series_chart_view.html', context)

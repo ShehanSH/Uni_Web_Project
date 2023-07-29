@@ -13,5 +13,8 @@ urlpatterns = [
     path('update_sports_item_request/<str:pk>/', update_sports_item_request, name="update_sports_item_request"),
     path('delete_request/<str:pk>/', delete_request, name='delete_request'),
 
-    path('sports_item_req_status/', views.sports_item_req_status, name='sports_item_req_status'),
+    path('item_request_chart/', views.item_request_chart_view, name='item_request_chart'),
+    path('sports_item_trend_chart/', views.sports_item_trend_chart_view, name='sports_item_trend_chart'),
+    path('stacked_bar_chart/', views.stacked_bar_chart_view, name='stacked_bar_chart'),
+    path('sports_item_time_series_chart/', views.sports_item_time_series_chart_view, name='sports_item_time_series_chart'),
 ]

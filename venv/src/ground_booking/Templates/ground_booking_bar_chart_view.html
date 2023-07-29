@@ -1,0 +1,57 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Ground Booking Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    
+    <section class="expert" id="groundBookingBarChart">
+        <div class="title">
+            <h2 class="titeText">Ground Booking Bar Chart</h2>
+        </div>
+
+        <form method="get" class="form-inline" style="text-align: center;">
+            {% csrf_token %}
+            {{ form.start_date }}
+            {{ form.end_date }}
+            {{ form.ground_name }}
+            <input type="submit" value="Filter" class="fillerbtn">
+        </form>
+        
+        <div style="margin-left:140px; width:85%; height:85%">
+            <div id="bar-chart"></div>
+            <script>
+                // Data for the bar chart
+                var data = [{
+                    x: {{ event_names|safe }},
+                    y: {{ counts|safe }},
+                    type: 'bar',
+                    text: {{ approval_statuses|safe }},
+                    marker: {
+                        color: 'blue', // Customize the color of bars here
+                    },
+                }];
+
+                // Layout for the bar chart
+                var layout = {
+                    title: 'Ground Booking Count by Event Type and Approval Status',
+                    xaxis: {
+                        title: 'Event Types',
+                    },
+                    yaxis: {
+                        title: 'Count of Ground Bookings',
+                    },
+                };
+
+                // Render the bar chart
+                Plotly.newPlot('bar-chart', data, layout);
+            </script>
+        </div>
+    </section>
+</body>
+</html>
