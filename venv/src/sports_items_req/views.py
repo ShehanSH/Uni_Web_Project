@@ -212,8 +212,6 @@ def sports_item_trend_chart_view(request):
         'received_counts': received_counts,
     }
     return render(request, 'sports_item_trend_chart_view.html', context)
-
-
 from django.shortcuts import render
 from .forms import SportsItemRequestStackedFilterForm
 from .models import SportsItemRequest, Inventory_Stock

@@ -121,9 +121,12 @@ def ground_details_view(request):
 
 
 
+#chart 1
 from django.shortcuts import render
-from .forms import GroundBookingFilterForm
 from .models import GroundBookingRequest
+from .forms import GroundBookingFilterForm
+import plotly.graph_objs as go
+from collections import defaultdict
 
 def ground_booking_bar_chart_view(request):
     form = GroundBookingFilterForm(request.GET)
@@ -140,34 +143,47 @@ def ground_booking_bar_chart_view(request):
     if ground_name_filter:
         ground_bookings = ground_bookings.filter(ground__ground_name=ground_name_filter)
 
-    # Create a dictionary to store counts for each event and approval status
-    event_approval_counts = {}
+    # Create a defaultdict to store the sum of request quantity for each event and approval status
+    request_quantity_sum = defaultdict(int)
 
     for booking in ground_bookings:
         event_name = booking.event.event_name
         approval_status = booking.get_approval_status_display()
 
-        # Initialize count to 0 if event_approval_counts entry doesn't exist
-        if (event_name, approval_status) not in event_approval_counts:
-            event_approval_counts[(event_name, approval_status)] = 0
+        # Add the request quantity to the specific event and approval status
+        request_quantity_sum[(event_name, approval_status)] += booking.request_quantity
 
-        # Increment the count for the specific event and approval status
-        event_approval_counts[(event_name, approval_status)] += 1
-
-    # Prepare the data for the chart
+    # Prepare data for the Plotly bar chart
     event_names = []
     approval_statuses = []
-    counts = []
+    request_quantities = []
 
-    for (event_name, approval_status), count in event_approval_counts.items():
+    for (event_name, approval_status), quantity_sum in request_quantity_sum.items():
         event_names.append(event_name)
         approval_statuses.append(approval_status)
-        counts.append(count)
+        request_quantities.append(quantity_sum)
+
+    # Create traces for each approval status
+    trace_approval = go.Bar(x=event_names, y=request_quantities, name='Approval', marker=dict(color='green'))
+
+    # Prepare the data for the chart
+    data = [trace_approval]
+
+    # Layout for the bar chart
+    layout = go.Layout(
+        title='Ground Booking Requests by Approval Status',
+        xaxis=dict(title='Event Names'),
+        yaxis=dict(title='Request Quantity'),
+        barmode='group'  # Use 'group' for grouped bars
+    )
+
+    # Render the bar chart
+    chart = go.Figure(data=data, layout=layout)
+    chart_div = chart.to_html(full_html=False)
 
     context = {
         'form': form,
-        'event_names': event_names,
-        'approval_statuses': approval_statuses,
-        'counts': counts,
+        'chart_div': chart_div
     }
+
     return render(request, 'ground_booking_bar_chart_view.html', context)
