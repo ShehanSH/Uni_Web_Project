@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -45,10 +45,14 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap_datepicker_plus',
     'ground_booking',
-    'chartjs'
-   
+    'chartjs',
+    'django_tables2',
+    'xhtml2pdf',
     
-    ]
+   
+]
+
+PDF_OUTPUT_DIR = 'pdfs/'
 
 SCHEDULER_HOUR_FORMAT = 12
 MIDDLEWARE = [
@@ -138,10 +142,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+XHTML2PDF_ROOT = os.path.join(BASE_DIR, 'static')
 
 # media settings.py
 
@@ -320,10 +328,11 @@ JAZZMIN_SETTINGS = {
 
         # Url that gets reversed (Permissions can be added)
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"name": "View Site",  "url": "/list_items/", "permissions": ["auth.view_user"]},
+        {"name": "View Statics",  "url": "/inventory_chart_view/", "permissions": ["auth.view_user"]},
+        {"name": "Reports",  "url": "/inventory_chart_view/", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
 
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},

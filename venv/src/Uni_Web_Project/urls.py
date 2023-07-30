@@ -59,8 +59,21 @@ urlpatterns = [
     path('supplier_chart_view/', views.supplier_chart_view, name='supplier_chart_view'),
     path('supplier_name_chart/', views.supplier_name_chart, name='supplier_name_chart'),
     path('supply_inventory_stock_over_time/', views.supply_inventory_stock_over_time, name='supply_inventory_stock_over_time'),
+
+    #reports
+    # path('inventory_stock_report/', views.inventory_stock_report, name='inventory_stock_report'),
+    
+    
+    path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
+    path('generate_csv/', views.generate_csv, name='generate_csv'),
+    path('select_file_type/', views.select_file_type, name='select_file_type'),
+    # path('generate_pdf_image/', views.generate_pdf_image, name='generate_pdf_image'),
+
     
     path('', include('sports_items_req.urls')),
     path('', include('ground_booking.urls')),
    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -9,7 +9,7 @@
 </head>
 
 <body class="page">
-    {% include 'navadmin.html' %}
+    {% include 'adminNavbar.html' %}
 
 <div class="sidebar">
     <div class="brand">
@@ -160,7 +160,7 @@
         </li>
 
       <li class="nav-item">
-          <a href="{% url 'sports_items_req:item_request_chart' %}">
+          <a href="{% url 'ground_booking:ground_booking_bar_chart' %}">
             <span class="nav-item__icon">
               <ion-icon name="chatbox-outline"></ion-icon>
             </span>
@@ -170,7 +170,7 @@
           </a>
         </li>
     <li class="nav-item">
-      <a href="{% url 'sports_items_req:sports_item_time_series_chart' %}">
+      <a href="{% url 'ground_booking:ground_booking_stacked_bar_chart' %}">
         <span class="nav-item__icon">
           <ion-icon name="chatbox-outline"></ion-icon>
         </span>
@@ -180,7 +180,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="{% url 'sports_items_req:stacked_bar_chart' %}">
+      <a href="{% url 'ground_booking:ground_booking_line_chart' %}">
         <span class="nav-item__icon">
           <ion-icon name="people-outline"></ion-icon>
         </span>

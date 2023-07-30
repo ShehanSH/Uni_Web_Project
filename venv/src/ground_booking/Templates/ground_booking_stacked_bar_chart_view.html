@@ -1,0 +1,36 @@
+<!-- ground_booking_stacked_bar_chart_view.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Ground Booking Requests Stacked Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="page">
+    {% include 'slidebar.html' %}
+    <section class="expert" id="groundBookingRequests">
+        <div class="title">
+            <h2 class="titeText">Ground Booking Requests Grouped <span>by</span> Approval Status</h2>
+            <p style="text-align: center;">Compares the number of booking requests per ground, grouped by approval status.</p>
+        </div>
+
+        <div style="margin-left:40px; width:85%; height:85%; margin-top:30px;" >
+            <div class="chart">
+                <div id="filter-form">
+                    <form method="get" class="form-inline">
+                        {% csrf_token %}
+                        {{ form.start_date }}
+                        {{ form.end_date }}
+                        {{ form.event_name }}
+                        <input type="submit" value="Filter" class="fillerbtn">
+                    </form>
+                </div>
+                <div id="stacked-bar-chart">{{ chart_div|safe }}</div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

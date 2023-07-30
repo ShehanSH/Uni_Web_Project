@@ -37,7 +37,29 @@ class GroundBookingRequestUpdateForm(forms.ModelForm):
 from django import forms
 from .models import Ground
 
+from django import forms
+from .models import Ground, GroundBookingRequest, EventType
+
 class GroundBookingFilterForm(forms.Form):
-    start_date = forms.DateField(label='Start Date', required=False, widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'}))
-    end_date = forms.DateField(label='End Date', required=False, widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'}))
-    ground_name = forms.ModelChoiceField(queryset=Ground.objects.all(), empty_label="All", required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+    start_date = forms.DateField(
+        label='Start Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    end_date = forms.DateField(
+        label='End Date',
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-inline'})
+    )
+    ground_name = forms.ModelChoiceField(
+        queryset=Ground.objects.all(),
+        label='Ground Name',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    event_name = forms.ModelChoiceField(
+        queryset=EventType.objects.all(),
+        label='Event Name',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )

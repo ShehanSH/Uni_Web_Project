@@ -18,6 +18,8 @@ urlpatterns = [
 
     path('ground_booking_bar_chart/', views.ground_booking_bar_chart_view, name='ground_booking_bar_chart'),
     
+    path('ground_booking_stacked_bar_chart/', views.ground_booking_stacked_bar_chart_view, name='ground_booking_stacked_bar_chart'),
+    path('ground_booking_line_chart/', views.ground_booking_line_chart_view, name='ground_booking_line_chart'),
 ]
 
 if settings.DEBUG:

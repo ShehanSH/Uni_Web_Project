@@ -21,7 +21,8 @@
                     {% csrf_token %}
                     {{ form.start_date }}
                     {{ form.end_date }}
-                    {{ form.ground_name }}
+                    
+                    {{ form.event_name }}
                     
                     <input type="submit" value="Filter" class="fillerbtn">
                 </form>

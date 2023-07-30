@@ -625,3 +625,82 @@ def supply_inventory_stock_over_time(request):
 
 
 
+#REPORTING
+
+# views.py
+from django.shortcuts import render
+from django_tables2 import RequestConfig
+from .models import Inventory_Stock
+from .tables import InventoryStockTable
+from django.http import HttpResponse
+import csv
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.core.files.storage import default_storage
+from reportlab.pdfgen import canvas
+
+
+
+from django.http import HttpResponse
+from django.shortcuts import render
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Frame, PageTemplate
+from reportlab.lib.styles import getSampleStyleSheet
+import csv
+
+
+
+#htmltopdf
+
+# views.py
+
+import csv
+from django.shortcuts import render, HttpResponse
+from .models import Inventory_Stock
+from .pdf import render_to_pdf
+from django.contrib.staticfiles import finders
+from django.templatetags.static import static
+
+def generate_pdf(request):
+    items = Inventory_Stock.objects.all()
+
+    context = {
+        'items': items,
+    }
+
+    pdf = render_to_pdf('inventory_stock_pdf.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename=inventory_stock.pdf'
+        return response
+
+    return HttpResponse("Failed to generate PDF.")
+
+def generate_csv(request):
+    items = Inventory_Stock.objects.all()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="inventory_stock.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Category', 'Item Name', 'Stock Quantity', 'Reorder Quantity'])
+    for item in items:
+        writer.writerow([item.category, item.item_name, item.stock_quantity, item.reorder_level])
+
+    return response
+
+def select_file_type(request):
+    if request.method == 'POST':
+        file_type = request.POST.get('file_type')
+
+        if file_type == 'pdf':
+            return generate_pdf(request)
+
+        elif file_type == 'csv':
+            return generate_csv(request)
+
+    return render(request, 'select_file_type.html')
+
+
+# views.py

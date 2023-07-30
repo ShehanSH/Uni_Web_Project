@@ -1,0 +1,20 @@
+<!-- select_file_type.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select File Type</title>
+</head>
+<body>
+    <h1>Select File Type</h1>
+    <img src="{% static 'images/user.png' %}" alt="logo" style = "width:40px; height:40px">
+    <form method="post">
+        {% csrf_token %}
+        <input type="radio" name="file_type" value="pdf" id="pdf_radio" required>
+        <label for="pdf_radio">PDF</label>
+        <input type="radio" name="file_type" value="csv" id="csv_radio" required>
+        <label for="csv_radio">CSV</label><br>
+        <button type="submit">Generate/Download</button>
+    </form>
+</body>
+</html>

@@ -17,4 +17,7 @@ urlpatterns = [
     path('sports_item_trend_chart/', views.sports_item_trend_chart_view, name='sports_item_trend_chart'),
     path('stacked_bar_chart/', views.stacked_bar_chart_view, name='stacked_bar_chart'),
     path('sports_item_time_series_chart/', views.sports_item_time_series_chart_view, name='sports_item_time_series_chart'),
+
+
+
 ]
