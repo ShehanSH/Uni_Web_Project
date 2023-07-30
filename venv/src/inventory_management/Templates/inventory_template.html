@@ -1,0 +1,54 @@
+<!-- inventory_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Define your CSS styles here if needed */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .item-table th,
+        .item-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- Updated image path -->
+        <img src="{% static 'image/unilogo2.png' %}" alt="Unilogo" width="200">
+    </div>
+
+    <h2>Inventory Report</h2>
+    <table class="item-table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Item Name</th>
+                <th>Stock Quantity</th>
+                <th>Reorder Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory_stocks %}
+            <tr>
+                <td>{{ item.category }}</td>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.stock_quantity }}</td>
+                <td>{{ item.reorder_level }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

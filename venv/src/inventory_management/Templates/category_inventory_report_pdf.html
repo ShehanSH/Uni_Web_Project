@@ -1,0 +1,72 @@
+<!-- category_inventory_report_pdf.html -->
+{% load static %}
+<html lang="en">
+<head>
+    <title>Category-wise Inventory Report</title>
+    <style>
+        /* ... (existing styles) ... */
+
+        /* Content styles */
+        main {
+            padding-top: 70px; /* Adjust this value to avoid content overlapping with header */
+            padding-bottom: 40px; /* Adjust this value to avoid content overlapping with footer */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #D1D0CE;
+            color: black;
+            font-weight: bold;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        h1 {
+            text-align: left;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="headerback">
+        <header>
+            <h1>DEPARTMENT OF PHYSICAL EDUCATION<br>
+                <span>University of Kelaniya, Sri Lanka </span></h1>
+        </header>
+        <hr>
+    </div>
+
+    <main>
+        <h2>Category-wise Inventory Report</h2>
+        <hr>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Total Stock Quantity</th>
+                <th>Total Damage Quantity</th>
+                <th>Total Lost Quantity</th>
+            </tr>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.total_stock_quantity }}</td>
+                <td>{{ category.total_damage_quantity }}</td>
+                <td>{{ category.total_lost_quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+
+    <footer class="footer-template">
+        <p>Inventory Management System</p>
+    </footer>
+
+</body>
+</html>

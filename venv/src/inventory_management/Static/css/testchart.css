@@ -151,3 +151,29 @@ body {
   
   margin-top: 20px;
 }
+
+.reportbtn{
+  width: 90px;
+  height: 30px;
+  background-color:#660000;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  
+  margin-top: 20px;
+}
+
+.reportbtn:hover{
+  width: 90px;
+  height: 30px;
+  background-color:#F6DD26;
+  border: none;
+  border-radius: 5px;
+  color: #020202;
+  font-size: 16px;
+  cursor: pointer;
+  
+  margin-top: 20px;
+}

@@ -661,7 +661,7 @@ from .models import Inventory_Stock
 from .pdf import render_to_pdf
 from django.contrib.staticfiles import finders
 from django.templatetags.static import static
-
+#report 1
 def generate_pdf(request):
     items = Inventory_Stock.objects.all()
 
@@ -690,17 +690,128 @@ def generate_csv(request):
 
     return response
 
-def select_file_type(request):
+# views.py
+from django.shortcuts import render
+from .models import Inventory_Stock, Category
+
+
+def reorder_report(request):
+    categories = Category.objects.all()
+
     if request.method == 'POST':
-        file_type = request.POST.get('file_type')
+        selected_categories = request.POST.getlist('selected_categories')
+        if 'all_categories' in request.POST:
+            selected_categories = [category.category_id for category in categories]
+        file_type = request.POST.get('generate')
 
         if file_type == 'pdf':
-            return generate_pdf(request)
+            items = Inventory_Stock.objects.filter(category__in=selected_categories)
+            context = {
+                'items': items,
+            }
+            pdf = render_to_pdf('inventory_stock_pdf.html', context)
+            if pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'filename=inventory_stock.pdf'
+                return response
 
         elif file_type == 'csv':
             return generate_csv(request)
 
-    return render(request, 'select_file_type.html')
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'inventory_report.html', context)
+
+#report 2
 
 
 # views.py
+import csv
+from django.shortcuts import render, HttpResponse
+from .models import Inventory_Stock, Category
+
+def generate_pdf2(request):
+    categories = Category.objects.annotate(
+        total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
+        total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
+        total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
+    )
+
+    context = {
+        'categories': categories,
+    }
+
+    pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename=category_inventory_report.pdf'
+        return response
+
+    return HttpResponse("Failed to generate PDF.")
+
+def generate_csv2(request):
+    categories = Category.objects.annotate(
+        total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
+        total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
+        total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
+    )
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="category_inventory_report.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Category', 'Total Stock Quantity', 'Total Damage Quantity', 'Total Lost Quantity'])
+    for category in categories:
+        writer.writerow([category.name, category.total_stock_quantity, category.total_damage_quantity, category.total_lost_quantity])
+
+    return response
+
+def select_file_type2(request):
+    if request.method == 'POST':
+        file_type = request.POST.get('file_type')
+
+        if file_type == 'pdf':
+            return generate_pdf2(request)
+
+        elif file_type == 'csv':
+            return generate_csv2(request)
+
+    categories = Category.objects.annotate(
+        total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
+        total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
+        total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
+    )
+
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'select_file_type.html', context)
+
+# def reorder_report2(request):
+#     categories = Category.objects.all()
+
+#     if request.method == 'POST':
+#         selected_categories = request.POST.getlist('selected_categories')
+#         if 'all_categories' in request.POST:
+#             selected_categories = [category.category_id for category in categories]
+#         file_type = request.POST.get('generate')
+
+#         if file_type == 'pdf':
+#             items = Inventory_Stock.objects.filter(category__in=selected_categories)
+#             context = {
+#                 'items': items,
+#             }
+#             pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
+#             if pdf:
+#                 response = HttpResponse(pdf, content_type='application/pdf')
+#                 response['Content-Disposition'] = 'filename=inventory_stock.pdf'
+#                 return response
+
+#         elif file_type == 'csv':
+#             return generate_csv(request)
+
+#     context = {
+#         'categories': categories,
+#     }
+#     return render(request, 'inventory_stock_pdf_2.html', context)

@@ -66,13 +66,18 @@ urlpatterns = [
     
     path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
     path('generate_csv/', views.generate_csv, name='generate_csv'),
-    path('select_file_type/', views.select_file_type, name='select_file_type'),
+    path('reorder_report/', views.reorder_report, name='reorder_report'),
+
+    path('generate_pdf2/', views.generate_pdf2, name='generate_pdf'),
+    path('generate_csv2/', views.generate_csv2, name='generate_csv'),
+    path('stock_report/', views.select_file_type2, name='stock_report/'),
+    
     # path('generate_pdf_image/', views.generate_pdf_image, name='generate_pdf_image'),
 
-    
+    # path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
     path('', include('sports_items_req.urls')),
     path('', include('ground_booking.urls')),
-   
+    # path('select_category/', views.generate_pdf, name='select_category'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
