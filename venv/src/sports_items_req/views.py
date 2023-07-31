@@ -21,6 +21,8 @@ def create_sports_item_request(request):
 
     return render(request, 'create_sports_item_request.html', {'form': form})
 
+
+
 def sports_item_requests_view(request):
     user = request.user
     requests = SportsItemRequest.objects.filter(user=user).select_related('category', 'item')
@@ -252,7 +254,7 @@ def sports_item_time_series_chart_view(request):
     received_items = SportsItemReceived.objects.all()
 
     # Apply date filter if selected
-    if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:
+    if form.is_valid() and form.cleaned_data['start_date'] and form.cleaned_data['end_date']:   #use cleaned for  sanitized and validate data
         start_date = form.cleaned_data['start_date']
         end_date = form.cleaned_data['end_date']
         requests = requests.filter(request_date__range=[start_date, end_date])

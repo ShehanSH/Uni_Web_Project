@@ -42,7 +42,7 @@ urlpatterns = [
     # path('list_history/', views.list_history, name='list_history'),
     path('', include('accounts.urls')),
     path('logout/', views.logout_view, name='logout'),
-
+    path('account_lockout/', views.account_lockout_view, name='account_lockout'),
     
     # path('accounts/', include('registration.backends.default.urls')),
     # path('sports_item_req/', include(('sports_item_req.urls', 'sports_item_req'), namespace='sports_item_req')),
@@ -68,9 +68,13 @@ urlpatterns = [
     path('generate_csv/', views.generate_csv, name='generate_csv'),
     path('reorder_report/', views.reorder_report, name='reorder_report'),
 
-    path('generate_pdf2/', views.generate_pdf2, name='generate_pdf'),
-    path('generate_csv2/', views.generate_csv2, name='generate_csv'),
-    path('stock_report/', views.select_file_type2, name='stock_report/'),
+    path('generate_pdf2/', views.generate_pdf2, name='generate_pdf2'),
+    path('generate_csv2/', views.generate_csv2, name='generate_csv2'),
+    path('stock_report/', views.reorder_report2, name='stock_report'),
+
+    path('supply_stock/', views.reorder_report3, name='supply_stock'),
+    path('generate_pdf3/', views.generate_pdf3, name='generate_pdf3'),
+    path('generate_csv3/', views.generate_csv3, name='generate_csv3'),
     
     # path('generate_pdf_image/', views.generate_pdf_image, name='generate_pdf_image'),
 

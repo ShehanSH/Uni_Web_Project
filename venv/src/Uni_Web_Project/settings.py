@@ -48,9 +48,15 @@ INSTALLED_APPS = [
     'chartjs',
     'django_tables2',
     'xhtml2pdf',
+    'axes',     # django-axes is a Django app that provides protection against brute force attacks on login and password reset views
+    
     
    
 ]
+
+AXES_FAILURE_LIMIT = 5
+AXES_LOCKOUT_TEMPLATE = 'lockout.html'
+
 
 PDF_OUTPUT_DIR = 'pdfs/'
 
@@ -63,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware'
 ]
 
 ROOT_URLCONF = 'Uni_Web_Project.urls'
@@ -175,6 +182,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 AUTHENTICATION_BACKENDS = [
     # 'Uni_Web_Project.backends.custom_auth_backend.CustomAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'axes.backends.AxesStandaloneBackend'
 ]
 
 
@@ -329,7 +337,7 @@ JAZZMIN_SETTINGS = {
         # Url that gets reversed (Permissions can be added)
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "View Statics",  "url": "/inventory_chart_view/", "permissions": ["auth.view_user"]},
-        {"name": "Reports",  "url": "/inventory_chart_view/", "permissions": ["auth.view_user"]},
+        {"name": "Reports",  "url": "/reorder_report/", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
         # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},

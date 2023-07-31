@@ -1,8 +1,9 @@
+
 {% load static %}
 <html lang="en">
 <head>
     <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
-    <title>Inventory Stock Report</title>
+    <title>Inventory Stock Bar Chart</title>
     <!-- Include Plotly.js from CDN -->
    
     <style>
@@ -29,27 +30,23 @@
   {% include 'slidebar2.html' %}
   <section class="expert" id="inventoryTrends">
     <div class="title">
-        <h2 class="titeText">Inventory Stock <span>vs</span> Reorder Level Report</h2>
-        <p style="text-align: center;">Generate report of the current stock quantity and reorder level for each item in the inventory.</p>
+        <h2 class="titeText">Supply <span>History </span>Report</h2>
+        <p style="text-align: center;">This report will give you an overview of all supply activities. Can generate reports monthly or annually.</p>
     </div>
 </section>
 <section style="margin-left:400px;margin-top:-100px;">
     <form method="post" target="_blank">
         {% csrf_token %}
         <div class="container">
-            <div class="categories">
-                <h3>Select Categories:</h3>
-                <input type="checkbox" name="all_categories" id="all_categories">
-                <label for="all_categories">All</label><br>
-                {% for category in categories %}
-                    <input type="checkbox" name="selected_categories" value="{{ category.category_id }}" id="category_{{ category.category_id }}">
-                    <label for="category_{{ category.category_id }}">{{ category.name }}</label><br>
-                {% endfor %}
-            </div>
-            <div class="buttons">
+            <form method="post">
+                {% csrf_token %}
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date">
                 <button type="submit" name="generate" value="pdf" class="fillerbtn">PDF</button>
                 <button type="submit" name="generate" value="csv" class="fillerbtn">CSV</button>
-            </div>
+            </form>
         </div>
     </form>
 </section>

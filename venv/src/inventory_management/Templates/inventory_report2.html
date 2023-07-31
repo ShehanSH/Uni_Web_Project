@@ -1,0 +1,57 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Inventory Stock Bar Chart</title>
+    <!-- Include Plotly.js from CDN -->
+   
+    <style>
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .categories {
+            flex: 1;
+        }
+        .buttons {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .fillerbtn {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="page">
+    {% include 'slidebar2.html' %}
+    <section class="expert" id="inventoryTrends">
+        <div class="title">
+            <h2 class="titeText">Inventory <span>Summary </span>Report </h2>
+            <p style="text-align: center;">This report will help you understand the inventory distribution across different categories.</p>
+        </div>
+    </section>
+    <section style="margin-left:400px;margin-top:-100px;">
+        <form method="post" target="_blank">
+            {% csrf_token %}
+            <div class="container">
+                <div class="categories">
+                    <h3>Select Categories:</h3>
+                    <input type="checkbox" name="all_categories" id="all_categories">
+                    <label for="all_categories">All</label><br>
+                    {% for category in categories %}
+                        <input type="checkbox" name="selected_categories" value="{{ category.category_id }}" id="category_{{ category.category_id }}">
+                        <label for="category_{{ category.category_id }}">{{ category.name }}</label><br>
+                    {% endfor %}
+                </div>
+                <div class="buttons">
+                    <button type="submit" name="generate" value="pdf" class="fillerbtn">PDF</button>
+                    <button type="submit" name="generate" value="csv" class="fillerbtn">CSV</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
