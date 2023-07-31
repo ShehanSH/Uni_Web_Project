@@ -1,9 +1,9 @@
-<!-- supply_stock_pdf.html -->
+
 {% load static %}
 
 <html lang="en">
 <head>
-    <title>Supply Stock PDF</title>
+    <title>Sports items request PDF</title>
     <style>
         /* Header styles */
         hr {
@@ -102,39 +102,25 @@
             <hr>
             <table>
                 <tr>
-                    <th>Supplier</th>
-                    <th>Supply Date</th>
-                    <th>Supply Time</th>
-                    <th>Item Supplied</th>
+                    <th>User</th>
                     <th>Category</th>
-                    <th>Quantity Supplied</th>
+                    <th>Item</th>
+                    <th>Request Date</th>
+                    <th>Request Time</th>
+                    <th>Requested Quantity</th>
+                    <th>Request Type</th>
+                    <th>Approval Status</th>
                 </tr>
-                {% for item in items %}
+                {% for item_request in item_requests %}
                 <tr>
-                    <td>{{ item.Supplier.supplier_name }}</td>
-                    <td>{{ item.supply_date }}</td>
-                    <td>{{ item.supply_time }}</td>
-                    <td>{{ item.item.item_name }}</td>
-                    <td>{{ item.category.name }}</td>
-                    <td>{{ item.supply_quantity }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-
-            <hr>
-            <h2>Supplier with total supply quantity</h2>
-            <hr>
-            <table>
-                <tr>
-                    <th>Supplier Name</th>
-                    <th>Supplier Category</th>
-                    <th>Total Supply Quantity</th>
-                </tr>
-                {% for supplier_data in suppliers_data %}
-                <tr>
-                    <td>{{ supplier_data.supplier_name }}</td>
-                    <td>{{ supplier_data.category_name }}</td>
-                    <td>{{ supplier_data.total_supply_quantity }}</td>
+                    <td>{{ item_request.user.username }}</td>
+                    <td>{{ item_request.category.name }}</td>
+                    <td>{{ item_request.item.item_name }}</td>
+                    <td>{{ item_request.request_date }}</td>
+                    <td>{{ item_request.request_time }}</td>
+                    <td>{{ item_request.req_quantity }}</td>
+                    <td>{{ item_request.get_request_type_display }}</td>
+                    <td>{{ item_request.get_approval_status_display }}</td>
                 </tr>
                 {% endfor %}
             </table>

@@ -29,10 +29,27 @@ class EventFormFilter(admin.SimpleListFilter):
         elif self.value() == 'not_submitted':
             return queryset.filter(event_form__exact='')
         return queryset
+    
+class PaymentFormFilter(admin.SimpleListFilter):
+    title = 'Payment Receipt Submitted'
+    parameter_name = 'payment_form_submitted'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('submitted', 'Submitted'),
+            ('not_submitted', 'Not Submitted'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'submitted':
+            return queryset.exclude(payment_receipt__exact='')
+        elif self.value() == 'not_submitted':
+            return queryset.filter(payment_receipt__exact='')
+        return queryset
 
 class GroundBookingRequestAdmin(admin.ModelAdmin):
     list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'display_payment_form', 'display_payment_receipt','approval_status' ]
-    list_filter = ['approval_status', 'event', EventFormFilter]
+    list_filter = ['approval_status', 'event', EventFormFilter, PaymentFormFilter]
     search_fields = ['user__username']
 
     def has_change_permission(self, request, obj=None):

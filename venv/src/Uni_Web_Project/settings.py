@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+import datetime
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,9 +56,21 @@ INSTALLED_APPS = [
    
 ]
 
+
 AXES_FAILURE_LIMIT = 5
 AXES_LOCKOUT_TEMPLATE = 'lockout.html'
 
+AXES_USE_HTTP_X_FORWARDED_FOR = True
+AXES_BEHIND_REVERSE_PROXY = True
+AXES_COOLOFF_TIME = datetime.timedelta(minutes=15)
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_LOCK_OUT_BY_USERNAME = True
+AXES_RESET_ON_SUCCESS = True
+AXES_META_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+    'USERNAME'
+]
 
 PDF_OUTPUT_DIR = 'pdfs/'
 

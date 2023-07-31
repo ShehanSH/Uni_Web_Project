@@ -18,6 +18,11 @@ urlpatterns = [
     path('stacked_bar_chart/', views.stacked_bar_chart_view, name='stacked_bar_chart'),
     path('sports_item_time_series_chart/', views.sports_item_time_series_chart_view, name='sports_item_time_series_chart'),
 
+    #charts
+    path('sports_item_request/', views.sports_item_request, name='sports_item_request'),
+    path('generate_pdf/<str:start_date>/<str:end_date>/', views.generate_pdf, name='generate_pdf'),
+    path('generate_csv/<str:start_date>/<str:end_date>/', views.generate_csv, name='generate_csv'),
+
 
 
 ]

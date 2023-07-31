@@ -23,7 +23,7 @@
   
   
   .LoginPageContainer {
-    height: 700px;
+    height: 1500px;
     /* overflow: auto; */
     margin-left: 30%;
     width: 40%;
@@ -37,8 +37,7 @@
     border-radius: 20px;
    
     margin-top: 100px;
-    margin-bottom: 50px;
-  
+    
   }
   
   /* Add styles for normal state */

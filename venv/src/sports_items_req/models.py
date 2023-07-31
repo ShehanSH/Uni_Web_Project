@@ -13,14 +13,21 @@ class SportsItemRequest(models.Model):
         ('D', 'Disapproval'),
         ('I', 'Issued'),
     )
+    TYPE_CHOICES = (
+        ('P', 'Practise'),
+        ('T', 'Tournament'),
+    )
     request_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE)
-    request_date = models.DateField()
-    request_time = models.TimeField()
-    req_quantity = models.PositiveIntegerField()
-    approval_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='D')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False, blank=False)
+    item = models.ForeignKey(Inventory_Stock, on_delete=models.CASCADE, null=False, blank=False)
+    request_date = models.DateField(null=False, blank=False)
+    request_time = models.TimeField(null=False, blank=False)
+    req_quantity = models.PositiveIntegerField(null=False, blank=False)
+    request_type = models.CharField(max_length=1, choices=TYPE_CHOICES, default='P', null=False, blank=False)
+    approval_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='D', null=False, blank=False)
+
+
 
     def save(self, *args, **kwargs):
         # Check if the approval_status is changing to 'Issued' from a different value

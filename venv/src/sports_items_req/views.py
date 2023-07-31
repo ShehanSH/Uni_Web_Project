@@ -280,3 +280,80 @@ def sports_item_time_series_chart_view(request):
         'received_counts': received_counts,
     }
     return render(request, 'sports_item_time_series_chart_view.html', context)
+
+
+#reports
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import SportsItemRequest
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+import csv
+
+from django.http import FileResponse
+
+def sports_item_request(request):
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        generate_format = request.POST.get('generate')
+
+        # Fetch item requests based on selected date range
+        item_requests = SportsItemRequest.objects.filter(request_date__range=(start_date, end_date))
+
+        if generate_format == 'pdf':
+            # Generate PDF report
+            pdf = generate_pdf(item_requests, start_date, end_date)
+            if pdf:
+                # Display the PDF in the browser
+                return FileResponse(pdf, content_type='application/pdf')
+
+        elif generate_format == 'csv':
+            # Generate CSV report and return as a response
+            csv_data = generate_csv(item_requests, start_date, end_date)
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename="sports_item_requests_{start_date}_to_{end_date}.csv"'
+            response.write(csv_data)
+            return response
+
+    return render(request, 'sports_item_request.html')
+
+
+def generate_pdf(request, start_date, end_date):
+    item_requests = SportsItemRequest.objects.filter(request_date__range=(start_date, end_date))
+    context = {
+        'item_requests': item_requests,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+
+    html_string = render_to_string('sports_item_requests_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=sports_item_requests_{start_date}_to_{end_date}.pdf'
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('PDF generation failed.')
+    return response
+
+def generate_csv(request, start_date, end_date):
+    item_requests = SportsItemRequest.objects.filter(request_date__range=(start_date, end_date))
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="sports_item_requests_{start_date}_to_{end_date}.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['User', 'Category', 'Item', 'Request Date', 'Request Time', 'Requested Quantity', 'Request Type', 'Approval Status'])
+    for item_request in item_requests:
+        writer.writerow([
+            item_request.user.username,
+            item_request.category.category_name,
+            item_request.item.item_name,
+            item_request.request_date,
+            item_request.request_time,
+            item_request.req_quantity,
+            dict(SportsItemRequest.TYPE_CHOICES).get(item_request.request_type),
+            dict(SportsItemRequest.APPROVAL_CHOICES).get(item_request.approval_status),
+        ])
+
+    return response

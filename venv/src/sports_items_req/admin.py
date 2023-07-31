@@ -3,8 +3,8 @@ from .models import SportsItemRequest, SportsItemReceived
 from inventory_management.models import Inventory_Stock
 
 class SportsItemRequestAdmin(admin.ModelAdmin):
-    list_display = ['request_id', 'user', 'category', 'item', 'request_date', 'request_time', 'req_quantity', 'approval_status']
-    list_filter = ['category', 'approval_status', 'user']
+    list_display = ['request_id', 'user', 'category', 'item', 'request_date', 'request_time', 'req_quantity','request_type', 'approval_status']
+    list_filter = ['category', 'request_type', 'approval_status', 'user']
     actions = ['issue_sports_items']
 
    

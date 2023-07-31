@@ -61,274 +61,11 @@ def test2(request):
     }
     return render(request, 'test2.html', context)
 
-# def test(request):
-#     title = "Welcome: This is the test Page"
-   
-#     context = {
-#         "title": title,
-#     }
-#     return render(request, 'test.html', context)
-
-
-# def list_items(request):
-    
-#     form = InventorySearchForm(request.POST or None)
-#     queryset = Inventory_Stock.objects.all()
-#     context = {
-      
-#         "queryset": queryset,
-#         "form": form,
-#     }
-
-#     # if request.method == 'POST':
-#     #     queryset = Inventory_Stock.objects.filter(
-#     #         # category__icontains=form['category'].value(),
-#     #         # category__name__icontains=form['category'].value(),
-#     #         item_name__icontains=form['item_name'].value()
-#     #     )
-
-#     if request.method == 'POST':
-#         category = form['category'].value()
-#         queryset = Inventory_Stock.objects.filter(
-#             item_name__icontains=form['item_name'].value()
-#         )
-
-#         if category != '':
-#             queryset = queryset.filter(category_id=category)
-
-
-#         if form['export_to_CSV'].value() == True:
-#             response = HttpResponse(content_type='text/csv')
-#             response['Content-Disposition'] = 'attachment; filename="List of stock.csv"'
-#             writer = csv.writer(response)
-#             writer.writerow(['CATEGORY', 'ITEM NAME', 'QUANTITY'])
-#             instance = queryset
-#             for stock in instance:
-#                 writer.writerow([stock.category, stock.item_name, stock.quantity])
-#             return response
-
-#         context = {
-#             "form": form,
-#             "header": header,
-#             "queryset": queryset,
-#         }
-    
-#     return render(request, 'list_items.html', context)
-
-
-# def add_items(request):
-#     form = InventoryCreateForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         messages.success(request, 'Item added successfully')
-#         return redirect('/list_items')
-    
-#     context = {
-#         "form": form,
-#         "title": "Add Item",
-#     }
-#     return render(request, 'add_items.html', context)
-
-
-# def update_items(request, pk):
-#     queryset = Inventory_Stock.objects.get(id=pk)
-#     form = InventoryUpdateForm(instance=queryset)
-#     if request.method == 'POST':
-#         form = InventoryUpdateForm(request.POST, instance=queryset)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Item updated successfully')
-#             return redirect('/list_items')
-
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'add_items.html', context)
-
-
-# def delete_items(request, pk):
-#     queryset = Inventory_Stock.objects.get(id=pk)
-#     if request.method == 'POST':
-#         queryset.delete()
-#         messages.success(request, 'Item deleted successfully')
-#         return redirect('/list_items')
-#     return render(request, 'delete_items.html')
-
-
-# def stock_detail(request, pk):
-# 	queryset = Inventory_Stock.objects.get(id=pk)
-# 	context = {
-#         "title": queryset.item_name,
-# 		"queryset": queryset,
-# 	}
-# 	return render(request, "stock_detail.html", context)
-
-
-# from django.shortcuts import render, redirect
-# from django.contrib import messages
-# from .models import Inventory_Stock
-# from .forms import IssueForm
-
-# def issue_items(request, pk):
-# 	queryset =Inventory_Stock.objects.get(id=pk)
-# 	form = IssueForm(request.POST or None, instance=queryset)
-# 	if form.is_valid():
-# 		instance = form.save(commit=False)
-# 		instance.quantity -= instance.issue_quantity
-# 		instance.issue_by = str(request.user)
-# 		messages.success(request, "Issued SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name) + "s now left in Store")
-# 		instance.save()
-
-# 		return redirect('/stock_detail/'+str(instance.id))
-# 		# return HttpResponseRedirect(instance.get_absolute_url())
-
-# 	context = {
-# 		"title": 'Issue ' + str(queryset.item_name),
-# 		"queryset": queryset,
-# 		"form": form,
-# 		"username": 'Issue By: ' + str(request.user),
-# 	}
-# 	return render(request, "add_items.html", context)
-
-
-
-# def receive_items(request, pk):
-# 	queryset = Inventory_Stock.objects.get(id=pk)
-# 	form = ReceiveForm(request.POST or None, instance=queryset)
-# 	if form.is_valid():
-# 		instance = form.save(commit=False)
-# 		instance.quantity += instance.receive_quantity
-# 		instance.save()
-# 		messages.success(request, "Received SUCCESSFULLY. " + str(instance.quantity) + " " + str(instance.item_name)+"s now in Store")
-
-# 		return redirect('/stock_detail/'+str(instance.id))
-# 		# return HttpResponseRedirect(instance.get_absolute_url())
-# 	context = {
-# 			"title": 'Reaceive ' + str(queryset.item_name),
-# 			"instance": queryset,
-# 			"form": form,
-# 			"username": 'Receive By: ' + str(request.user),
-# 		}
-# 	return render(request, "add_items.html", context)
-
-
-
-# def reorder_level(request, pk):
-# 	queryset = Inventory_Stock.objects.get(id=pk)
-# 	form = ReorderLevelForm(request.POST or None, instance=queryset)
-# 	if form.is_valid():
-# 		item = form.save(commit=False)
-# 		item.save()
-# 		messages.success(request, "Reorder level for " + str(item.item_name) + " is updated to " + str(item.reorder_level))
-
-# 		return redirect("/list_items")
-# 	context = {
-# 			"instance": queryset,
-# 			"form": form,
-# 		}
-# 	return render(request, "add_items.html", context)
-
-
-# def list_history(request):
-#     header = 'LIST OF ITEMS'
-#     queryset = Inventory_Stock_History.objects.all()
-#     form = InventoryStockHistorySearchForm(request.POST or None)
-#     context = {
-#         "header": header,
-#         "queryset": queryset,
-#         "form": form,
-#     }
-
-#     if request.method == 'POST':
-#         category = form['category'].value()
-#         queryset = Inventory_Stock_History.objects.filter(
-#             item_name__icontains=form['item_name'].value(),
-#             last_updated__range=[
-#                                     form['start_date'].value(),
-#                                     form['end_date'].value()
-#                                 ]
-#         )
-
-#         if category != '':
-#             queryset = queryset.filter(category_id=category)
-
-#         if form['export_to_CSV'].value() == True:
-#                 response = HttpResponse(content_type='text/csv')
-#                 response['Content-Disposition'] = 'attachment; filename="Stock History.csv"'
-#                 writer = csv.writer(response)
-#                 writer.writerow(
-#                     ['CATEGORY',
-#                      'ITEM NAME',
-#                      'QUANTITY',
-#                      'ISSUE QUANTITY',
-#                      'RECEIVE QUANTITY',
-#                      'RECEIVE BY',
-#                      'ISSUE BY',
-#                      'LAST UPDATED'])
-#                 instance = queryset
-#                 for stock in instance:
-#                     writer.writerow(
-#                         [stock.category,
-#                          stock.item_name,
-#                          stock.quantity,
-#                          stock.issue_quantity,
-#                          stock.receive_quantity,
-#                          stock.receive_by,
-#                          stock.issue_by,
-#                          stock.last_updated])
-#                 return response
-
-#         context = {
-#             "form": form,
-#             "header": header,
-#             "queryset": queryset,
-#         }
-
-#     return render(request, "list_history.html", context)
-
-# from django.contrib.auth.decorators import login_required
-# from django.shortcuts import render
-
-# @login_required(login_url='login')
-# def index(request):
-#     # Get the current user ID and role name
-#     user_id = request.user.user_id
-#     role_name = request.user.role.role_name
-
-#     context = {'user_id': user_id, 'role_name': role_name}
-#     return render(request, 'index.html', context)
-
-
-
 
 def logout_view(request):
     logout(request)
     return redirect('/')  # Replace 'home' with the desired URL after logout
 
-# from django.shortcuts import render, redirect
-# from .forms import Inventory_Stock_CreateForm, AddSupplierForm
-
-# def create_inventory_stock(request):
-#     if request.method == 'POST':
-#         form = Inventory_Stock_CreateForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success_url')  # Redirect to a success page after saving the inventory stock.
-#     else:
-#         form = Inventory_Stock_CreateForm()
-
-#     return render(request, 'create_inventory_stock.html', {'form': form})
-
-# def add_supplier(request):
-#     if request.method == 'POST':
-#         form = AddSupplierForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success_url')  # Redirect to a success page after saving the supplier.
-#     else:
-#         form = AddSupplierForm()
-
-#     return render(request, 'add_supplier.html', {'form': form})
 
 from .models import Category, Supplier, Inventory_Stock, Supply_Inventory
 from .forms import InventoryStockForm
@@ -736,162 +473,6 @@ def reorder_report(request):
 #report 2
 
 
-# # views.py
-# import csv
-# from django.shortcuts import render, HttpResponse
-# from .models import Inventory_Stock, Category
-
-# def generate_pdf2(request):
-#     categories = Category.objects.annotate(
-#         total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
-#         total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
-#         total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
-#     )
-
-#     context = {
-#         'categories': categories,
-#     }
-
-#     pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
-#     if pdf:
-#         response = HttpResponse(pdf, content_type='application/pdf')
-#         response['Content-Disposition'] = 'filename=category_inventory_report.pdf'
-#         return response
-
-#     return HttpResponse("Failed to generate PDF.")
-
-
-# def generate_pdf2(request):
-#     items = Inventory_Stock.objects.all()
-
-#     context = {
-#         'items': items,
-#     }
-
-#     pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
-#     if pdf:
-#         response = HttpResponse(pdf, content_type='application/pdf')
-#         response['Content-Disposition'] = 'filename=category_inventory_report.pdf'
-#         return response
-
-#     return HttpResponse("Failed to generate PDF.")
-
-
-# def generate_csv2(request):
-#     items = Inventory_Stock.objects.all()
-
-#     response = HttpResponse(content_type='text/csv')
-#     response['Content-Disposition'] = 'attachment; filename="category_inventory_report.csv"'
-
-#     writer = csv.writer(response)
-#     writer.writerow(['Category', 'Item Name', 'Stock Quantity', 'Damage Quantity', 'Lost Quantity'])
-#     for item in items:
-#         writer.writerow([item.category.name, item.item_name, item.stock_quantity, item.damage_quantity, item.lost_quantity])
-
-#     return response
-
-
-
-# def select_file_type2(request):
-#     if request.method == 'POST':
-#         file_type = request.POST.get('file_type')
-
-#         if file_type == 'pdf':
-#             return generate_pdf2(request)
-
-#         elif file_type == 'csv':
-#             return generate_csv2(request)
-
-#     categories = Category.objects.annotate(
-#         total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
-#         total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
-#         total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
-#     )
-
-#     context = {
-#         'categories': categories,
-#     }
-#     return render(request, 'select_file_type.html', context)
-
-# def reorder_report2(request):
-#     categories = Category.objects.all()
-
-#     if request.method == 'POST':
-#         selected_categories = request.POST.getlist('selected_categories')
-#         if 'all_categories' in request.POST:
-#             selected_categories = [category.category_id for category in categories]
-#         file_type = request.POST.get('generate')
-
-#         if file_type == 'pdf':
-#             items = Inventory_Stock.objects.filter(category__in=selected_categories)
-#             context = {
-#                 'items': items,
-#             }
-#             pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
-#             if pdf:
-#                 response = HttpResponse(pdf, content_type='application/pdf')
-#                 response['Content-Disposition'] = 'filename=inventory_stock.pdf'
-#                 return response
-
-#         elif file_type == 'csv':
-#             return generate_csv(request)
-
-#     context = {
-#         'categories': categories,
-#     }
-#     return render(request, 'inventory_stock_pdf_2.html', context)
-
-
-# def generate_pdf2(request):
-#     selected_categories = request.POST.getlist('selected_categories')  # Get selected categories from the form
-#     items = Inventory_Stock.objects.filter(category__category_id__in=selected_categories)
-
-#     context = {
-#         'items': items,
-#     }
-
-#     pdf = render_to_pdf('inventory_stock_pdf_2.html', context)
-#     if pdf:
-#         response = HttpResponse(pdf, content_type='application/pdf')
-#         response['Content-Disposition'] = 'filename=category_inventory_report.pdf'
-#         return response
-
-#     return HttpResponse("Failed to generate PDF.")
-
-# def generate_csv2(request):
-#     selected_categories = request.POST.getlist('selected_categories')  # Get selected categories from the form
-#     items = Inventory_Stock.objects.filter(category__category_id__in=selected_categories)
-
-#     response = HttpResponse(content_type='text/csv')
-#     response['Content-Disposition'] = 'attachment; filename="category_inventory_report.csv"'
-
-#     writer = csv.writer(response)
-#     writer.writerow(['Category', 'Item Name', 'Stock Quantity', 'Damage Quantity', 'Lost Quantity'])
-#     for item in items:
-#         writer.writerow([item.category.name, item.item_name, item.stock_quantity, item.damage_quantity, item.lost_quantity])
-
-#     return response
-
-# def select_file_type2(request):
-#     categories = Category.objects.annotate(
-#         total_stock_quantity=models.Sum('inventory_stock__stock_quantity'),
-#         total_damage_quantity=models.Sum('inventory_stock__damage_quantity'),
-#         total_lost_quantity=models.Sum('inventory_stock__lost_quantity')
-#     )
-
-#     if request.method == 'POST':
-#         file_type = request.POST.get('file_type')
-
-#         if file_type == 'pdf':
-#             return generate_pdf2(request)
-
-#         elif file_type == 'csv':
-#             return generate_csv2(request)
-
-#     context = {
-#         'categories': categories,
-#     }
-#     return render(request, 'select_file_type.html', context)
 
 
 
@@ -903,7 +484,7 @@ from .pdf import render_to_pdf
 from django.contrib.staticfiles import finders
 from django.templatetags.static import static
 
-# report 1
+# report 2
 def generate_pdf2(request):
     items = Inventory_Stock.objects.all()
 
@@ -968,6 +549,10 @@ def reorder_report2(request):
         'categories': categories,
     }
     return render(request, 'inventory_report2.html', context)
+
+
+
+
 #supply reports
 #reports 1
 
@@ -1051,6 +636,13 @@ def generate_csv3(request):
 
 from django.db.models import Sum
 
+from django.db.models import Sum, OuterRef, Subquery
+from django.http import HttpResponse
+import csv
+from django.shortcuts import render
+from .models import Supply_Inventory, Supplier
+from django.db.models import Sum, F
+
 def reorder_report3(request):
     if request.method == 'POST':
         start_date = request.POST.get('start_date')
@@ -1065,34 +657,54 @@ def reorder_report3(request):
             if 'all' not in selected_suppliers and selected_suppliers:
                 items = items.filter(Supplier__id__in=selected_suppliers)
         else:
-            items = []
+            items = []  # Set an empty list when dates are not selected
 
-        total_supply_count = items.aggregate(Sum('supply_quantity'))['supply_quantity__sum']
+        total_supply_count = 0  # Initialize total_supply_count as 0
+        if items:  # Check if items is not empty before aggregating the total supply count
+            total_supply_count = items.aggregate(Sum('supply_quantity'))['supply_quantity__sum']
+
+        # Get supplier data for the new table within the selected date range
+        suppliers_data = []
+        if start_date and end_date:
+            suppliers_data = Supplier.objects.filter(
+                supply_inventory__supply_date__range=(start_date, end_date)
+            ).annotate(
+                total_supply_quantity=Sum('supply_inventory__supply_quantity'),
+                category_name=F('supply_inventory__category__name')
+            ).values('supplier_name', 'category_name', 'total_supply_quantity')
 
         context = {
             'items': items,
             'start_date': start_date,
             'end_date': end_date,
-            'suppliers': Supplier.objects.all(),  # Add this to pass all suppliers to the template
+            'suppliers': Supplier.objects.all(),
             'total_supply_count': total_supply_count,
+            'suppliers_data': suppliers_data,
         }
 
         if generate_format == 'pdf':
-            pdf = render_to_pdf('supply_stock_pdf.html', context)
-            if pdf:
-                response = HttpResponse(pdf, content_type='application/pdf')
-                response['Content-Disposition'] = f'filename=supply_stock_{start_date}_to_{end_date}.pdf'
-                return response
+            if start_date and end_date:
+                pdf = render_to_pdf('supply_stock_pdf.html', context)
+                if pdf:
+                    response = HttpResponse(pdf, content_type='application/pdf')
+                    response['Content-Disposition'] = f'filename=supply_stock_{start_date}_to_{end_date}.pdf'
+                    return response
+            else:
+                return HttpResponse('')
+
         elif generate_format == 'csv':
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = f'attachment; filename="supply_stock_{start_date}_to_{end_date}.csv"'
+            if start_date and end_date:
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = f'attachment; filename="supply_stock_{start_date}_to_{end_date}.csv"'
 
-            writer = csv.writer(response)
-            writer.writerow(['Supply Date', 'Supply Time', 'Supplier', 'Item Supplied', 'Category', 'Quantity Supplied'])
-            for item in items:
-                writer.writerow([item.supply_date, item.supply_time, item.Supplier.supplier_name, item.item.item_name, item.category.name, item.supply_quantity])
+                writer = csv.writer(response)
+                writer.writerow(['Supply Date', 'Supply Time', 'Supplier', 'Item Supplied', 'Category', 'Quantity Supplied'])
+                for item in items:
+                    writer.writerow([item.supply_date, item.supply_time, item.Supplier.supplier_name, item.item.item_name, item.category.name, item.supply_quantity])
 
-            return response
+                return response
+            else:
+                return HttpResponse('')
 
     context = {
         'suppliers': Supplier.objects.all(),
