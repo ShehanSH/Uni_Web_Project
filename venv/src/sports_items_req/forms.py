@@ -1,6 +1,9 @@
 from django import forms
 from .models import SportsItemRequest, SportsItemReceived
 
+from django import forms
+from datetime import date, timedelta
+
 class SportsItemsRequestForm(forms.ModelForm):
     class Meta:
         model = SportsItemRequest
@@ -14,6 +17,15 @@ class SportsItemsRequestForm(forms.ModelForm):
             'request_type': forms.Select(attrs={'class': 'abc'}),
         }
 
+    def clean_request_date(self):
+        request_date = self.cleaned_data.get('request_date')
+        today = date.today()
+        max_allowed_date = today + timedelta(days=14)
+
+        if request_date < today or request_date > max_allowed_date:
+            raise forms.ValidationError("Please select a date within today or 14 days from today.")
+        return request_date
+
 
 class SportsItemRequestUpdateForm(forms.ModelForm):
     class Meta:
@@ -26,7 +38,6 @@ class SportsItemRequestUpdateForm(forms.ModelForm):
             'request_time': forms.TimeInput(attrs={'class': 'abc', 'type': 'time'}),
             'req_quantity': forms.NumberInput(attrs={'class': 'abc'}),
         }
-
 
 
 

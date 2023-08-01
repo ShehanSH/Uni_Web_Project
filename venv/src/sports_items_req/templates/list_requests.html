@@ -36,6 +36,8 @@
                     <th>Category</th>
                     <th>Item Name</th>
                     <th>Quantity</th>
+                    <th>Request Date</th>
+                    <th>Request Time</th>
                     <th>Type</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -49,6 +51,8 @@
                    <td>{{ request.category.name }}</td></a>
                     <td>{{ request.item.item_name }}</td>
                     <td>{{ request.req_quantity }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.request_time }}</td>
                     <td>{{ request.get_request_type_display }}</td>
                     <td>{{ request.get_approval_status_display }}</td>
                     <td>

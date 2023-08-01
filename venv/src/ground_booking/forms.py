@@ -1,5 +1,6 @@
 from django import forms
 from .models import GroundBookingRequest
+from datetime import date, timedelta
 class GroundBookingRequestForm(forms.ModelForm):
     # ground = forms.ModelChoiceField(queryset=Ground.objects.all(), widget=forms.Select(attrs={'class': 'abc'}))
     # event = forms.ModelChoiceField(queryset=EventType.objects.all(), widget=forms.Select(attrs={'class': 'abc'}))
@@ -15,6 +16,12 @@ class GroundBookingRequestForm(forms.ModelForm):
             'event_form': forms.ClearableFileInput(attrs={'class': 'abc', 'type': 'file'}),
             'payment_receipt': forms.ClearableFileInput(attrs={'class': 'abc', 'type': 'file'}),
         }
+
+    def clean_request_date(self):
+        request_date = self.cleaned_data.get('request_date')
+        if request_date < date.today():
+            raise forms.ValidationError("Past dates are not allowed.")
+        return request_date
 
 
 class GroundBookingRequestUpdateForm(forms.ModelForm):
@@ -32,6 +39,7 @@ class GroundBookingRequestUpdateForm(forms.ModelForm):
             'event_form': forms.ClearableFileInput(attrs={'class': 'abc', 'type': 'file'}),
             'payment_receipt': forms.ClearableFileInput(attrs={'class': 'abc', 'type': 'file'}),
         }
+
 
 
 from django import forms
