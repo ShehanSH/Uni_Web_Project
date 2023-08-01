@@ -125,11 +125,22 @@ class LostQuantityFilter(admin.SimpleListFilter):
             return queryset.filter(lost_quantity__exact=0)
 
 
+from django.contrib import admin
+from django.utils.html import format_html
+
 class InventoryStockAdmin(admin.ModelAdmin):
     form = InventoryStockForm
-    list_display = ['item_name', 'category', 'stock_quantity', 'damage_quantity', 'lost_quantity', 'reorder_level']
+    list_display = ['item_name', 'category', 'display_stock_quantity', 'damage_quantity', 'lost_quantity', 'reorder_level']
     search_fields = ['item_name']
     list_filter = ['category', DamageQuantityFilter, LostQuantityFilter]
+
+    def display_stock_quantity(self, obj):
+        if obj.stock_quantity < obj.reorder_level:
+            return format_html('<span style="color: red; background-color:yellow;">{}</span>', obj.stock_quantity)
+        return obj.stock_quantity
+
+    display_stock_quantity.short_description = 'Stock Quantity'
+
 
 
 
