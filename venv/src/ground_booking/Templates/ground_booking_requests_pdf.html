@@ -1,16 +1,13 @@
-
-<!-- inventory_stock_pdf.html -->
 {% load static %}
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <title>Inventory Stock PDF</title>
+    <title>Ground Booking Requests PDF</title>
     <style>
         /* Header styles */
         hr {
             width: 100%;
-            
             background-color: black;
             position: fixed;
             top: 0;
@@ -71,7 +68,8 @@
             height: 10%;
             position: absolute;
             top: 0;
-            left: 0}
+            left: 0;
+        }
 
         span {
             font-weight: normal;
@@ -79,9 +77,8 @@
             font-size: 10px;
             color: white;
             padding: 10px 10px 10px 10px;
-
-
         }
+
         h3 {
             text-align: center;
             color: #660000;
@@ -91,48 +88,41 @@
     <link rel="stylesheet" href="style.css">
     <link href="{% static 'css/home2.css' %}" rel="stylesheet" />
     {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
-    
 </head>
 <body>
-    <div class = "headerback" >
-   <header>
-        <h1>DEPARTMENT OF PHYSICAL EDUCATION<br>
-        <span>University of Kelaniya, Sri Lanka </span></h1>
-    </header>
+    <div class="headerback">
+        <header>
+            <h1>DEPARTMENT OF PHYSICAL EDUCATION<br>
+            <span>University of Kelaniya, Sri Lanka </span></h1>
+        </header>
         <hr>
         <main>
-            <h3>Category-wise Inventory Summery Report</h3>
+            <h3>Ground Booking Requests Report</h3>
+            <p>Booking Date Range: {{ start_date }} to {{ end_date }}</p> <!-- Display selected date range -->
             <hr>
             <table>
                 <tr>
-                    <th>Category</th>
-                    <th>Item Name</th>
-                    <th>Stock Quantity</th>
-                    <th>Damage Quantity</th>
-                    <th>Lost Quantity</th>
+                    <th>User</th>
+                    <th>Ground</th>
+                    <th>Request Date</th>
+                    <th>Request Time</th>
+                    <th>Event</th>
+                    <th>Approval Status</th>
                 </tr>
-                {% for item in items %}
+                {% for request in requests %}
                 <tr>
-                    <td>{{ item.category.name }}</td>
-                    <td>{{ item.item_name }}</td>
-                    <td>{{ item.stock_quantity }}</td>
-                    <td>{{ item.damage_quantity }}</td>
-                    <td>{{ item.lost_quantity }}</td>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.ground.ground_name}}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.request_time }}</td>
+                    <td>{{ request.event.event_name }}</td>
+                    <td>{{ request.get_approval_status_display }}</td>
                 </tr>
                 {% endfor %}
-        
-                <!-- Add the row to display total values -->
-                <tr>
-                    <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>
-                    <td>{{ total_stock }}</td>
-                    <td>{{ total_damage }}</td>
-                    <td>{{ total_lost }}</td>
-                </tr>
             </table>
             <hr style="margin-top:40px;">
-        <h3>Thank You for generate report <br>- Department Web Based System - </h3> 
+            <h3>Thank You for generating the report<br>- Department Web Based System -</h3> 
         </main>
-  
-
+    </div>
 </body>
 </html>

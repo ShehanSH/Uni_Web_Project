@@ -1,9 +1,9 @@
-
 {% load static %}
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sports items request PDF</title>
+    <title>Ground Booking Requests PDF</title>
     <style>
         /* Header styles */
         hr {
@@ -97,30 +97,26 @@
         </header>
         <hr>
         <main>
-            <h2>Supply History Report</h2>
-            <p>Supply Date Range: {{ start_date }} to {{ end_date }}</p> <!-- Display selected date range -->
+            <h3>Ground Booking Requests Report</h3>
+            <p>Booking Date Range: {{ start_date }} to {{ end_date }}</p> <!-- Display selected date range -->
             <hr>
             <table>
                 <tr>
                     <th>User</th>
-                    <th>Category</th>
-                    <th>Item</th>
+                    <th>Ground</th>
                     <th>Request Date</th>
                     <th>Request Time</th>
-                    <th>Requested Quantity</th>
-                    <th>Request Type</th>
+                    <th>Event</th>
                     <th>Approval Status</th>
                 </tr>
-                {% for item_request in item_requests %}
+                {% for request in requests %}
                 <tr>
-                    <td>{{ item_request.user.username }}</td>
-                    <td>{{ item_request.category.name }}</td>
-                    <td>{{ item_request.item.item_name }}</td>
-                    <td>{{ item_request.request_date }}</td>
-                    <td>{{ item_request.request_time }}</td>
-                    <td>{{ item_request.req_quantity }}</td>
-                    <td>{{ item_request.get_request_type_display }}</td>
-                    <td>{{ item_request.get_approval_status_display }}</td>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.ground.name }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.request_time }}</td>
+                    <td>{{ request.event.name }}</td>
+                    <td>{{ request.get_approval_status_display }}</td>
                 </tr>
                 {% endfor %}
             </table>

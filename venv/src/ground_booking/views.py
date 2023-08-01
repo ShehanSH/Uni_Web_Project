@@ -307,3 +307,130 @@ def ground_booking_line_chart_view(request):
     }
 
     return render(request, 'ground_booking_line_chart_view.html', context)
+
+
+#report
+from django.http import HttpResponse, FileResponse
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+import csv
+from .models import GroundBookingRequest
+def ground_booking_request(request):
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        generate_format = request.POST.get('generate')
+
+        # Fetch ground booking requests based on selected date range
+        booking_requests = GroundBookingRequest.objects.filter(request_date__range=(start_date, end_date))
+
+        if generate_format == 'pdf':
+            # Generate PDF report
+            pdf = generate_pdf(booking_requests, start_date, end_date)
+            if pdf:
+                # Display the PDF in the browser
+                return FileResponse(pdf, content_type='application/pdf')
+
+        elif generate_format == 'csv':
+            # Generate CSV report and return as a response
+            csv_data = generate_csv(booking_requests, start_date, end_date)
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename="ground_booking_requests_{start_date}_to_{end_date}.csv"'
+            response.write(csv_data)
+            return response
+
+    return render(request, 'ground_booking_request_interface.html')  # Updated template name
+
+def generate_pdf(requests, start_date, end_date):
+    context = {
+        'requests': requests,
+        'start_date': start_date,
+        'end_date': end_date,
+    }
+    html_string = render_to_string('ground_booking_requests_pdf.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=ground_booking_requests_{start_date}_to_{end_date}.pdf'
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('PDF generation failed.')
+    return response
+
+def generate_csv(requests, start_date, end_date):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="ground_booking_requests_{start_date}_to_{end_date}.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['User', 'Ground', 'Request Date', 'Request Time', 'Event', 'Approval Status'])
+    for booking_request in requests:
+        writer.writerow([
+            booking_request.user.username,
+            booking_request.ground.ground_name,
+            booking_request.request_date,
+            booking_request.request_time,
+            booking_request.event.event_name,
+            dict(GroundBookingRequest.APPROVAL_CHOICES).get(booking_request.approval_status),
+        ])
+
+    return response
+
+
+#report 2
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+import csv
+import io
+from datetime import datetime
+from django.db.models import Count, Q
+from .models import Ground, GroundBookingRequest
+
+def booking_summary(request):
+    if request.method == 'POST':
+        start_date_str = request.POST.get('start_date')
+        end_date_str = request.POST.get('end_date')
+
+        try:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+
+            grounds = Ground.objects.annotate(
+                total_approval=Count('groundbookingrequest', filter=Q(groundbookingrequest__approval_status='A',
+                                    groundbookingrequest__request_date__range=(start_date, end_date))),
+                total_disapproval=Count('groundbookingrequest', filter=Q(groundbookingrequest__approval_status='D',
+                                       groundbookingrequest__request_date__range=(start_date, end_date)))
+            )
+
+            if 'generate_pdf' in request.POST:
+                # Generate PDF
+                template_path = 'booking_summary_pdf.html'  # Updated template name
+                context = {'grounds': grounds, 'start_date': start_date, 'end_date': end_date}
+                template = render_to_string(template_path, context)
+                pdf = io.BytesIO()
+
+                pisa.CreatePDF(template, dest=pdf)
+
+                # Get the PDF data as bytes and set the response content type
+                response = HttpResponse(pdf.getvalue(), content_type='application/pdf')
+                response['Content-Disposition'] = 'inline; filename="booking_summary.pdf"'
+
+                return response
+
+            elif 'generate_csv' in request.POST:
+                # Generate CSV
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="booking_summary.csv"'
+                writer = csv.writer(response)
+                writer.writerow(['Ground Name', 'Total Approval', 'Total Disapproval'])
+
+                for ground in grounds:
+                    writer.writerow([ground.ground_name, ground.total_approval, ground.total_disapproval])
+
+                return response
+
+        except ValueError:
+            error_message = "Invalid date format. Please use YYYY-MM-DD format."
+            return render(request, 'booking_summary.html', {'error_message': error_message})
+
+    return render(request, 'booking_summary.html')

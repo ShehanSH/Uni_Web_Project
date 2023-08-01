@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/testchart.css' %}" rel="stylesheet" />
+    <title>Ground Booking Summary Report</title>
+    <!-- Include any necessary styles here -->
+    <style>
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .categories {
+            flex: 1;
+        }
+        .buttons {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .fillerbtn {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="page">
+    {% include 'slidebar2.html' %}
+    <section class="expert" id="groundBookingSummary">
+        <div class="title">
+            <h2 class="titeText">Ground Booking <span>Summary </span>Report</h2>
+            <p style="text-align: center;">This report will give you the summary of ground booking requests with the total approval and disapproval counts for each ground. You can generate reports for specific date ranges.</p>
+        </div>
+    </section>
+    <section style="margin-left:400px;margin-top:-100px;">
+        <form method="post" target="_blank">
+            {% csrf_token %}
+            <div class="container">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date">
+                <button type="submit" name="generate" value="pdf" class="fillerbtn">Generate PDF</button>
+                <button type="submit" name="generate" value="csv" class="fillerbtn">Generate CSV</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

@@ -347,7 +347,7 @@ def generate_csv(request, start_date, end_date):
     for item_request in item_requests:
         writer.writerow([
             item_request.user.username,
-            item_request.category.category_name,
+            item_request.category.name,
             item_request.item.item_name,
             item_request.request_date,
             item_request.request_time,
@@ -357,3 +357,106 @@ def generate_csv(request, start_date, end_date):
         ])
 
     return response
+
+
+
+#received item reports summary
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from .models import SportsItemReceived
+from django.db.models import Sum
+import io
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+def render_to_pdf_req(template_path, context={}):
+    template = get_template(template_path)
+    html = template.render(context)
+    result = io.BytesIO()
+    pdf = pisa.pisaDocument(io.BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+import io
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import SportsItemRequest
+from django.views.generic import View
+# from .utils import render_to_pdf_req
+from django.core.serializers import serialize
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from .models import SportsItemReceived
+from django.db.models import Sum, Count
+# from .utils import generate_csv
+
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from .models import SportsItemReceived
+from django.db.models import Sum, Count
+
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from .models import SportsItemReceived
+from django.db.models import Sum, Count
+
+def received_items_summary(request):
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        generate_format = request.POST.get('generate')
+
+        # Fetch received items based on selected date range
+        received_items = SportsItemReceived.objects.filter(received_date__range=(start_date, end_date))
+
+        # Calculate total_received_quantity, total_damage_quantity, and total_lost_quantity
+        total_received_quantity = received_items.aggregate(Sum('received_quantity'))['received_quantity__sum']
+        total_damage_quantity = received_items.filter(damage_status='D').aggregate(Sum('damage_quantity'))['damage_quantity__sum']
+        total_lost_quantity = received_items.filter(lost_status='L').aggregate(Sum('lost_quantity'))['lost_quantity__sum']
+
+        if not total_received_quantity:
+            total_received_quantity = 0
+
+        if not total_damage_quantity:
+            total_damage_quantity = 0
+
+        if not total_lost_quantity:
+            total_lost_quantity = 0
+
+        if generate_format == 'pdf':
+            # Fetch data for the additional table (sports item categories and their totals)
+            sports_item_categories = SportsItemReceived.objects.filter(received_date__range=(start_date, end_date)) \
+                .values('category__name') \
+                .annotate(total_received_quantity=Sum('received_quantity'),
+                          total_damage_quantity=Sum('damage_quantity'),
+                          total_lost_quantity=Sum('lost_quantity'))
+
+            # Generate PDF report
+            context = {
+                'received_items': received_items,
+                'start_date': start_date,
+                'end_date': end_date,
+                'sports_item_categories': sports_item_categories,
+                'total_received_quantity': total_received_quantity,
+                'total_damage_quantity': total_damage_quantity,
+                'total_lost_quantity': total_lost_quantity,
+            }
+            pdf = render_to_pdf_req('received_items_summary_pdf.html', context)
+            if pdf:
+                # Display the PDF in the browser
+                return FileResponse(pdf, content_type='application/pdf')
+
+        elif generate_format == 'csv':
+            # Generate CSV report and return as a response
+            csv_data = generate_csv(received_items, start_date, end_date)
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename="received_items_summary_{start_date}_to_{end_date}.csv"'
+            response.write(csv_data)
+            return response
+
+    return render(request, 'received_items_summary.html')

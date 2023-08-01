@@ -82,7 +82,7 @@
             </a>
           </li>
       <li class="nav-item">
-        <a href="{% url 'sports_items_req:sports_item_request' %}">
+        <a href="{% url 'sports_items_req:received_items_summary' %}"> 
           <span class="nav-item__icon">
             <ion-icon name="chatbox-outline"></ion-icon>
           </span>
@@ -101,13 +101,13 @@
                 <ion-icon name="chatbox-outline"></ion-icon>
               </span>
               <span class="nav-item__text" style="color:#660000; font-weight:bold;">
-                sports
+                Bookings
               </span>
             </a>
           </li>
 
         <li class="nav-item">
-            <a href="{% url 'sports_items_req:item_request_chart' %}">
+            <a href="{% url 'ground_booking:ground_booking_request' %}">
               <span class="nav-item__icon">
                 <ion-icon name="chatbox-outline"></ion-icon>
               </span>
@@ -117,7 +117,7 @@
             </a>
           </li>
       <li class="nav-item">
-        <a href="{% url 'sports_items_req:sports_item_time_series_chart' %}">
+        <a href="{% url 'ground_booking:booking_summary' %}">
           <span class="nav-item__icon">
             <ion-icon name="chatbox-outline"></ion-icon>
           </span>
@@ -126,61 +126,7 @@
           </span>
         </a>
       </li>
-      <li class="nav-item">
-        <a href="{% url 'sports_items_req:stacked_bar_chart' %}">
-          <span class="nav-item__icon">
-            <ion-icon name="people-outline"></ion-icon>
-          </span>
-          <span class="nav-item__text">
-             Chart 3
-          </span>
-        </a>
-      </li>
-      
-    </ul>
-
-    <ul class="nav-list">
-      <li class="nav-item">
-            <span class="nav-item__icon">
-              <ion-icon name="chatbox-outline"></ion-icon>
-            </span>
-            <span class="nav-item__text" style="color:#660000; font-weight:bold;">
-              Grounds
-            </span>
-          </a>
-        </li>
-
-      <li class="nav-item">
-          <a href="{% url 'ground_booking:ground_booking_bar_chart' %}">
-            <span class="nav-item__icon">
-              <ion-icon name="chatbox-outline"></ion-icon>
-            </span>
-            <span class="nav-item__text">
-              Chart 1
-            </span>
-          </a>
-        </li>
-    <li class="nav-item">
-      <a href="{% url 'ground_booking:ground_booking_stacked_bar_chart' %}">
-        <span class="nav-item__icon">
-          <ion-icon name="chatbox-outline"></ion-icon>
-        </span>
-        <span class="nav-item__text">
-          Chart 2
-        </span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="{% url 'ground_booking:ground_booking_line_chart' %}">
-        <span class="nav-item__icon">
-          <ion-icon name="people-outline"></ion-icon>
-        </span>
-        <span class="nav-item__text">
-           Chart 3
-        </span>
-      </a>
-    </li>
-    
+     
   </ul>
     
     

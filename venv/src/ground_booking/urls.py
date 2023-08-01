@@ -20,6 +20,12 @@ urlpatterns = [
     
     path('ground_booking_stacked_bar_chart/', views.ground_booking_stacked_bar_chart_view, name='ground_booking_stacked_bar_chart'),
     path('ground_booking_line_chart/', views.ground_booking_line_chart_view, name='ground_booking_line_chart'),
+
+    #reports
+    path('ground_booking_request/', views.ground_booking_request, name='ground_booking_request'),
+    path('booking_summary/', views.booking_summary, name='booking_summary'),
+
+    
 ]
 
 if settings.DEBUG:
