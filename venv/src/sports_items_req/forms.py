@@ -39,6 +39,10 @@ from .models import SportsItemReceived
 from django import forms
 from .models import SportsItemReceived
 
+from datetime import datetime, timedelta
+
+from datetime import datetime, timedelta
+
 class SportsItemReceivedForm(forms.ModelForm):
     class Meta:
         model = SportsItemReceived
@@ -49,7 +53,20 @@ class SportsItemReceivedForm(forms.ModelForm):
         # Filter the request_id choices to only include SportsItemRequest IDs with approval_status 'Issued'
         self.fields['request_id'].queryset = self.fields['request_id'].queryset.filter(approval_status='I')
 
-   
+        # Get the current date
+        today = datetime.now().date()
+
+        # Calculate the date four weeks ago from today
+        four_weeks_ago = today - timedelta(weeks=4)
+
+        # Filter the request_id choices to only include SportsItemRequest IDs
+        # with a request date within the last four weeks
+        self.fields['request_id'].queryset = self.fields['request_id'].queryset.filter(
+            approval_status='I',
+            request_date__gte=four_weeks_ago,
+            request_date__lte=today
+        )
+
 # forms.py
 from django import forms
 from .models import SportsItemRequest,Category

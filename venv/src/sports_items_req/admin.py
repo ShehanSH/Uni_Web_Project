@@ -4,10 +4,10 @@ from inventory_management.models import Inventory_Stock
 
 class SportsItemRequestAdmin(admin.ModelAdmin):
     list_display = ['request_id', 'user', 'category', 'item', 'request_date', 'request_time', 'req_quantity','request_type', 'approval_status']
-    list_filter = ['category', 'request_type', 'approval_status', 'user']
+    list_filter = ['category', 'request_type', 'approval_status', 'user', 'request_date']
     actions = ['issue_sports_items']
 
-   
+    
 
 
 from django.contrib import admin
@@ -22,11 +22,5 @@ class SportsItemReceivedAdmin(admin.ModelAdmin):
 
 # Register the model with the custom admin class
 admin.site.register(SportsItemReceived, SportsItemReceivedAdmin)
-
-
-
-
-
-# Register the admin class
 admin.site.register(SportsItemRequest, SportsItemRequestAdmin)
 

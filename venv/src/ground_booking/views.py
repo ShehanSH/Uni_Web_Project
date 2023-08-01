@@ -8,7 +8,7 @@ from .models import GroundBookingRequest, Ground
 
 #ground booking request
 @login_required(login_url='login')
-def ground_booking_request(request):
+def create_ground_booking_request(request):
     if request.method == 'POST':
         form = GroundBookingRequestForm(request.POST, request.FILES)
         if form.is_valid():
@@ -19,7 +19,7 @@ def ground_booking_request(request):
                 ground_booking_request.event_form = file2
             ground_booking_request.save()
             messages.success(request, 'Ground booking request submitted successfully.')
-            return redirect('ground_booking:ground_booking_request')
+            return redirect('ground_booking:create_ground_booking_request')
         else:
             messages.error(request, 'Error submitting the ground booking request. Please check the form and try again.')
     else:
@@ -434,3 +434,29 @@ def booking_summary(request):
             return render(request, 'booking_summary.html', {'error_message': error_message})
 
     return render(request, 'booking_summary.html')
+
+
+#bookig receiptfrom django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
+
+def generate_booking_receipt_pdf(request, booking_id):
+    # Get the booking object based on the booking_id
+    booking = GroundBookingRequest.objects.get(booking_id=booking_id)
+
+    # Render the PDF template with the booking details
+    template = get_template('booking_receipt.html')
+    context = {'request': booking}
+    html = template.render(context)
+
+    # Create a PDF
+    pdf_file = BytesIO()
+    pisa.CreatePDF(BytesIO(html.encode("UTF-8")), dest=pdf_file)
+
+    # Set the response headers for PDF download
+    response = HttpResponse(pdf_file.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="booking_receipt_{booking_id}.pdf"'
+    return response
+
+

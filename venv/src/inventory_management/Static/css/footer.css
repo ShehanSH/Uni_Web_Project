@@ -223,11 +223,11 @@ footer .flex:last-child a:hover{
 }
 
 .location{
-    border-radius: 30%;  
+    
     overflow: hidden;
-    width: 200px;
+    width: 400px;
     height: 200px;
-    margin-top: -40px;
-    margin-left: -20px;
+    margin-top: 4px;
+    margin-left: -10px;
     padding-top: 20px;
 }

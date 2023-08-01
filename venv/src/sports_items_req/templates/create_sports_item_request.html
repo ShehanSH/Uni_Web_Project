@@ -120,7 +120,11 @@
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
-                <label class="form-check-label" for="exampleCheck1">I have read and accept the terms of conditions</label>
+                <label class="form-check-label" for="exampleCheck1">I have read and accept the terms and conditions</label><br>
+                <input type="checkbox" class="form-check-input" id="exampleCheck2" checked>
+                <label class="form-check-label" for="exampleCheck2">If you requested sports items for <b>practices</b>, You must provide sports items again on the same day of practice. If you requested sports items for a <b>tournament</b>. You must provide sports items again one day before the tournament.</label><br>
+                <input type="checkbox" class="form-check-input" id="exampleCheck3" checked>
+                <label class="form-check-label" for="exampleCheck3">Make sure if you are requesting sports items within a <b>two-week period </b> from today.</label>
             </div>
             
         </form>
@@ -161,39 +165,33 @@
     <script src="{% static 'js/home2.js' %}"></script>
     <script src="{% static 'js/login.js' %}"></script>
     <script>
-        // Get references to the checkbox and the button
-        const termsCheckbox = document.getElementById('exampleCheck1');
-        const bookingButton = document.getElementById('bookingButton');
-    
-        // Add an event listener to the checkbox
-        termsCheckbox.addEventListener('change', function () {
-            // Enable the button if the checkbox is checked, disable it otherwise
-            if (termsCheckbox.checked) {
+        // Function to update the booking button state
+        function updateBookingButtonState() {
+            const checkbox1 = document.getElementById("exampleCheck1");
+            const checkbox2 = document.getElementById("exampleCheck2");
+            const checkbox3 = document.getElementById("exampleCheck3");
+            const bookingButton = document.getElementById("bookingButton");
+
+            // Check if all checkboxes are checked
+            if (checkbox1.checked && checkbox2.checked && checkbox3.checked) {
                 bookingButton.disabled = false;
                 bookingButton.style.backgroundColor = '#660000';
                 bookingButton.style.color = '#FFFFFF';
                 bookingButton.style.fontWeight = 'bold';
-                bookingButton.style.cursor = 'pointer'; // Add cursor pointer on hover
+                bookingButton.style.cursor = 'pointer';
             } else {
                 bookingButton.disabled = true;
                 bookingButton.style.backgroundColor = 'white';
                 bookingButton.style.color = '#000000';
                 bookingButton.style.fontWeight = 'normal';
-                bookingButton.style.cursor = 'default'; // Reset cursor to default on uncheck
+                bookingButton.style.cursor = 'default';
             }
-        });
-    
-        // Add a click event listener to the booking button
-        bookingButton.addEventListener('click', function () {
-            // Check if the checkbox is checked before submitting the form
-            if (!termsCheckbox.checked) {
-                alert('Please accept the terms of contract before submitting the booking request.');
-            } else {
-                // Checkbox is checked, manually trigger form submission
-                const bookingForm = document.getElementById('bookingForm');
-                bookingForm.submit();
-            }
-        });
+        }
+
+        // Attach event listeners to the checkboxes
+        document.getElementById("exampleCheck1").addEventListener("change", updateBookingButtonState);
+        document.getElementById("exampleCheck2").addEventListener("change", updateBookingButtonState);
+        document.getElementById("exampleCheck3").addEventListener("change", updateBookingButtonState);
     </script>
 
 </body>

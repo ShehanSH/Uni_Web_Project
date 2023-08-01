@@ -1,0 +1,132 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Booking Receipt</title>
+    <style>
+        /* Header styles */
+        hr {
+            width: 100%;
+            background-color: black;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* Footer styles */
+        footer {
+            width: 100%;
+            height: 50px;
+            background-color: #660000;
+            position: fixed;
+            margin-top: 500px;
+            left: 0;
+            color: white;
+            padding: 10px 10px 10px 10px;
+        }
+
+        header {
+            width: 100%;
+            height: 70px;
+            background-color: #660000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            color: white;
+        }
+
+        /* Content styles */
+        main {
+            padding-top: 70px; /* Adjust this value to avoid content overlapping with header */
+            padding-bottom: 40px; /* Adjust this value to avoid content overlapping with footer */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #D1D0CE;
+            color: black;
+            font-weight: bold;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        h1 {
+            text-align: left;
+            color: white;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .header-image {
+            width: 10%;
+            height: 10%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        span {
+            font-weight: normal;
+            color: #660000;
+            font-size: 10px;
+            color: white;
+            padding: 10px 10px 10px 10px;
+        }
+
+        h3 {
+            text-align: center;
+            color: #660000;
+            padding: 10px 10px 10px 10px;
+        }
+       
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="{% static 'css/home2.css' %}" rel="stylesheet" />
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"> {% endcomment %}
+</head>
+<body>
+    <div class="headerback">
+        <header>
+            <h1>DEPARTMENT OF PHYSICAL EDUCATION<br>
+            <span>University of Kelaniya, Sri Lanka </span></h1>
+        </header>
+        <hr>
+        <main>
+            <h3>Ground Booking Requests Receipt</h3>
+            <hr>
+            <div style="display: inline-block; width: 50%;">
+                <div class="div1">
+                    <h4 style="color:#660000; text-align:center;">Booking Details</h4>
+                    <p><strong>User:</strong> {{ request.user.username }}</p>
+                    <p><strong>Ground:</strong> {{ request.ground.ground_name }}</p>
+                    <p><strong>Event:</strong> {{ request.event.event_name }}</p>
+                    <p><strong>Booking Price:</strong> {{ request.ground.booking_price }}</p>
+                    <p><strong>Request Date:</strong> {{ request.request_date }}</p>
+                    <p><strong>Request Time:</strong> {{ request.request_time }}</p>
+                </div>
+            </div>
+            <hr>
+            <div style="display: inline-block; width: 50%;">
+                <div class="div2">
+                    <h4 style="color:#660000; text-align:center;">Department Bank Account Details</h4>
+                    <p style="padding-top:5px"><strong>Account Number:</strong> 123456789</p>
+                    <p><strong>Account Name:</strong> Department of Physical Education</p>
+                    <p><strong>Bank:</strong> Peoples Bank</p>
+                    <p><strong>Branch: </strong>Colombo 07</p>
+                </div>
+            </div>
+            
+            <hr style="margin-top:40px;">
+            <h3>Thank You for make a ground booking request<br> visit again<br>- Department Web Based System -</h3> 
+        </main>
+    </div>
+</body>
+</html>
