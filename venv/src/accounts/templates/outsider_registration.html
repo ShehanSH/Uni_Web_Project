@@ -84,7 +84,7 @@
             </div>
             <div class="LoginFormContainer" style="margin-top:-200px">
                 <div class="LoginFormInnerContainer" style="margin-top:0px">
-                    <h2 class="header">Sign Up.</h2>
+                    <h2 class="header">Sign Up Outsiders</h2>
                     <form method="post" class="registration-form">
                         {% csrf_token %}
                         
@@ -130,15 +130,16 @@
   </script> 
 
 
-     <script>
-        $(document).ready(function(){
-      
-          $("#id_date_of_birth").datepicker({changeYear: true,changeMonth: true, dateFormat: 'yy-mm-dd'});
-        
-    
-         
-        });
-      </script>
+  <script>
+    $(document).ready(function() {
+      $("#id_date_of_birth").datepicker({
+        changeYear: true,
+        changeMonth: true,
+        dateFormat: 'yy-mm-dd',
+        minDate: new Date(1900, 1, 1) // Sets the minimum date to January 1, 1900
+      });
+    });
+    </script>
     
 
 <!-- Add the CDN link for the inputmask plugin -->

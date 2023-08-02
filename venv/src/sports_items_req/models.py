@@ -78,7 +78,7 @@ class SportsItemReceived(models.Model):
     received_status = models.CharField(max_length=1, choices=APPROVAL_CHOICES, default='N')
     damage_status = models.CharField(max_length=2, choices=DAMAGE_STATUS, default='ND')
     lost_status = models.CharField(max_length=2, choices=LOST_STATUS, default='NL')
-    description = models.TextField(max_length=1000, help_text='Enter a brief description of the received item')
+    description = models.TextField(max_length=1000, help_text='Enter a brief description of the received item', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.received_status == 'R':  # Check if the received_status is 'Recived'

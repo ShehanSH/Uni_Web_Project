@@ -13,7 +13,7 @@ class CustomRegistrationForm(UserCreationForm):
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'abc', 'placeholder': 'Username'}))
     first_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'abc', 'placeholder': 'First Name'}))
     last_name = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'abc', 'placeholder': 'Last Name'}))
-    date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(attrs={'class': 'abc', 'placeholder': 'YYYY-MM-DD'}))
+    date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(attrs={'class': 'abc', 'placeholder': 'YYYY-MM-DD','min': '1900-01-01'}))
     phone_number = forms.CharField(label='Phone Number', max_length=15, widget=forms.TextInput(attrs={'class': 'abc', 'placeholder': 'Phone Number'}))
     gender = forms.ChoiceField(label='Gender', choices=[('male', 'Male'), ('female', 'Female')], widget=forms.Select(attrs={'class': 'abc'}))
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'class': 'abc', 'placeholder': 'Address'}))

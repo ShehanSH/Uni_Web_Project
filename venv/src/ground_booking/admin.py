@@ -49,7 +49,7 @@ class PaymentFormFilter(admin.SimpleListFilter):
 
 class GroundBookingRequestAdmin(admin.ModelAdmin):
     list_display = ['booking_id', 'user', 'ground', 'request_date', 'request_time', 'event', 'display_payment_form', 'display_payment_receipt','approval_status' ]
-    list_filter = ['approval_status', 'event', EventFormFilter, PaymentFormFilter]
+    list_filter = ['approval_status', 'event', EventFormFilter, PaymentFormFilter, 'ground']
     search_fields = ['user__username']
 
     def has_change_permission(self, request, obj=None):

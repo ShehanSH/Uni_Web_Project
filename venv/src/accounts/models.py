@@ -133,7 +133,7 @@ class UniStudent(models.Model):
     # Add other fields specific to the UniStudent model
 
 class UniStaff(models.Model):
-    staff_id = models.CharField(primary_key=True, max_length=15)
+    staff_id = models.CharField(primary_key=True, max_length=25)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
